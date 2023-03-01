@@ -8,7 +8,6 @@ import { useRouter } from 'next/router';
 
 import { OverlayProvider } from '@react-aria/overlays';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
-import { SessionProvider } from 'next-auth/react';
 
 import ThirdParty from 'containers/third-party';
 
@@ -41,21 +40,15 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
     <ReduxProvider store={store}>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <SessionProvider
-            session={pageProps.session}
-            refetchInterval={10 * 60}
-            refetchOnWindowFocus
-          >
-            <OverlayProvider>
-              {/* @ts-ignore: https://github.com/artsy/fresnel/issues/281 */}
-              <MediaContextProvider>
-                <MapProvider>
-                  <ThirdParty />
-                  <Component {...pageProps} />
-                </MapProvider>
-              </MediaContextProvider>
-            </OverlayProvider>
-          </SessionProvider>
+          <OverlayProvider>
+            {/* @ts-ignore: https://github.com/artsy/fresnel/issues/281 */}
+            <MediaContextProvider>
+              <MapProvider>
+                <ThirdParty />
+                <Component {...pageProps} />
+              </MapProvider>
+            </MediaContextProvider>
+          </OverlayProvider>
         </Hydrate>
       </QueryClientProvider>
     </ReduxProvider>
