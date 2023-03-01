@@ -71,3 +71,40 @@
 .flicking-viewport.flicking-hidden>.flicking-camera>* {
   @apply invisible;
 }
+
+/* Fonts */
+
+@font-face {
+  font-family: 'Baskerville';
+  src: url('/fonts/Baskerville-Regular.woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Baskerville';
+  src: url('/fonts/Baskerville-Italice.woff2');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Regular.woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Bold.woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-SemiBold.woff2');
+  font-weight: 700;
+  font-style: normal;
+}
