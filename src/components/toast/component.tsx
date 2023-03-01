@@ -65,7 +65,7 @@ export const Toast: React.FC<ToastProps> = ({
         })}
       >
         <div
-          className="flex w-full rounded-2xl bg-white p-2 text-gray-500 shadow-md transition hover:ring-4 hover:ring-white hover:ring-opacity-40"
+          className="text-gray-500 flex w-full rounded-2xl bg-white p-2 shadow-md transition hover:ring-4 hover:ring-white hover:ring-opacity-40"
           onMouseEnter={() => {
             controls.stop();
           }}

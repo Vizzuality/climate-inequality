@@ -28,10 +28,10 @@ export const ConfirmationPrompt: FC<ConfirmationPromptProps> = ({
     }}
   >
     <div className="px-8 py-4">
-      <div className="leading-1 font-heading mt-8 text-xl font-medium text-gray-800 sm:mt-0 sm:pr-32">
+      <div className="leading-1 font-heading text-gray-800 mt-8 text-xl font-medium sm:mt-0 sm:pr-32">
         {title}
       </div>
-      <p className="mt-4 text-sm text-gray-400 sm:pr-32">{description}</p>
+      <p className="text-gray-400 mt-4 text-sm sm:pr-32">{description}</p>
       <div
         className={classnames({
           'flex items-end justify-start': true,

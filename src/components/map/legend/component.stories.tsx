@@ -38,13 +38,13 @@ const Template: Story<LegendProps> = (args) => {
         return (
           <LegendItem key={i.id} {...i}>
             {type === 'basic' && (
-              <LegendTypeBasic className="text-sm text-gray-300" items={items} />
+              <LegendTypeBasic className="text-gray-300 text-sm" items={items} />
             )}
             {type === 'choropleth' && (
-              <LegendTypeChoropleth className="text-sm text-gray-300" items={items} />
+              <LegendTypeChoropleth className="text-gray-300 text-sm" items={items} />
             )}
             {type === 'gradient' && (
-              <LegendTypeGradient className="text-sm text-gray-300" items={items} />
+              <LegendTypeGradient className="text-gray-300 text-sm" items={items} />
             )}
           </LegendItem>
         );

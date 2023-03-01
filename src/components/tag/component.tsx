@@ -7,7 +7,7 @@ import type { TagProps } from './types';
 export const Tag: FC<TagProps> = ({ children, className }: TagProps) => (
   <div
     className={cx({
-      'relative inline-flex rounded': true,
+      'rounded relative inline-flex': true,
       [`${className}`]: !!className,
       'bg-gray-200 text-black': !className,
     })}

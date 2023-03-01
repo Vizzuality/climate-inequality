@@ -17,7 +17,7 @@ export const LegendTypeBasic: FC<LegendTypeBasicProps> = ({
       {items.map(({ value, color }) => (
         <li key={`${value}`} className="flex space-x-2 text-xs">
           <div
-            className="mt-0.5 h-3 w-3 shrink-0 rounded"
+            className="rounded mt-0.5 h-3 w-3 shrink-0"
             style={{
               backgroundColor: color,
             }}

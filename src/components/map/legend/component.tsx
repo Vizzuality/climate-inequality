@@ -42,13 +42,13 @@ export const Legend: FC<LegendPropsWithChildren> = ({
         className="font-heading relative flex w-full items-center space-x-2 px-5 py-3 text-xs uppercase text-white"
         onClick={onToggleActive}
       >
-        <Icon icon={LEGEND_SVG} className="h-4 w-4 text-gray-300" />
+        <Icon icon={LEGEND_SVG} className="text-gray-300 h-4 w-4" />
         <span>Legend</span>
 
         <Icon
           icon={ARROW_DOWN_SVG}
           className={cx({
-            'absolute top-1/2 right-5 h-3 w-3 -translate-y-1/2 transform text-blue-500 transition-transform':
+            'text-blue-500 absolute top-1/2 right-5 h-3 w-3 -translate-y-1/2 transform transition-transform':
               true,
             'rotate-180': active,
           })}

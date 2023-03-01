@@ -29,7 +29,7 @@ export const Search: FC<SearchProps> = ({
 
   return (
     <div
-      className={cx('relative flex w-full border-b border-gray-400', {
+      className={cx('border-gray-400 relative flex w-full border-b', {
         [THEME[theme]]: true,
         [SIZES[size]]: true,
       })}
@@ -48,7 +48,7 @@ export const Search: FC<SearchProps> = ({
         placeholder={placeholder}
         type="search"
         className={cx(
-          'w-full truncate bg-transparent px-10 font-sans leading-4 placeholder-gray-300 placeholder-opacity-50',
+          'bg-transparent placeholder-gray-300 w-full truncate px-10 font-sans leading-4 placeholder-opacity-50',
           {
             [THEME[theme]]: true,
             [SIZES[size]]: true,
