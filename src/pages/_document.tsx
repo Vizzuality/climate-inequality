@@ -16,7 +16,7 @@ class MyDocument extends Document {
         <Head>
           <style type="text/css" dangerouslySetInnerHTML={{ __html: mediaStyles }} />
         </Head>
-        <body>
+        <body className="h-small-screen bg-black">
           <Main />
           <NextScript />
         </body>

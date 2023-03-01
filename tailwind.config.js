@@ -45,6 +45,9 @@ module.exports = {
       lg: '1.25rem',
       xl: '1.5rem',
       '2xl': '2rem',
+      '3xl': '3rem',
+      '4xl': '4rem',
+      '5xl': '5rem',
     },
     fontFamily: {
       sans: 'Inter, sans-serif',
@@ -58,7 +61,6 @@ module.exports = {
       lg: '0.5rem',
       xl: '1.25rem',
       '2xl': '1.5rem',
-      '3xl': '2rem',
       full: '9999px',
     },
   },

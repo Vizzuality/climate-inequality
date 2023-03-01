@@ -20,7 +20,7 @@ const vizzualityLogo = (
 );
 export const Header: FC = () => (
   <header>
-    <div className="container py-6">
+    <div className="py-6">
       <div className="flex items-center justify-between">
         <div className="relative flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2">
           {vizzualityLogo}
