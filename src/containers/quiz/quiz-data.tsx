@@ -1,6 +1,7 @@
 export type Answer = { value?: string; isCorrect?: boolean };
 
 export type Question = {
+  question: string;
   sourceLink: string;
   answers: Answer[];
   text: React.ReactElement;
@@ -8,6 +9,7 @@ export type Question = {
 
 const QUESTIONS: Question[] = [
   {
+    question: 'How many people die every day in consequence of some form of inequality?',
     answers: [
       { value: '3,400', isCorrect: true },
       { value: '400' },
@@ -30,6 +32,7 @@ const QUESTIONS: Question[] = [
     sourceLink: '#',
   },
   {
+    question: 'How many people die every day in consequence of some form of inequality????',
     answers: [{ value: '00', isCorrect: true }, { value: '400' }, { value: '400' }, { value: '0' }],
     text: (
       <div key="1">

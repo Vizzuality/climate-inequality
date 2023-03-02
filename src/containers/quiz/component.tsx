@@ -2,9 +2,20 @@ import { useState } from 'react';
 
 import cx from 'classnames';
 
+import Link from 'next/link';
+
 import QUESTIONS from './quiz-data';
 import type { Answer } from './quiz-data';
 
+const renderButton = (onClick: () => void, text: string) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className="inline-flex h-16 w-64 items-center justify-center gap-x-2 bg-white px-5 text-center text-xl font-bold text-black"
+  >
+    {text}
+  </button>
+);
 const renderStep = (step: number, totalSteps: number) => (
   <div className="font-semibold text-white">
     0{step}
@@ -89,14 +100,46 @@ const renderAnswers = (
     renderAnswer(i, answer, handleAnswerClick, isSolutionMode, selectedAnswer === i)
   );
 
+const renderFinalScreen = (userCorrectAnswers: number) => {
+  return (
+    <div>
+      <div className="container pt-14 font-serif">
+        <p className="text-center text-2xl">
+          You answered correctly {userCorrectAnswers} out of 4 questions.
+        </p>
+        <div className="flex items-center justify-center">
+          <Link
+            href="/"
+            className="flex h-16 w-56 items-center justify-center bg-white px-5 text-center"
+          >
+            <span className="text-xl font-bold text-black">Discover story.</span>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const QuizPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [isSolutionMode, setIsSolutionMode] = useState<boolean>(false);
   const [selectedAnswer, setSelectedAnswer] = useState<number | undefined>();
+  const [userCorrectAnswers, setUserCorrectAnswers] = useState<number>(0);
+
+  const currentQuestion = QUESTIONS[currentStep - 1];
+
+  if (!currentQuestion) {
+    return renderFinalScreen(userCorrectAnswers);
+  }
+
+  const { question, text, answers, sourceLink } = currentQuestion || {};
 
   const handleAnswerClick = (index: number) => {
     setSelectedAnswer(index);
     setIsSolutionMode(true);
+    if (answers[index].isCorrect) {
+      setUserCorrectAnswers(userCorrectAnswers + 1);
+    }
   };
 
   const handleNextClick = () => {
@@ -104,17 +147,13 @@ const QuizPage: React.FC = () => {
     setIsSolutionMode(false);
   };
 
-  const currentQuestion = QUESTIONS[currentStep - 1];
-  const { text, answers, sourceLink } = currentQuestion;
   return (
     <div>
       <div className="container pt-14 pr-36">
         <div className="space-y-5 pb-10">
           {renderStep(currentStep, 4)}
-          <p className="text-2xl text-white">
-            How many people die every day in consequence of some form of inequality?
-          </p>
-          <p className="text-zinc-100 text-base leading-snug">Select your answer.</p>
+          <p className="text-2xl text-white">{question}</p>
+          <p className="text-base leading-snug text-100">Select your answer.</p>
         </div>
         <div className="inline-flex items-start justify-start gap-x-6 pb-6">
           {renderAnswers(answers, handleAnswerClick, isSolutionMode, selectedAnswer)}
@@ -129,12 +168,7 @@ const QuizPage: React.FC = () => {
               >
                 Source
               </a>
-              <button
-                onClick={handleNextClick}
-                className="inline-flex h-16 w-64 items-center justify-center gap-x-2 bg-white px-5 text-center text-xl font-bold text-black"
-              >
-                Next.
-              </button>
+              {renderButton(handleNextClick, 'Next.')}
             </div>
           </div>
         )}
