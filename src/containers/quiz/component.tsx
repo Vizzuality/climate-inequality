@@ -4,8 +4,10 @@ import cx from 'classnames';
 
 import Link from 'next/link';
 
+import { motion, PanInfo } from 'framer-motion';
+
 import QUESTIONS from './quiz-data';
-import type { Answer } from './quiz-data';
+import type { Answer, SentenceQuestion } from './quiz-data';
 
 const renderButton = (onClick: () => void, text: string) => (
   <button
@@ -16,6 +18,7 @@ const renderButton = (onClick: () => void, text: string) => (
     {text}
   </button>
 );
+
 const renderStep = (step: number, totalSteps: number) => (
   <div className="font-semibold text-white">
     0{step}
@@ -120,25 +123,105 @@ const renderFinalScreen = (userCorrectAnswers: number) => {
   );
 };
 
+const Circle = ({
+  answer,
+  setAnswer,
+  isSolutionMode,
+  isPercentage,
+}: {
+  answer: number;
+  setAnswer: (index: number) => void;
+  isSolutionMode: boolean;
+  isPercentage: boolean;
+}) => {
+  const answerToSize = (n: number) => n * 4;
+  const handlePan = (_: Event, info: PanInfo) => {
+    if (isSolutionMode) return;
+    const {
+      velocity: { x: xVelocity },
+    } = info;
+    const newAnswer = Math.round(answer + xVelocity / 100);
+    if (newAnswer > -1 && !(isPercentage && newAnswer > 100)) {
+      setAnswer(newAnswer);
+    }
+  };
+  return (
+    <div className="relative flex h-full w-full items-center justify-center">
+      <motion.div
+        className="flex items-center justify-center rounded-full border border-500 text-500"
+        onPan={handlePan}
+        style={{
+          height: answerToSize(answer),
+          width: answerToSize(answer),
+        }}
+        whileTap={{ cursor: !isSolutionMode && 'grabbing' }}
+      />
+      <div className="pointer-events-none absolute flex h-24 w-24 items-center justify-center">
+        {answer}
+        {isPercentage && ' %'}
+      </div>
+    </div>
+  );
+};
+
+const renderCircles = (
+  isSolutionMode: boolean,
+  circleAnswer1: number,
+  setCircleAnswer1: (index: number) => void,
+  circleAnswer2: number,
+  setCircleAnswer2: (index: number) => void,
+  isPercentage: boolean
+) => {
+  return (
+    <>
+      <Circle
+        answer={circleAnswer1}
+        setAnswer={setCircleAnswer1}
+        isSolutionMode={isSolutionMode}
+        isPercentage={isPercentage}
+      />
+      <Circle
+        answer={circleAnswer2}
+        setAnswer={setCircleAnswer2}
+        isSolutionMode={isSolutionMode}
+        isPercentage={isPercentage}
+      />
+    </>
+  );
+};
+
 const QuizPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [isSolutionMode, setIsSolutionMode] = useState<boolean>(false);
-  const [selectedAnswer, setSelectedAnswer] = useState<number | undefined>();
+  const [selectedAnswer, setSelectedAnswer] = useState<number | number[] | undefined>();
   const [userCorrectAnswers, setUserCorrectAnswers] = useState<number>(0);
-
   const currentQuestion = QUESTIONS[currentStep - 1];
+
+  const { question, text, answers, sourceLink, type } = currentQuestion || {};
+  const [circleAnswer1, setCircleAnswer1] = useState<number | undefined>(
+    answers && parseInt(answers[0].value, 10)
+  );
+  const [circleAnswer2, setCircleAnswer2] = useState<number | undefined>(
+    answers && parseInt(answers[1].value, 10)
+  );
 
   if (!currentQuestion) {
     return renderFinalScreen(userCorrectAnswers);
   }
 
-  const { question, text, answers, sourceLink } = currentQuestion || {};
+  const handleAnswerClick = (index?: number) => {
+    if (type === 'multiple') {
+      setSelectedAnswer(index);
+      setIsSolutionMode(true);
+      if (answers[index].isCorrect) {
+        setUserCorrectAnswers(userCorrectAnswers + 1);
+      }
+    } else if (type === 'sentence') {
+      const { solutions }: { solutions: Answer[] } = currentQuestion as SentenceQuestion;
 
-  const handleAnswerClick = (index: number) => {
-    setSelectedAnswer(index);
-    setIsSolutionMode(true);
-    if (answers[index].isCorrect) {
-      setUserCorrectAnswers(userCorrectAnswers + 1);
+      setIsSolutionMode(true);
+      setCircleAnswer1(parseInt(solutions[0].value, 10));
+      setCircleAnswer2(parseInt(solutions[1].value, 10));
     }
   };
 
@@ -147,20 +230,71 @@ const QuizPage: React.FC = () => {
     setIsSolutionMode(false);
   };
 
+  const renderQuestion = () => {
+    const { type } = currentQuestion;
+    if (type === 'multiple') {
+      return (
+        <>
+          <p className="mb-5 text-2xl text-white">{question}</p>
+          <p className="mb-5 text-base leading-snug text-white/80">Select your answer.</p>
+          <div className="inline-flex items-start justify-start gap-x-6 pb-6">
+            {renderAnswers(answers, handleAnswerClick, isSolutionMode, selectedAnswer as number)}
+          </div>
+        </>
+      );
+    }
+    return (
+      <>
+        <p className="mb-5 text-2xl text-white">
+          <div
+            dangerouslySetInnerHTML={{
+              __html: question
+                .replace(
+                  '<answer1>',
+                  `<span class="border-b-2 -translate-y-1.5 border-white text-500 text-lg inline-flex w-20 justify-center">${circleAnswer1}${
+                    currentQuestion.isPercentage && ' %'
+                  }</span>`
+                )
+                .replace(
+                  '<answer2>',
+                  `<span class="border-b-2 -translate-y-1.5 border-white text-500 text-lg inline-flex w-20 justify-center">${circleAnswer2}${
+                    currentQuestion.isPercentage && ' %'
+                  }</span>`
+                ),
+            }}
+          />
+        </p>
+        <p className="mb-5 text-base leading-snug text-white/80">
+          Drag the circles to change value and validate when you are happy with your answer
+        </p>
+        <div className="flex h-56 w-full space-y-5">
+          {renderCircles(
+            isSolutionMode,
+            circleAnswer1,
+            setCircleAnswer1,
+            circleAnswer2,
+            setCircleAnswer2,
+            currentQuestion.isPercentage
+          )}
+        </div>
+        {!isSolutionMode && (
+          <div className="mt-12 flex justify-end">
+            {renderButton(handleAnswerClick, 'Validate.')}
+          </div>
+        )}
+      </>
+    );
+  };
   return (
     <div>
-      <div className="container pt-14 pr-36">
-        <div className="space-y-5 pb-10">
+      <div className="container pt-10 pr-36">
+        <div className="mb-5 pb-4">
           {renderStep(currentStep, 4)}
-          <p className="text-2xl text-white">{question}</p>
-          <p className="text-base leading-snug text-100">Select your answer.</p>
-        </div>
-        <div className="inline-flex items-start justify-start gap-x-6 pb-6">
-          {renderAnswers(answers, handleAnswerClick, isSolutionMode, selectedAnswer)}
+          {renderQuestion()}
         </div>
         {isSolutionMode && (
           <div>
-            <p className="pb-16 text-sm  leading-tight">{text}</p>
+            <p className="pb-16 text-sm leading-tight">{text}</p>
             <div className="align-center flex w-full justify-between">
               <a
                 href={sourceLink}
