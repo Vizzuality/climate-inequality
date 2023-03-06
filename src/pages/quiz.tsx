@@ -1,8 +1,10 @@
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import Quiz from 'containers/quiz';
-
+const Quiz = dynamic(() => import('containers/quiz'), {
+  ssr: false,
+});
 import Icon from 'components/icon';
 import Logo from 'components/logo';
 

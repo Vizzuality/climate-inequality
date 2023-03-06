@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 import cx from 'classnames';
 
@@ -195,7 +195,13 @@ const QuizPage: React.FC = () => {
   const [isSolutionMode, setIsSolutionMode] = useState<boolean>(false);
   const [selectedAnswer, setSelectedAnswer] = useState<number | number[] | undefined>();
   const [userCorrectAnswers, setUserCorrectAnswers] = useState<number>(0);
-  const currentQuestion = QUESTIONS[currentStep - 1];
+
+  const questions = useMemo(() => {
+    const randomStart = Math.floor(Math.random() * 4);
+    return QUESTIONS.slice(randomStart, randomStart + 4);
+  }, []);
+
+  const currentQuestion = questions[currentStep - 1];
 
   const { question, text, answers, sourceLink, type } = currentQuestion || {};
   const [circleAnswer1, setCircleAnswer1] = useState<number | undefined>(
@@ -235,7 +241,7 @@ const QuizPage: React.FC = () => {
     if (type === 'multiple') {
       return (
         <>
-          <p className="mb-5 text-2xl text-white">{question}</p>
+          <div className="mb-5 text-2xl text-white">{question}</div>
           <p className="mb-5 text-base leading-snug text-white/80">Select your answer.</p>
           <div className="inline-flex items-start justify-start gap-x-6 pb-6">
             {renderAnswers(answers, handleAnswerClick, isSolutionMode, selectedAnswer as number)}
