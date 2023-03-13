@@ -120,17 +120,15 @@ const QUESTIONS: Question[] = [
     solutions: [{ value: '70' }, { value: '20' }],
     text: (
       <div key="4">
-        {' '}
-        Other
-        <span className="text-500">
-          It is estimated that every 4 seconds, one person dies as a result of inequality
-        </span>
-        , primarily due to issues such as hunger, lack of access to healthcare, climate breakdown in
-        low-income countries, and gender-based violence. This amounts to over{' '}
-        <span className="text-500">21,300 deaths per day</span>.
+        In most countries, there is a significant gender gap, particularly in top-income groups.
+        This disparity, known as the "glass ceiling" effect, highlights that women are significantly
+        under-represented in these top-paying positions, leading to a significant wage gap towards
+        the top of the wage distribution. In the United States, the representation of women in the
+        top 1% has been increasing slowly, with data showing that in 2019, only about{' '}
+        <span className="text-500">18%</span> of the top 1% were women.
       </div>
     ),
-    sourceLink: '#',
+    sourceLink: 'https://wir2022.wid.world/chapter-5/',
     type: 'sentence',
     isPercentage: true,
   },
