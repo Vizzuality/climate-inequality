@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 import cx from 'classnames';
 
@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { motion, PanInfo } from 'framer-motion';
 
 import QUESTIONS from './quiz-data';
-import type { Answer, SentenceQuestion } from './quiz-data';
+import type { Answer, Question, SentenceQuestion } from './quiz-data';
 
 const renderButton = (onClick: () => void, text: string) => (
   <button
@@ -87,7 +87,10 @@ const renderAnswer = (
       <>
         {isSolutionMode && isCorrect && correctIcon()}
         {isSolutionMode && isSelectedAnswer && !isCorrect && wrongIcon()}
-        <span className="text-center text-xl font-bold">{value}</span>
+        <span
+          dangerouslySetInnerHTML={{ __html: value }}
+          className="text-center text-xl font-bold"
+        />
       </>
     </button>
   );
@@ -134,7 +137,7 @@ const Circle = ({
   isSolutionMode: boolean;
   isPercentage: boolean;
 }) => {
-  const answerToSize = (n: number) => n * 4;
+  const answerToSize = (n: number) => n * 2;
   const handlePan = (_: Event, info: PanInfo) => {
     if (isSolutionMode) return;
     const {
@@ -148,7 +151,7 @@ const Circle = ({
   return (
     <div className="relative flex h-full w-full items-center justify-center">
       <motion.div
-        className="flex items-center justify-center rounded-full border border-500 text-500"
+        className="flex items-center justify-center rounded-full border border-500 text-500 hover:cursor-grab hover:border-2"
         onPan={handlePan}
         style={{
           height: answerToSize(answer),
@@ -201,15 +204,21 @@ const QuizPage: React.FC = () => {
     return QUESTIONS.slice(randomStart, randomStart + 4);
   }, []);
 
-  const currentQuestion = questions[currentStep - 1];
+  const currentQuestion: Question = questions[currentStep - 1];
 
   const { question, text, answers, sourceLink, type } = currentQuestion || {};
+
   const [circleAnswer1, setCircleAnswer1] = useState<number | undefined>(
     answers && parseInt(answers[0].value, 10)
   );
   const [circleAnswer2, setCircleAnswer2] = useState<number | undefined>(
     answers && parseInt(answers[1].value, 10)
   );
+
+  useEffect(() => {
+    setCircleAnswer1(answers && parseInt(answers[0].value, 10));
+    setCircleAnswer2(answers && parseInt(answers[1].value, 10));
+  }, [answers]);
 
   if (!currentQuestion) {
     return renderFinalScreen(userCorrectAnswers);
@@ -273,7 +282,7 @@ const QuizPage: React.FC = () => {
         <p className="mb-5 text-base leading-snug text-white/80">
           Drag the circles to change value and validate when you are happy with your answer
         </p>
-        <div className="flex h-56 w-full space-y-5">
+        <div className="flex h-56 w-full">
           {renderCircles(
             isSolutionMode,
             circleAnswer1,

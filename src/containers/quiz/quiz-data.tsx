@@ -72,15 +72,15 @@ const QUESTIONS: Question[] = [
   },
   {
     question: `The wealthiest countries represent <answer1> % of the world population but contribute to <answer2> % of CO2 emissions.`,
-    answers: [{ value: '40' }, { value: '60' }],
+    answers: [{ value: '50' }, { value: '50' }],
     solutions: [{ value: '16' }, { value: '40' }],
     text: (
       <div key="3">
-        {`Inequality in carbon emissions is evident as the wealthiest countries, representing only{' '}
+        Inequality in carbon emissions is evident as the wealthiest countries, representing only{' '}
         <span className="text-500">16%</span>% of the world population, are responsible for almost{' '}
         <span className="text-500">40%</span>% of CO2 emissions. In contrast, the two categories of
         the poorest countries in the World Bank classification, which account for nearly 60% of the
-        world's population, are responsible for less than 15% of emissions.`}
+        world's population, are responsible for less than 15% of emissions.
       </div>
     ),
     sourceLink:
@@ -98,7 +98,7 @@ const QUESTIONS: Question[] = [
       { value: '$21 billion to $355 billion' },
     ],
     text: (
-      <div key="3">
+      <div key="3b">
         According to the Organization for Economic Cooperation and Development, global annual
         healthcare costs associated with air pollution will increase{' '}
         <span className="text-500">from $21 billion in 2015 to $176 billion</span> in 2060. It is
@@ -116,7 +116,7 @@ const QUESTIONS: Question[] = [
   {
     question: `According to US 2019 data on wage distribution among the top 1% earners, <answer1> are women
     and <answer2> are men.`,
-    answers: [{ value: '40' }, { value: '60' }],
+    answers: [{ value: '50' }, { value: '50' }],
     solutions: [{ value: '70' }, { value: '20' }],
     text: (
       <div key="4">
@@ -159,10 +159,10 @@ const QUESTIONS: Question[] = [
     question:
       "How much of global carbon emissions are contributed by the world's wealthiest 1% compared to the bottom 50%?",
     answers: [
-      { value: 'x2 (or twice as much)', isCorrect: true },
-      { value: 'x1 (or the same)' },
-      { value: 'x1/2 (or half)' },
-      { value: 'x1/3 (or a third)' },
+      { value: 'x2 <div class="font-normal">(or twice as much)</div>', isCorrect: true },
+      { value: 'x1 <div class="font-normal">(or the same)</div>' },
+      { value: 'x1/2 <div class="font-normal">(or half)</div>' },
+      { value: 'x1/3 <div class="font-normal">(or a third)</div>' },
     ],
     text: (
       <div key="6">
@@ -179,7 +179,7 @@ const QUESTIONS: Question[] = [
   },
   {
     question: `In the US, the richest men live <answer1> years longer than the poorest portion of the population. And the richest women <answer2> years longer.`,
-    answers: [{ value: '5' }, { value: '5' }],
+    answers: [{ value: '50' }, { value: '50' }],
     solutions: [{ value: '15' }, { value: '10' }],
     text: (
       <div key="7">
@@ -257,8 +257,8 @@ const QUESTIONS: Question[] = [
     question:
       'How many billion tons of greenhouse gases were produced in 2021 from human activities? How many billion tons of greenhouse gases were produced in 2021 from human activities?',
     answers: [
-      { value: 'nearly or ~ 50', isCorrect: true },
-      { value: 'nearly or ~ 10' },
+      { value: '~ 50', isCorrect: true },
+      { value: '~ 10' },
       { value: '164' },
       { value: '32' },
     ],
@@ -281,7 +281,7 @@ const QUESTIONS: Question[] = [
       'How many people could fall into poverty as a result of the impacts of climate change by 2030?',
     answers: [
       { value: '32 to 132 million', isCorrect: true },
-      { value: '2 to 26 million' },
+      { value: '2 to 26 <br/> million' },
       { value: '14 to 58 million' },
       { value: '29 to 81 million' },
     ],
@@ -325,10 +325,10 @@ const QUESTIONS: Question[] = [
     question:
       'How much less economic losses due to extreme climate-related events did very high Human Development Index countries suffer compared to others?',
     answers: [
-      { value: '½ (half)', isCorrect: true },
-      { value: ' ⅓ (a third)' },
-      { value: '¼ (a fourth)' },
-      { value: '⅕ (a fifth)' },
+      { value: '½ <div class="font-normal"> (half)</div>', isCorrect: true },
+      { value: ' ⅓ <div class="font-normal"> (a third)</div>' },
+      { value: '¼ <div class="font-normal"> (a fourth)</div>' },
+      { value: '⅕ <div class="font-normal"> (a fifth)</div>' },
     ],
     text: (
       <div key="14">
