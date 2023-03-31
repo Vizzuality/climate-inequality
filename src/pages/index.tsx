@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import { RecoilRoot } from 'recoil';
 
 import Footer from 'containers/footer';
 import Header from 'containers/header';

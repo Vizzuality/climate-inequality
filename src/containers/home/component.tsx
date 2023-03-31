@@ -1,0 +1,94 @@
+import Head from 'next/head';
+
+import { stepAtom } from 'store/home';
+
+import { AnimatePresence } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
+
+import Header from 'containers/header';
+import Intro from 'containers/home/intro';
+
+import FadeY from './animations/fadeY';
+import RiveScrollComponent from './rive-components/rive-scroll';
+import ScrollList from './scroll-list';
+import {
+  Text1 as LayersText1,
+  Text2 as LayersText2,
+  Text3 as LayersText3,
+  Text4 as LayersText4,
+} from './texts';
+
+export const Arrow = () => {
+  return (
+    <svg
+      className="relative h-12 w-6"
+      width="8"
+      height="34"
+      viewBox="0 0 8 34"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        className="fill-500"
+        d="M3.64645 16.3536C3.84171 16.5488 4.15829 16.5488 4.35355 16.3536L7.53553 13.1716C7.7308 12.9763 7.7308 12.6597 7.53553 12.4645C7.34027 12.2692 7.02369 12.2692 6.82843 12.4645L4 15.2929L1.17157 12.4645C0.97631 12.2692 0.659728 12.2692 0.464466 12.4645C0.269203 12.6597 0.269203 12.9763 0.464466 13.1716L3.64645 16.3536ZM3.5 -2.18557e-08L3.5 16L4.5 16L4.5 2.18557e-08L3.5 -2.18557e-08Z"
+      />
+    </svg>
+  );
+};
+
+const Home: React.FC = () => {
+  const step = useRecoilValue(stepAtom);
+  const renderIntro = () => (
+    <div className="container py-20" key="text-layers-0">
+      <div className="items-center justify-start pb-2 text-left text-sm text-500">
+        Vizzuality’s look at climate action and equality.
+      </div>
+      <div className="flex w-5/6 items-center justify-start pb-6 text-left font-serif text-4xl text-white">
+        We believe in a sustainable and just future for all, where equality is core.
+      </div>
+      <div className="w-9/12 pb-16 text-left text-xl font-light leading-8 text-white">
+        The climate crisis threatens that reality. To create the world <br /> we believe in, we need
+        to understand these dynamics.
+      </div>
+      <Arrow />
+    </div>
+  );
+  const renderIfSteps = (step, steps: number[]) => steps.includes(step);
+
+  const renderAnimations = () => (
+    <div className="fixed top-0 z-0 h-screen">
+      {renderIfSteps(step, [1, 2, 3]) && <RiveScrollComponent fileName={'circle.riv'} />}
+      {/* <AnimatePresence>
+        <FadeY key="circle">
+        </FadeY>
+      </AnimatePresence> */}
+    </div>
+  );
+
+  return (
+    <div>
+      <Head>
+        <title>Climate inequality</title>
+      </Head>
+      <main className="relative">
+        <div className="container">
+          <Header />
+          {renderIntro()}
+          <Intro />
+          <ScrollList>
+            <div className="h-full" />
+            <LayersText1 key="text-layers-1" sticky={2} />
+            {/* <LayersText2 key="text-layers-2" />
+            <LayersText3 key="text-layers-3" />
+            <LayersText4 key="text-layers-4" /> */}
+          </ScrollList>
+          {renderIntro()}
+          {renderIntro()}
+          {renderIntro()}
+        </div>
+        {renderAnimations()}
+      </main>
+    </div>
+  );
+};
+
+export default Home;
