@@ -5,6 +5,7 @@ import cx from 'classnames';
 import Link from 'next/link';
 
 import { motion, PanInfo } from 'framer-motion';
+import { throttle } from 'lodash-es';
 
 import QUESTIONS from './quiz-data';
 import type { Answer, Question, SentenceQuestion } from './quiz-data';
@@ -137,17 +138,21 @@ const Circle = ({
   isSolutionMode: boolean;
   isPercentage: boolean;
 }) => {
-  const answerToSize = (n: number) => n * 2;
-  const handlePan = (_: Event, info: PanInfo) => {
+  const answerToSize = (n: number) => n * 2.5;
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const handlePan = throttle((_: Event, info: PanInfo) => {
     if (isSolutionMode) return;
     const {
       velocity: { x: xVelocity },
     } = info;
     const newAnswer = Math.round(answer + xVelocity / 100);
-    if (newAnswer > -1 && !(isPercentage && newAnswer > 100)) {
+
+    if (newAnswer !== answer && newAnswer > -1 && !(isPercentage && newAnswer > 100)) {
       setAnswer(newAnswer);
     }
-  };
+  }, 10);
+
   return (
     <div className="relative flex h-full w-full items-center justify-center">
       <motion.div
@@ -313,7 +318,9 @@ const QuizPage: React.FC = () => {
             <div className="align-center flex w-full justify-between">
               <a
                 href={sourceLink}
+                target="_blank"
                 className="text-center text-xs font-light leading-none text-white underline"
+                rel="noreferrer"
               >
                 Source
               </a>
