@@ -13,7 +13,6 @@ type SimulationNode = d3.SimulationNodeDatum & BeeswarmDataset;
 
 const BeeswarmChart: FC<BeeswarmChartProps> = ({
   dataset,
-  margin = 100,
   xLabel = ['Low', 'High'],
   radioUnit,
   xValueUnit,
@@ -21,10 +20,10 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
   width = 1000,
   height = 400,
   isMobile,
+  yearChanged = false,
 }) => {
   const simulation = useRef<d3.Simulation<SimulationNode, undefined>>(null);
   const [nodes, setNodes] = useState<SimulationNode[]>([]);
-  // console.log(nodes[0].name);
 
   useEffect(() => {
     // Create the simulation and add the event listener
@@ -39,11 +38,11 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
     const colorScale = d3.scaleLinear<string>().domain(colorDomain).range(['#FEE124', '#FFFFFF']);
     const radiusDomain = d3.extent(dataset.map((d) => d.radio));
     const radiusRangeMax =
-      radiusSize === 'md' ? height / (isMobile ? 16 : 8) : height / (isMobile ? 20 : 12);
+    radiusSize === 'md' ? height / (isMobile ? 16 : 8) : height / (isMobile ? 20 : 12);
+    const margin = radiusRangeMax * 2.5;
 
     const rScale = d3.scaleSqrt().domain(radiusDomain).range([1, radiusRangeMax]);
     const xDomain = d3.extent(dataset.map((d) => d.xValue));
-
     const xScale = d3
       .scaleLog()
       .domain(xDomain)
@@ -51,8 +50,8 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
 
     const x = isMobile ? () => width / 2 : xScale;
     const y = isMobile ? xScale : () => height / 2;
-    const data = dataset.map((d, i) => {
-      const prevNode = nodes[i];
+    const data = dataset.map((d) => {
+      const prevNode = nodes.find((n) => n.name === d.name);
       return {
         ...d,
         x: prevNode?.x || x(d.xValue),
@@ -62,18 +61,24 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
       };
     });
 
+    simulation.current.nodes(data);
+
+    const mainAxisStrength = 1;
+    const secondaryAxisStrength = 0.5;
+
     simulation.current
-      .nodes(data)
-      .force('y', d3.forceY((d: SimulationNode) => y(d.xValue)).strength(isMobile ? 0.75 : 0.25))
-      .force('x', d3.forceX((d: SimulationNode) => x(d.xValue)).strength(isMobile ? 0.25 : 0.75))
-      .force('collide', d3.forceCollide((d: SimulationNode) => d.radio + 3.5).strength(0.5))
-      .alpha(0.2)
+      .force('y', d3.forceY((d: SimulationNode) => y(d.xValue)).strength(isMobile ? mainAxisStrength : secondaryAxisStrength))
+      .force('x', d3.forceX((d: SimulationNode) => x(d.xValue)).strength(isMobile ? secondaryAxisStrength : mainAxisStrength))
+      .force('collide', d3.forceCollide((d: SimulationNode) => d.radio + 3.5).strength(0.75))
+      .alpha(yearChanged ? 0.01 : 0.15)
       .restart();
 
     return () => {
       simulation.current.stop();
     };
-  }, [dataset, height, isMobile, margin, radiusSize, width]);
+  // 'nodes' can't be in the dependencies because we don't want to update the simulation when nodes change (when simulation ticks)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataset, height, isMobile, radiusSize, width, yearChanged]);
 
   const getTextSize = (text: string) => {
     if (!d3) return;
@@ -110,10 +115,10 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
               <div className="p-2 mb-1 text-xs bg-white text-900">
                 <span className="font-semibold">{node.name}</span>
                 <span className="block">
-                  {node.radio} {radioUnit}
+                  {node.radio.toFixed(2)} {radioUnit}
                 </span>
                 <span className="block">
-                  {node.color} {xValueUnit}
+                  {node.color.toFixed(2)} {xValueUnit}
                 </span>
               </div>
             }
@@ -186,12 +191,3 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
 };
 
 export default BeeswarmChart;
-
-// tick 483.76 - last -1
-// data 305.4566553959771
-// tick 320.19 - first 1
-// tick 482.49 - last 1
-
-// data 301.52238848492476
-// tick 317.66 first 2
-// tick 497.27 last 2

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { FC, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import classNames from 'classnames';
 
@@ -35,6 +35,7 @@ const EmissionChart = () => {
   const [minYear, maxYear] = useMemo(() => [years[0], years[years.length - 1]], [years]);
   const [chartSize, setChartSize] = useState({ width: 1000, height: 300, isMobile: false });
   const [year, setYear] = useState<number>(years[years.length - 1]);
+  const [yearChanged, setYearChanged] = useState(false);
 
   const dataset = useMemo(() => {
     return comparation.reduce((prev: BeeswarmDataset[], curr) => {
@@ -90,6 +91,7 @@ const EmissionChart = () => {
       if (newYear + 1 === lastYear + 1) {
         clearInterval(yearIntervalRef.current);
       } else {
+        setYearChanged(true)
         setYear(newYear + 1);
         newYear++;
       }
@@ -97,6 +99,7 @@ const EmissionChart = () => {
   };
 
   const handleChangeYear = (selectedYear: number) => {
+    setYearChanged(true)
     clearInterval(yearIntervalRef.current);
     setYear(selectedYear);
   };
@@ -110,6 +113,7 @@ const EmissionChart = () => {
   );
 
   const handleChange = (name: keyof EmissionChartData, data: string) => {
+    setYearChanged(false)
     clearInterval(yearIntervalRef.current);
     setEmissionData({ ...emissionData, [name]: data });
   };
@@ -173,6 +177,8 @@ const EmissionChart = () => {
             radioUnit="MtCO₂e"
             dataset={dataset}
             xLabel={[`Low ${emissionData.comparation}`, `High ${emissionData.comparation}`]}
+            yearChanged={yearChanged}
+            // margin={emissionData.emission === 'absolute' ? 100 : 150}
             {...chartSize}
           />
         </div>

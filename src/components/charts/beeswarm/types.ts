@@ -8,7 +8,6 @@ export type BeeswarmDataset = {
 
 export type BeeswarmChartProps = {
   dataset: BeeswarmDataset[];
-  margin?: number;
   xLabel?: [string, string];
   xValueUnit?: string;
   radioUnit?: string;
@@ -16,4 +15,6 @@ export type BeeswarmChartProps = {
   height?: number;
   width?: number;
   isMobile?: boolean;
+  /** whether the last param changed was the year  */
+  yearChanged?: boolean;
 };
