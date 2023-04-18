@@ -1,0 +1,29 @@
+[
+  {
+    "iso3": "IND",
+    "name": "India",
+    "top": 8.81,
+    "middle": 2.02,
+    "bottom": 0.97,
+    "year": 2019,
+    "unit": "tCO2e/cap"
+  },
+  {
+    "iso3": "CHN",
+    "name": "China",
+    "top": 36.37,
+    "middle": 7.16,
+    "bottom": 3.04,
+    "year": 2019,
+    "unit": "tCO2e/cap"
+  },
+  {
+    "iso3": "USA",
+    "name": "USA",
+    "top": 74.74,
+    "middle": 21.97,
+    "bottom": 9.73,
+    "year": 2019,
+    "unit": "tCO2e/cap"
+  }
+]

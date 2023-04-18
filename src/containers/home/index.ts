@@ -1,0 +1,13 @@
+export { default as Title } from './components/1-title';
+export { default as OurVision } from './components/2-our-vision';
+export { default as Inequality } from './components/4-inequality';
+export { default as Distribution } from './components/5-distribution';
+export { default as EmissionsDistribution } from './components/6-emissions-distribution';
+export { default as ClimateCrisis } from './components/7-climate-crisis';
+export { default as Multidimensional } from './components/8-multidimensional';
+export { default as Countries } from './components/9-countries';
+export { default as ClimateInjustice } from './components/10-climate-injustice';
+export { default as ZoomingIn } from './components/11-zooming-in';
+export { default as Understanding } from './components/12-understanding';
+export { default as Investment } from './components/13-investment';
+export { default as Prioritising } from './components/14-prioritising';

@@ -3,7 +3,7 @@ type SingleIcon = {
   viewBox: string;
 };
 
-export interface IconProps {
+export interface IconProps extends React.SVGProps<SVGSVGElement> {
   icon: SingleIcon | string;
   className?: string;
   style?: unknown;

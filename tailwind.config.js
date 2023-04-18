@@ -37,6 +37,9 @@ module.exports = {
       700: '#998718',
       800: '#665a10',
       900: '#332d08',
+      'ligth-gray': '#EDECEF',
+      'middle-gray': '#CCCCCC',
+      green: '#2BA4A0',
     },
     fontSize: {
       '2xs': '0.625rem',
