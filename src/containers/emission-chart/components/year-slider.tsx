@@ -30,7 +30,7 @@ const YearSlider = ({
         .scaleLinear()
         .domain(yearDomain)
         .range(!isMobile ? [0, width] : [height, 0]),
-    [height, !isMobile, width, yearDomain]
+    [height, isMobile, width, yearDomain]
   );
 
   const orientation: 'vertical' | 'horizontal' = isMobile ? 'vertical' : 'horizontal';

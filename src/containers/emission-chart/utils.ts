@@ -4,6 +4,11 @@ import { useMemo } from 'react';
 import * as rawData from './data';
 import { EmissionChartData, EmissionRawData } from './types';
 
+export const COLORS = {
+  white: '#fff',
+  yellow: '#FEE124',
+};
+
 export const initialEmissionData: EmissionChartData = {
   comparation: 'vulnerability',
   emission: 'absolute',

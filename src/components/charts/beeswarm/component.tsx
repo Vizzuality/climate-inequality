@@ -5,6 +5,8 @@ import classNames from 'classnames';
 
 import * as d3 from 'd3';
 
+import { COLORS } from 'containers/emission-chart/utils';
+
 import Tooltip from 'components/tooltip';
 
 import { BeeswarmChartProps, BeeswarmDataset } from './types';
@@ -17,13 +19,13 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
   radioUnit,
   xValueUnit,
   radiusSize,
-  width = 1000,
-  height = 400,
-  isMobile,
+  width = 0,
+  height = 0,
   yearChanged = false,
 }) => {
   const simulation = useRef<d3.Simulation<SimulationNode, undefined>>(null);
   const [nodes, setNodes] = useState<SimulationNode[]>([]);
+  const isMobile = useMemo(() => height > width, [height, width])
 
   useEffect(() => {
     // Create the simulation and add the event listener
@@ -35,7 +37,7 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
 
   useEffect(() => {
     const colorDomain = d3.extent(dataset.map((d) => d.color));
-    const colorScale = d3.scaleLinear<string>().domain(colorDomain).range(['#FEE124', '#FFFFFF']);
+    const colorScale = d3.scaleLinear<string>().domain(colorDomain).range([COLORS.yellow, COLORS.white]);
     const radiusDomain = d3.extent(dataset.map((d) => d.radio));
     const radiusRangeMax =
     radiusSize === 'md' ? height / (isMobile ? 16 : 8) : height / (isMobile ? 20 : 12);
@@ -128,9 +130,8 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
                 cx={node.x}
                 cy={node.y}
                 r={node.radio + 3.5}
-                stroke="#ffffff"
                 strokeWidth={1}
-                className={classNames('transition-opacity duration-300 ease-out', {
+                className={classNames('transition-opacity duration-300 ease-out stroke-white', {
                   'opacity-100': tooltipOpen === node.name,
                   'opacity-0': tooltipOpen !== node.name,
                 })}
@@ -139,16 +140,16 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
                 cx={node.x}
                 cy={node.y}
                 r={node.radio}
-                fill={node.colorScale || '#FEE124'}
+                fill={node.colorScale}
                 className={classNames('transition-shadow duration-300 ease-out', {
-                  'drop-shadow-[0_0_10px_rgb(254,225,36)]': tooltipOpen === node.name,
+                  'drop-shadow-yellow': tooltipOpen === node.name,
                   'drop-shadow-none': tooltipOpen !== node.name,
                 })}
               />
               {top3Radio.includes(node.name) && (
                 <text
                   textAnchor="middle"
-                  className="max-w-full whitespace-pre-wrap fill-[#130E19] text-xs font-bold"
+                  className="max-w-full whitespace-pre-wrap fill-black text-xs font-bold"
                 >
                   {node.name.split(' ').map((t, i) => (
                     <tspan textAnchor="middle" key={t} x={node.x} y={node.y + i * 12}>
@@ -175,7 +176,7 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
           y2={isMobile ? height - 20 : height / 2}
           strokeDasharray={3}
           strokeWidth={1}
-          stroke="#ffffff"
+          className='stroke-white'
         />
         <text
           x={isMobile ? width / 2 : width}
