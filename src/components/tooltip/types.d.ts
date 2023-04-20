@@ -15,4 +15,5 @@ export interface TooltipProps {
     id?: string;
     root?: HTMLElement;
   };
+  onChange?: (open: boolean) => void;
 }

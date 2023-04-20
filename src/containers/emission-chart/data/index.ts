@@ -1,0 +1,10 @@
+export { default as comparation_readness_country } from './comparation/readness/countries.json';
+export { default as comparation_readness_region } from './comparation/readness/regions.json';
+export { default as comparation_vulnerability_country } from './comparation/vulnerability/countries.json';
+export { default as comparation_vulnerability_region } from './comparation/vulnerability/regions.json';
+export { default as emission_absolute_country } from './emission/absolute/countries.json';
+export { default as emission_absolute_region } from './emission/absolute/regions.json';
+export { default as emission_percapita_region } from './emission/per-capita/regions.json';
+export { default as emission_percapita_country } from './emission/per-capita/countries.json';
+export { default as income_percapita_country } from './income/countries.json';
+export { default as income_percapita_region } from './income/regions.json';

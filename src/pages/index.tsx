@@ -1,11 +1,14 @@
+/* eslint-disable prettier/prettier */
 import Head from 'next/head';
 
+import EmissionChart from 'containers/emission-chart';
 import Header from 'containers/header';
+
 
 export const Arrow = () => {
   return (
     <svg
-      className="relative h-12 w-6"
+      className="relative w-6 h-12"
       width="8"
       height="34"
       viewBox="0 0 8 34"
@@ -27,17 +30,20 @@ const Home: React.FC = () => (
     <main className="container">
       <Header />
       <div className="container py-20">
-        <div className="items-center justify-start pb-2 text-left text-sm text-500">
+        <div className="items-center justify-start pb-2 text-sm text-left text-500">
           Vizzuality’s look at climate action and equality.
         </div>
-        <div className="flex w-5/6 items-center justify-start pb-6 text-left font-serif text-4xl text-white">
+        <div className="flex items-center justify-start w-5/6 pb-6 font-serif text-4xl text-left text-white">
           We believe in a sustainable and just future for all, where equality is core.
         </div>
-        <div className="w-9/12 pb-16 text-left text-xl font-light leading-8 text-white">
+        <div className="w-9/12 pb-16 text-xl font-light leading-8 text-left text-white">
           The climate crisis threatens that reality. To create the world <br /> we believe in, we
           need to understand these dynamics.
         </div>
         <Arrow />
+        <div>
+          <EmissionChart />
+        </div>
       </div>
     </main>
   </div>

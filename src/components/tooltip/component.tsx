@@ -34,6 +34,7 @@ export const Tooltip = ({
   portalProps = {
     enabled: true,
   },
+  onChange,
 }: TooltipProps) => {
   const [open, setOpen] = useState(false);
 
@@ -42,7 +43,10 @@ export const Tooltip = ({
   const { x, y, reference, floating, strategy, context, placement, middlewareData } = useFloating({
     placement: initialPlacement,
     open,
-    onOpenChange: setOpen,
+    onOpenChange: (open) => {
+      setOpen(open);
+      onChange?.(open);
+    },
     middleware: [
       offset(5),
       flip(),

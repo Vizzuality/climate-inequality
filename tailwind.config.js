@@ -64,6 +64,9 @@ module.exports = {
       '2xl': '1.5rem',
       full: '9999px',
     },
+    dropShadow: {
+      yellow: '0 0 10px #ffe229',
+    },
   },
   plugins: [forms, lineClamp],
 };
