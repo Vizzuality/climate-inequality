@@ -11,6 +11,7 @@ import { screens } from 'styles/styles.config';
 
 import emissionRadioLegendIcon from 'svgs/ui/emissions-radio-legend.svg';
 import playIcon from 'svgs/ui/play-circle.svg';
+import pauseIcon from 'svgs/ui/pause.svg';
 
 import YearSlider from './components/year-slider';
 import { EmissionChartData } from './types';
@@ -21,15 +22,21 @@ const EmissionChart = () => {
   const yearIntervalRef = useRef<NodeJS.Timer>(null);
   const chartContainerRef = useRef<HTMLDivElement>(null);
 
+  const [playing, setPlaying] = useState(false);
   const [emissionData, setEmissionData] = useState<EmissionChartData>(initialEmissionData);
   const { comparation, emission, income } = useEmissionChartData(emissionData);
 
+  // Get the years from the data
   const years: number[] = useMemo(
     () =>
-      Object.keys(comparation[0])
-        .slice(2)
-        .map((year) => Number(year.substring(1))),
-    [comparation]
+      // Picks the first emission object, gets the keys that contains 'y' and transform it to a number
+      Object.keys(emission[0]).reduce((prev: number[], curr) => {
+        if (curr.includes('y')) {
+          return [...prev, Number(curr.substring(1))];
+        }
+        return prev;
+      }, []),
+    [emission]
   );
 
   const [minYear, maxYear] = useMemo(() => [years[0], years[years.length - 1]], [years]);
@@ -48,9 +55,9 @@ const EmissionChart = () => {
           {
             name: curr.name,
             iso3: curr.iso3,
-            xValue,
-            radio,
-            color,
+            xValue: Number(xValue),
+            radio: Number(radio),
+            color: Number(color),
           },
         ];
       }
@@ -83,6 +90,10 @@ const EmissionChart = () => {
 
   const handlePlayYears = () => {
     clearInterval(yearIntervalRef.current);
+    setPlaying(!playing);
+    if (playing) {
+      return;
+    }
     const lastYear = years[years.length - 1];
     let newYear = year === lastYear ? years[0] : year + 1;
     setYear(newYear);
@@ -99,6 +110,7 @@ const EmissionChart = () => {
 
   const handleChangeYear = (selectedYear: number) => {
     setYearChanged(true);
+    setPlaying(false);
     clearInterval(yearIntervalRef.current);
     setYear(selectedYear);
   };
@@ -106,7 +118,7 @@ const EmissionChart = () => {
   const legendText = useMemo(
     () =>
       emissionData.emission === 'absolute'
-        ? 'Total carbon emissions (tCO2)'
+        ? 'Total carbon emissions (MtCO2e)'
         : 'Per capita carbon emissions (tCO2e)',
     [emissionData]
   );
@@ -140,7 +152,7 @@ const EmissionChart = () => {
             onChange={(comparation) => handleChange('comparation', comparation)}
             options={[
               { label: 'Vulnerability', value: 'vulnerability' },
-              { label: 'Readness', value: 'readness' },
+              { label: 'Readiness', value: 'readiness' },
             ]}
             value={emissionData.comparation}
           />
@@ -173,7 +185,7 @@ const EmissionChart = () => {
                 : 'sm'
             }
             xValueUnit="€/year"
-            radioUnit="MtCO₂e"
+            radioUnit={emissionData.emission === 'absolute' ? 'MtCO₂e' : 'tCO₂e'}
             dataset={dataset}
             xLabel={[`Low ${emissionData.comparation}`, `High ${emissionData.comparation}`]}
             yearChanged={yearChanged}
@@ -206,7 +218,7 @@ const EmissionChart = () => {
               size="xs"
               onClick={handlePlayYears}
             >
-              <Icon icon={playIcon} className="h-8 w-8 fill-500" />
+              <Icon icon={playing ? pauseIcon : playIcon} className="h-8 w-8 fill-500" />
             </Button>
           </div>
           <div>
