@@ -601,7 +601,7 @@
   },
   {
     "iso3": "BOL",
-    "name": "Bolivia",
+    "name": "Bolivia, Plurinational State of",
     "y1995": 22.98,
     "y1996": 30.18,
     "y1997": 39.67,
@@ -2221,7 +2221,7 @@
   },
   {
     "iso3": "IRN",
-    "name": "Iran",
+    "name": "Iran, Islamic Republic of",
     "y1995": 374.17,
     "y1996": 386.75,
     "y1997": 386.8,
@@ -2521,7 +2521,7 @@
   },
   {
     "iso3": "KOR",
-    "name": "Korea",
+    "name": "Korea, Republic of",
     "y1995": 538.39,
     "y1996": 558.84,
     "y1997": 686.44,
@@ -2611,7 +2611,7 @@
   },
   {
     "iso3": "LAO",
-    "name": "Lao PDR",
+    "name": "Lao People's Democratic Republic",
     "y1995": 7.15,
     "y1996": 7.41,
     "y1997": 7.51,
@@ -3181,7 +3181,7 @@
   },
   {
     "iso3": "MDA",
-    "name": "Moldova",
+    "name": "Moldova, Republic of",
     "y1995": 0.21,
     "y1996": 0.25,
     "y1997": 0.25,
@@ -3601,7 +3601,7 @@
   },
   {
     "iso3": "PRK",
-    "name": "North Korea",
+    "name": "Korea, Democratic People's Republic of",
     "y1995": 113.54,
     "y1996": 101.76,
     "y1997": 86.23,

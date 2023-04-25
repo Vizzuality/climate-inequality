@@ -580,7 +580,7 @@
     "y2020": 3.3
   },
   {
-    "name": "Bolivia",
+    "name": "Bolivia, Plurinational State of",
     "y1995": 3.01,
     "y1996": 3.88,
     "y1997": 5,
@@ -2146,7 +2146,7 @@
     "y2020": 3.01
   },
   {
-    "name": "Iran",
+    "name": "Iran, Islamic Republic of",
     "y1995": 6.09,
     "y1996": 6.21,
     "y1997": 6.13,
@@ -2436,7 +2436,7 @@
     "y2020": 1.35
   },
   {
-    "name": "Korea",
+    "name": "Korea, Republic of",
     "y1995": 11.94,
     "y1996": 12.28,
     "y1997": 14.94,
@@ -2523,7 +2523,7 @@
     "y2020": 3.95
   },
   {
-    "name": "Lao PDR",
+    "name": "Lao People's Democratic Republic",
     "y1995": 1.48,
     "y1996": 1.5,
     "y1997": 1.49,
@@ -3074,7 +3074,7 @@
     "y2020": 4.47
   },
   {
-    "name": "Moldova",
+    "name": "Moldova, Republic of",
     "y1995": 0.05,
     "y1996": 0.06,
     "y1997": 0.06,
@@ -3480,7 +3480,7 @@
     "y2020": 1.52
   },
   {
-    "name": "North Korea",
+    "name":"Korea, Democratic People's Republic of",
     "y1995": 5.19,
     "y1996": 4.6,
     "y1997": 3.86,

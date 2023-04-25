@@ -7,15 +7,16 @@ import Button from 'components/button';
 import Beeswarm, { BeeswarmDataset } from 'components/charts/beeswarm';
 import RadioButton from 'components/forms/radio-button';
 import Icon from 'components/icon';
+import Tooltip from 'components/tooltip';
 import { screens } from 'styles/styles.config';
 
 import emissionRadioLegendIcon from 'svgs/ui/emissions-radio-legend.svg';
-import playIcon from 'svgs/ui/play-circle.svg';
 import pauseIcon from 'svgs/ui/pause.svg';
+import playIcon from 'svgs/ui/play-circle.svg';
 
 import YearSlider from './components/year-slider';
 import { EmissionChartData } from './types';
-import { useEmissionChartData, initialEmissionData } from './utils';
+import { useEmissionChartData, initialEmissionData, useMinMax } from './utils';
 
 const EmissionChart = () => {
   const yearSliderLabelRef = useRef<HTMLLabelElement>(null);
@@ -25,6 +26,12 @@ const EmissionChart = () => {
   const [playing, setPlaying] = useState(false);
   const [emissionData, setEmissionData] = useState<EmissionChartData>(initialEmissionData);
   const { comparation, emission, income } = useEmissionChartData(emissionData);
+
+  /** Find min and max values emission for all years and countries/regions */
+  const emissionVariation = useMinMax(emission);
+
+  /** Find min and max values emission for all years and countries/regions */
+  const comparationVariation = useMinMax(comparation);
 
   // Get the years from the data
   const years: number[] = useMemo(
@@ -73,7 +80,7 @@ const EmissionChart = () => {
         height = window?.innerHeight * 0.75;
       } else {
         const lg = Number(screens.lg.replace('px', ''));
-        height = width > lg ? width / 2 : width / 1.5;
+        height = width > lg ? width / 2.5 : width / 1.5;
       }
       setChartSize({ width, height });
     };
@@ -100,6 +107,7 @@ const EmissionChart = () => {
     yearIntervalRef.current = setInterval(() => {
       if (newYear + 1 === lastYear + 1) {
         clearInterval(yearIntervalRef.current);
+        setPlaying(false);
       } else {
         setYearChanged(true);
         setYear(newYear + 1);
@@ -117,21 +125,24 @@ const EmissionChart = () => {
 
   const legendText = useMemo(
     () =>
-      emissionData.emission === 'absolute'
-        ? 'Total carbon emissions (MtCO2e)'
-        : 'Per capita carbon emissions (tCO2e)',
+      emissionData.emission === 'absolute' ? (
+        <span>Total carbon emissions (MtCO&#8322;e)</span>
+      ) : (
+        <span>Per capita carbon emissions (tCO&#8322;e)</span>
+      ),
     [emissionData]
   );
 
   const handleChange = (name: keyof EmissionChartData, data: string) => {
     setYearChanged(false);
+    setPlaying(false);
     clearInterval(yearIntervalRef.current);
     setEmissionData({ ...emissionData, [name]: data });
   };
 
   return (
     <div>
-      <div className="mb-4 flex flex-wrap items-center gap-2 sm:mb-10">
+      <div className="mb-8 flex flex-wrap items-center gap-1 sm:mb-4 sm:gap-2">
         <fieldset className="flex flex-shrink-0 items-center gap-x-2">
           <RadioButton
             name="emission-type"
@@ -143,7 +154,19 @@ const EmissionChart = () => {
             value={emissionData.emission}
           />
           <div className="flex gap-x-1 text-xs">
-            <legend>carbon emissions</legend> and
+            <Tooltip
+              arrowProps={{ enabled: true, size: 7.5, className: 'mb-1' }}
+              content={
+                <p className="mb-1 w-64 bg-white p-2 text-xs text-900">
+                  Emissions include carbon and other greenhouse gases produced within a
+                  country/region as well as net imports embedded in goods and services from other
+                  regions.
+                </p>
+              }
+            >
+              <legend className="border-b border-dashed">carbon emissions</legend>
+            </Tooltip>{' '}
+            and
           </div>
         </fieldset>
         <fieldset className="flex flex-shrink-0 items-center gap-x-2">
@@ -177,11 +200,13 @@ const EmissionChart = () => {
       </div>
       <div className="grid grid-flow-col grid-cols-[calc(100%-40px),40px] items-center justify-between gap-y-4 sm:grid-cols-2">
         {/* Chart */}
-        <div ref={chartContainerRef} className="col-span-1 sm:col-span-2">
+        <div ref={chartContainerRef} className="col-span-1 sm:col-span-2 sm:-ml-[10%] sm:w-[120%]">
           <Beeswarm
             radiusSize={
-              emissionData.emission === 'absolute' || emissionData.population === 'region'
+              emissionData.emission === 'absolute' && emissionData.population !== 'region'
                 ? 'md'
+                : emissionData.population === 'region'
+                ? 'lg'
                 : 'sm'
             }
             xValueUnit="€/year"
@@ -190,6 +215,8 @@ const EmissionChart = () => {
             xLabel={[`Low ${emissionData.comparation}`, `High ${emissionData.comparation}`]}
             yearChanged={yearChanged}
             {...chartSize}
+            emissionVariation={emissionVariation}
+            comparationVariation={comparationVariation}
           />
         </div>
         {/* Legends */}
@@ -198,13 +225,19 @@ const EmissionChart = () => {
             <p>Average national income per capita (€/year)</p>
             <div className="my-1 h-2.5 w-full rounded-full bg-gradient-to-r from-100 to-500" />
             <div className="flex justify-between">
-              <span>Min</span>
-              <span>Max</span>
+              <span>{Math.min(...dataset.map((d) => d.color)).toLocaleString()}</span>
+              <span>{Math.max(...dataset.map((d) => d.color)).toLocaleString()}</span>
             </div>
           </div>
-          <div className="flex text-2xs leading-3">
+          <div className="flex gap-1 text-2xs leading-3 sm:gap-2">
             <p className="w-16 sm:w-24">{legendText}</p>
-            <Icon icon={emissionRadioLegendIcon} className="h-[61px] w-[107px]" />
+            <Icon icon={emissionRadioLegendIcon} className="h-[45px] w-[47px]" />
+            <div className="flex flex-col justify-between">
+              {/* <span>{Math.max(...dataset.map((d) => d.color)).toLocaleString()}</span>
+              <span>{Math.min(...dataset.map((d) => d.color)).toLocaleString()}</span> */}
+              <span>Max</span>
+              <span>Min</span>
+            </div>
           </div>
         </div>
         {/* Year selector */}
