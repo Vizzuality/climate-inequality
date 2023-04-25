@@ -27,11 +27,14 @@ const EmissionChart = () => {
   const [emissionData, setEmissionData] = useState<EmissionChartData>(initialEmissionData);
   const { comparation, emission, income } = useEmissionChartData(emissionData);
 
-  /** Find min and max values emission for all years and countries/regions */
+  /** Min and max values emission for all years and countries/regions */
   const emissionVariation = useMinMax(emission);
 
-  /** Find min and max values emission for all years and countries/regions */
+  /** Min and max values vulnerability/readness for all years and countries/regions */
   const comparationVariation = useMinMax(comparation);
+
+  /** Min and max values income for all years and countries/regions */
+  const colorVariation = useMinMax(income);
 
   // Get the years from the data
   const years: number[] = useMemo(
@@ -225,8 +228,8 @@ const EmissionChart = () => {
             <p>Average national income per capita (€/year)</p>
             <div className="my-1 h-2.5 w-full rounded-full bg-gradient-to-r from-100 to-500" />
             <div className="flex justify-between">
-              <span>{Math.min(...dataset.map((d) => d.color)).toLocaleString()}</span>
-              <span>{Math.max(...dataset.map((d) => d.color)).toLocaleString()}</span>
+              <span>{Math.round(colorVariation[0]).toLocaleString()}</span>
+              <span>{Math.round(colorVariation[1]).toLocaleString()}</span>
             </div>
           </div>
           <div className="flex gap-1 text-2xs leading-3 sm:gap-2">

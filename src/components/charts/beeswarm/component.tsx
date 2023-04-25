@@ -189,10 +189,10 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
                 <div className="mb-1 bg-white p-2 text-xs text-900">
                   <span className="font-semibold">{node.name}</span>
                   <span className="block">
-                    {node.radio?.toLocaleString()} {radioUnit}
+                    {Math.round(node.radio)?.toLocaleString()} {radioUnit}
                   </span>
                   <span className="block">
-                    {node.color.toLocaleString()} {xValueUnit}
+                    {Math.round(node.color).toLocaleString()} {xValueUnit}
                   </span>
                 </div>
               }
