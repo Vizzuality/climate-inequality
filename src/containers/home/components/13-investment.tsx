@@ -5,7 +5,7 @@ import InvestmentsIcon from 'svgs/ui/investments.svg';
 
 const Investment = () => {
   return (
-    <div className="flex min-h-screen bg-500 sm:h-screen">
+    <div className="flex min-h-screen bg-500 sm:h-screen sm:min-h-fit">
       <div className="container flex flex-col justify-between py-14 text-black sm:h-full">
         <div className="sm:w-1/2">
           <SectionTitle className="mb-6">When needs and investment do not align.</SectionTitle>

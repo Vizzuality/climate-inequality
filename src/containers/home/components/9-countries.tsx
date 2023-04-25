@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import Icon from 'components/icon/component';
 import SectionSubtitle from 'components/section-subtitle';
 import SectionTitle from 'components/section-title';
@@ -67,7 +65,7 @@ const Countries = ({ isReadness = false }) => {
         </p>
       </div>
       <div className="w-full">
-        <Image alt="map" width={1217} height={529} src="/images/map.png" />
+        <img alt="map" width={1217} height={529} src="/images/map.png" />
         <div className="mt-3 flex justify-center text-2xs">
           <div className="w-full sm:w-auto">
             <span className="text-xs">{isReadness ? 'Readness' : 'Vulnerability'}</span>

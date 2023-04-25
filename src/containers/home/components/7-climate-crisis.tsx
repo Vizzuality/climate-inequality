@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title';
 
@@ -19,16 +17,16 @@ const ClimateCrisis = () => {
           <div className="flex flex-1 flex-col-reverse items-center justify-end gap-8 sm:gap-10 lg:mt-0 lg:flex-row lg:gap-[120px] xl:gap-[160px]">
             <div className="flex-1">
               <div className="left-0 bottom-0 w-screen sm:translate-x-0 lg:absolute lg:max-h-[55%] lg:max-w-[50%] lg:-translate-x-4 xl:max-h-[60%]">
-                <Image
+                <img
                   className="w-screen lg:hidden"
-                  alt=""
+                  alt="Climate crisis"
                   src="/images/climate-crisis-sm.png"
                   width={672}
                   height={484}
                 />
-                <Image
+                <img
                   className="hidden w-full lg:block"
-                  alt=""
+                  alt="Climate crisis"
                   src="/images/climate-crisis.png"
                   width={360}
                   height={484}

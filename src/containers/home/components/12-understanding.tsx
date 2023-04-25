@@ -11,7 +11,7 @@ const Understanding = () => {
 
   return (
     <div className="bg-white">
-      <div className="container flex flex-col justify-between pt-14 text-900 sm:h-screen lg:mt-0">
+      <div className="container flex flex-col justify-between pt-14 text-900  sm:min-h-screen lg:mt-0">
         <div>
           <SectionTitle className="mb-4" color="green">
             From understanding the problem to embracing solutions.

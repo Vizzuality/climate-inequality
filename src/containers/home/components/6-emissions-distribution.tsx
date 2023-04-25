@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
 
@@ -40,14 +38,14 @@ const EmissionsDistribution = () => {
             </div>
           </div>
           <div>
-            <Image
+            <img
               className="hidden w-full sm:block"
               alt=""
               src="/images/emission-distribution.svg"
               height={240}
               width={1230}
             />
-            <Image
+            <img
               className="w-full sm:hidden"
               alt=""
               src="/images/emission-distribution-sm.svg"

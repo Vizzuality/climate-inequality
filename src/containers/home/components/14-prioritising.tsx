@@ -1,7 +1,5 @@
 import classNames from 'classnames';
 
-import Image from 'next/image';
-
 const projects = [
   'Half Earth',
   'Global Forest Watch',
@@ -16,7 +14,7 @@ const projects = [
 const Prioritising = () => {
   return (
     <div className="flex min-h-screen flex-col justify-between bg-white">
-      <div className="container flex h-full flex-col justify-between pt-14 pb-6 text-black md:pb-14">
+      <div className="container flex h-full flex-col justify-between pt-14 pb-6  text-black md:pt-24 md:pb-14 xl:pt-28">
         <div className="flex flex-col md:flex-row">
           <h2 className="mb-6 flex-1 font-serif text-2xl leading-tight md:mb-0 md:text-[56px]">
             Prioritising people and planet
@@ -45,20 +43,13 @@ const Prioritising = () => {
           return (
             <div
               key={project}
-              className={classNames('max-h-[25vh] w-full md:max-h-80', {
+              className={classNames('h-[30vh] w-full bg-cover bg-center xl:h-[35vh]', {
                 'col-span-1 md:col-span-3': isFirstOrLast,
                 'col-span-1 md:col-span-2': !isFirstOrLast,
               })}
+              style={{ backgroundImage: `url('/images/projects/${project}.png')` }}
             >
               <p className="h-0 max-w-[calc(100%-36px)] translate-y-14 pl-9">{project}</p>
-              <Image
-                alt=""
-                className="h-full w-full object-cover"
-                width={isFirstOrLast ? 455 : 328}
-                height={320}
-                src={`/images/${project}.png`}
-                sr-hidden
-              />
             </div>
           );
         })}
