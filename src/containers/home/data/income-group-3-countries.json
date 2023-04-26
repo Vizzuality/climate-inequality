@@ -1,0 +1,29 @@
+[
+  {
+    "iso3": "IND",
+    "name": "India",
+    "top": 44773.3809,
+    "middle": 5828.0251,
+    "bottom": 2057.8213,
+    "year": 2021,
+    "unit": "euro"
+  },
+  {
+    "iso3": "CHN",
+    "name": "China",
+    "top": 77206.07,
+    "middle": 19108.756,
+    "bottom": 4893.3034,
+    "year": 2021,
+    "unit": "euro"
+  },
+  {
+    "iso3": "USA",
+    "name": "United States",
+    "top": 251276.4497,
+    "middle": 55889.5816,
+    "bottom": 15232.6239,
+    "year": 2021,
+    "unit": "euro"
+  }
+]

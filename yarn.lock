@@ -5959,7 +5959,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/d3-ease@npm:*":
+"@types/d3-ease@npm:*, @types/d3-ease@npm:^3.0.0":
   version: 3.0.0
   resolution: "@types/d3-ease@npm:3.0.0"
   checksum: 1be7c993643b5a08332e0ee146375a3845545d8deb423db5d152e0b061524385d2345ceccf968f75f605247b940dd3f9a144335fee2e7d935cddaf187afb7095
@@ -5975,7 +5975,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/d3-force@npm:*":
+"@types/d3-force@npm:*, @types/d3-force@npm:^3.0.4":
   version: 3.0.4
   resolution: "@types/d3-force@npm:3.0.4"
   checksum: 779fb597fb41e7bc6a5e1b8969d500deb95c4a73428c7c268bf0ca6f3ed668dd2ed6aa652de7af14d2f9c192dad4f6e7badf2c5bc330624bd8405ac88440b278
@@ -9398,7 +9398,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-force@npm:3":
+"d3-force@npm:3, d3-force@npm:^3.0.0":
   version: 3.0.0
   resolution: "d3-force@npm:3.0.0"
   dependencies:
@@ -11523,6 +11523,8 @@ __metadata:
     "@tailwindcss/line-clamp": 0.4.0
     "@tanstack/react-query": 4.0.10
     "@types/d3": ^7.4.0
+    "@types/d3-ease": ^3.0.0
+    "@types/d3-force": ^3.0.4
     "@types/google.analytics": 0.0.42
     "@types/lodash-es": ^4.17.7
     "@types/react": 18.0.15

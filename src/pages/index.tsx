@@ -19,7 +19,6 @@ import {
 } from 'containers/home';
 
 const Home: React.FC = () => {
-
   return (
     <div>
       <Head>

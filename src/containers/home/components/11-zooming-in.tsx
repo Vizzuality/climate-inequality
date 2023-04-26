@@ -3,32 +3,25 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { uniq } from 'lodash-es';
 
-import data from 'containers/home/data/emission-group-3-countries.json';
+import emissions from 'containers/home/data/emission-group-3-countries.json';
+import income from 'containers/home/data/income-group-3-countries.json';
 
 import Icon from 'components/icon';
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
+import Tooltip from 'components/tooltip/component';
 
 import CircleLegend from 'svgs/ui/circle-legend.svg';
 import ColorLegend from 'svgs/ui/income-population-legend.svg';
 
-type Dataset = d3.SimulationNodeDatum & {
-  country: string;
-  value: number;
-  r: number;
-  x: number;
-  y: number;
-  color: string;
-  group: string;
-  groupSize: number;
-};
-
 const groups = ['top', 'middle', 'bottom'];
-const positions = [
-  { x: 1.45, y: 3 },
-  { x: 1.47, y: 3 },
-  { x: 1.37, y: 2.1 },
-];
+const groupLabels = ['top 10', 'middle 40', 'bottom 50'];
+
+enum Groups {
+  'Top 10',
+  'Middle 40',
+  'Bottom 50',
+}
 
 const ZoomingIn = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -47,47 +40,50 @@ const ZoomingIn = () => {
     };
   }, []);
 
-  const [dataset, setDataSet] = useState<Dataset[]>([]);
+  const rDomain = d3.extent(
+    emissions.map(({ bottom, middle, top }) => Object.values({ bottom, middle, top })).flat()
+  );
+  const cDomain = d3.extent(
+    income.map(({ bottom, middle, top }) => Object.values({ bottom, middle, top })).flat()
+  );
 
-  const countries: string[] = useMemo(() => uniq(dataset.map((d) => d.country)), [dataset]);
-
-  useEffect(() => {
+  const dataset = useMemo(() => {
     const maxRadius = 284;
-    const domain = d3.extent(
-      data.map(({ bottom, middle, top }) => Object.values({ bottom, middle, top })).flat()
-    );
     const isMobile = width < 768;
     const radiusRangeMax = width / (isMobile ? 1.6 : 3.5);
     const rScale = d3
       .scaleRadial()
-      .domain(domain)
+      .domain(rDomain)
       .range([isMobile ? 20 : 30, radiusRangeMax > maxRadius ? maxRadius : radiusRangeMax]);
-    const colorScale = d3.scaleLinear<string>().domain(domain).range(['#FFFFFF', '#FEE124']);
+    const colorScale = d3.scaleLinear<string>().domain(cDomain).range(['#FFFFFF', '#FEE124']);
 
-    setDataSet(
-      data
-        .map(({ bottom, middle, top, name }, i) => {
-          const groupSize = rScale(middle) + rScale(top);
-          return [top, middle, bottom].map((value, index) => {
-            const r = rScale(value) / 2 - 1;
-            const x =
-              index === 0 ? r : index === 1 ? groupSize - r : (groupSize * positions[i].x) / 2;
-            const y = index === 0 || index === 1 ? groupSize / 2 : groupSize - r * positions[i].y;
-            return {
-              country: name,
-              value,
-              r,
-              x,
-              y,
-              color: colorScale(value),
-              group: groups[index],
-              groupSize,
-            };
-          });
-        })
-        .flat()
-    );
-  }, [width]);
+    return emissions
+      .map(({ bottom, middle, top, name }, i) => {
+        const groupSize = rScale(middle) + rScale(top);
+        return [top, middle, bottom].map((emissionValue, index) => {
+          const r = rScale(emissionValue) / 2;
+          // 45 degrees converted to radians. Used to adjust the position of the bottom group in the circle
+          const RAD = (45 * Math.PI) / 180;
+          const x = index === 0 ? r : index === 1 ? groupSize - r : groupSize * Math.sin(RAD);
+          const y = index === 0 || index === 1 ? groupSize / 2 : (groupSize + r) * Math.cos(RAD);
+          const incomeValue: number = income[i][groups[index]];
+          return {
+            country: name,
+            emissionValue,
+            incomeValue,
+            r,
+            x,
+            y,
+            color: colorScale(incomeValue),
+            group: groups[index],
+            groupSize,
+          };
+        });
+      })
+      .flat();
+  }, [cDomain, rDomain, width]);
+
+  const countries: string[] = useMemo(() => uniq(dataset.map((d) => d.country)), [dataset]);
 
   return (
     <div className="container flex min-h-screen flex-col justify-between py-12 lg:py-16 2xl:justify-around">
@@ -119,21 +115,53 @@ const ZoomingIn = () => {
             <div key={groupSize}>
               <svg width={groupSize + 1} height={groupSize + 1}>
                 <circle r={groupSize / 2} cx="50%" cy="50%" stroke="white" />
-                {groupNodes.map(({ color, r, x, y, value }, index) => {
+                {groupNodes.map(({ color, r, x, y, emissionValue, incomeValue, group }, index) => {
+                  const key = `${country}-${group}`;
                   return (
-                    <g key={value} width={groupSize} height={groupSize}>
-                      <circle r={r - 2} color={color} cx={x} cy={y} fill={color} strokeWidth={0} />
-                      {r > 30 && (
-                        <text
-                          x={x}
-                          y={y}
-                          className="fill-black text-sm font-semibold"
-                          textAnchor="middle"
-                        >
-                          {index === 0 ? 'Top 10' : index === 1 ? 'Middle 40' : 'Bottom 50'}
-                        </text>
-                      )}
-                    </g>
+                    <Tooltip
+                      key={key}
+                      arrowProps={{ enabled: true, size: 7.5, className: 'mb-1' }}
+                      placement="top"
+                      content={
+                        <div className="mb-1 bg-white p-2 text-xs text-900">
+                          <p className="mb-1 font-semibold">
+                            {country} {groupLabels[index]}% population
+                          </p>
+                          <span className="block">
+                            Emissions: {emissionValue.toFixed(2)} tCO2e/cap
+                          </span>
+                          <span className="block">Income: {incomeValue.toFixed(2)} euros/year</span>
+                        </div>
+                      }
+                    >
+                      <g width={groupSize} height={groupSize}>
+                        <circle
+                          r={r - 2}
+                          color={color}
+                          cx={x}
+                          cy={y}
+                          fill={color}
+                          strokeWidth={0}
+                        />
+                        {r > 30 && (
+                          <text
+                            x={x}
+                            y={y}
+                            className="fill-black text-sm font-semibold"
+                            textAnchor="middle"
+                            alignmentBaseline="middle"
+                          >
+                            {r > 35
+                              ? Groups[index]
+                              : Groups[index].split(' ').map((t, i) => (
+                                  <tspan x={x} y={y + 15 * i} key={t}>
+                                    {t}
+                                  </tspan>
+                                ))}
+                          </text>
+                        )}
+                      </g>
+                    </Tooltip>
                   );
                 })}
               </svg>
@@ -144,24 +172,24 @@ const ZoomingIn = () => {
       </div>
       <div className="mt-6 flex flex-col justify-between gap-8 text-ligth-gray lg:mt-0 lg:flex-row lg:gap-0">
         <div className="flex justify-between gap-6 text-2xs">
-          <div className="max-w-[180px]">
+          <div className="w-1/2 max-w-[180px] flex-1">
             <p>Average pre-tax national income by population group (€/year)</p>
             <Icon className="h-4 w-full" icon={ColorLegend} />
             <div className="flex justify-between">
-              <p>Min</p>
-              <p>Max</p>
+              <p>{Math.round(cDomain[0]).toLocaleString()}</p>
+              <p>{Math.round(cDomain[1]).toLocaleString()}</p>
             </div>
           </div>
-          <div className="flex">
+          <div className="flex h-min w-1/2 flex-1 gap-1">
             <p className="w-32">Average per capita group emissions in tCO2e/ca</p>
             <Icon className="h-12 w-12" icon={CircleLegend} />
             <div className="flex flex-col justify-between">
-              <p>Min</p>
-              <p>Max</p>
+              <p>{rDomain[0].toLocaleString()}</p>
+              <p>{rDomain[1].toLocaleString()}</p>
             </div>
           </div>
         </div>
-        <div className="">
+        <div className="text-xs">
           <p>
             Source:{' '}
             <a
