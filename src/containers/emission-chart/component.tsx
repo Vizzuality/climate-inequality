@@ -30,9 +30,6 @@ const EmissionChart = () => {
   /** Min and max values emission for all years and countries/regions */
   const emissionVariation = useMinMax(emission);
 
-  /** Min and max values vulnerability/readness for all years and countries/regions */
-  const comparationVariation = useMinMax(comparation);
-
   /** Min and max values income for all years and countries/regions */
   const colorVariation = useMinMax(income);
 
@@ -219,7 +216,6 @@ const EmissionChart = () => {
             yearChanged={yearChanged}
             {...chartSize}
             emissionVariation={emissionVariation}
-            comparationVariation={comparationVariation}
           />
         </div>
         {/* Legends */}
@@ -236,10 +232,8 @@ const EmissionChart = () => {
             <p className="w-16 sm:w-24">{legendText}</p>
             <Icon icon={emissionRadioLegendIcon} className="h-[45px] w-[47px]" />
             <div className="flex flex-col justify-between">
-              {/* <span>{Math.max(...dataset.map((d) => d.color)).toLocaleString()}</span>
-              <span>{Math.min(...dataset.map((d) => d.color)).toLocaleString()}</span> */}
-              <span>Max</span>
-              <span>Min</span>
+              <span>{emissionVariation[1].toLocaleString()}</span>
+              <span>{emissionVariation[0].toLocaleString()}</span>
             </div>
           </div>
         </div>

@@ -17,5 +17,4 @@ export type BeeswarmChartProps = {
   /** whether the last param changed was the year  */
   yearChanged?: boolean;
   emissionVariation?: [number, number];
-  comparationVariation?: [number, number];
 };

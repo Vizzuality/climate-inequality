@@ -29,15 +29,8 @@ export const useEmissionChartData = (data: EmissionChartData) =>
 
 export const useMinMax = (dataset: { [key: string]: number | string }[]): [number, number] =>
   useMemo(() => {
-    return dataset.reduce(
-      (prev, curr) => {
-        const values: number[] = [
-          ...(Object.values(curr).filter((v) => typeof v === 'number') as number[]),
-        ];
-        const min = Math.min(...values, prev[0]);
-        const max = Math.max(...values, prev[1]);
-        return [min, max];
-      },
-      [Math.pow(10, 10), 0]
-    );
+    const flattedData = dataset
+      .map((data) => Object.values(data).filter((v) => typeof v === 'number') as number[])
+      .flat();
+    return [Math.min(...flattedData), Math.max(...flattedData)];
   }, [dataset]);

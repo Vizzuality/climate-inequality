@@ -13,7 +13,7 @@ import ArrowRigthIcon from 'svgs/ui/arrow-right.svg';
 
 import { BeeswarmChartProps, BeeswarmDataset } from './types';
 
-type SimulationNode = d3.SimulationNodeDatum & BeeswarmDataset & { r: number, fill: string };
+type SimulationNode = d3.SimulationNodeDatum & BeeswarmDataset & { r: number; fill: string };
 
 const MARGIN_Y = 30;
 const AXIS_CIRCLE_RADIUS = 3;
@@ -30,7 +30,6 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
   height = 0,
   yearChanged = false,
   emissionVariation = [0, 0],
-  comparationVariation = [0, 0],
 }) => {
   const simulation = useRef<d3.Simulation<SimulationNode, undefined>>(null);
   const [nodes, setNodes] = useState<SimulationNode[]>([]);
@@ -56,8 +55,8 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
         : radiusSize === 'md'
         ? height / (isMobile ? 18 : 5)
         : height / (isMobile ? 16 : 6);
-    const margin =
-      radiusSize === 'lg' ? maxRadius * 2 : isMobile ? maxRadius + MARGIN_Y : maxRadius;
+    const margin = maxRadius  * (radiusSize === 'sm' ? 3 : radiusSize === 'md' ? 1.5 : 2.5);
+    const xDomain = d3.extent(dataset.map((d) => d.xValue));
 
     const rScale = d3
       .scaleRadial()
@@ -65,7 +64,7 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
       .range([isMobile ? 1 : 2, maxRadius]);
     const xScale = d3
       .scaleLinear()
-      .domain(comparationVariation)
+      .domain(xDomain)
       .range([margin, (isMobile ? height : width) - margin]);
 
     const x = isMobile ? () => width / 2 : xScale;
@@ -82,8 +81,8 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
       };
     });
 
-    const mainAxisStrength = 0.5;
-    const secondaryAxisStrength = 0.25;
+    const mainAxisStrength = 0.1;
+    const secondaryAxisStrength = 0.2;
 
     simulation.current
       .nodes(data)
@@ -99,13 +98,13 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
           .forceY((d: SimulationNode) => y(d.xValue))
           .strength(isMobile ? mainAxisStrength : secondaryAxisStrength)
       )
-      .force('charge', d3.forceManyBody().strength(-15))
+      .force('charge', d3.forceManyBody().strength(isMobile ? 0 : -5))
       .force(
         'collide',
-        d3.forceCollide((d: SimulationNode) => d.r + (isMobile ? 2 : 3.5)).strength(0.9)
+        d3.forceCollide((d: SimulationNode) => d.r + (isMobile ? 2 : 3.5)).strength(0.8)
       )
-      .alphaDecay(0.03)
-      .alpha(0.3)
+      .alphaDecay(yearChanged ? 0.03 : 0.0228)
+      .alpha(yearChanged ? 0.2 : 0.8)
       .restart();
     return () => {
       simulation.current.stop();
