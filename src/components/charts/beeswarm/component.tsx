@@ -13,7 +13,7 @@ import ArrowRigthIcon from 'svgs/ui/arrow-right.svg';
 
 import { BeeswarmChartProps, BeeswarmDataset } from './types';
 
-type SimulationNode = d3.SimulationNodeDatum & BeeswarmDataset & { r: number };
+type SimulationNode = d3.SimulationNodeDatum & BeeswarmDataset & { r: number, fill: string };
 
 const MARGIN_Y = 30;
 const AXIS_CIRCLE_RADIUS = 3;
@@ -55,13 +55,9 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
         ? height / (isMobile ? 20 : 10)
         : radiusSize === 'md'
         ? height / (isMobile ? 18 : 5)
-        : height / (isMobile ? 16 : 5);
+        : height / (isMobile ? 16 : 6);
     const margin =
-      radiusSize === 'lg'
-        ? maxRadius * 2
-        : isMobile
-        ? maxRadius + MARGIN_Y
-        : maxRadius;
+      radiusSize === 'lg' ? maxRadius * 2 : isMobile ? maxRadius + MARGIN_Y : maxRadius;
 
     const rScale = d3
       .scaleRadial()
@@ -82,21 +78,15 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
         y: prevNode?.y || y(d.xValue),
         r: rScale(d.radio),
         radio: d.radio,
-        colorScale: colorScale(d.color),
+        fill: colorScale(d.color),
       };
     });
 
     const mainAxisStrength = 0.5;
-    const secondaryAxisStrength = 0.75;
+    const secondaryAxisStrength = 0.25;
 
     simulation.current
       .nodes(data)
-      .force(
-        'y',
-        d3
-          .forceY((d: SimulationNode) => y(d.xValue))
-          .strength(isMobile ? mainAxisStrength : secondaryAxisStrength)
-      )
       .force(
         'x',
         d3
@@ -104,17 +94,25 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
           .strength(isMobile ? secondaryAxisStrength : mainAxisStrength)
       )
       .force(
-        'collide',
-        d3.forceCollide((d: SimulationNode) => d.r + (isMobile ? 2 : 3.5)).strength(0.75)
+        'y',
+        d3
+          .forceY((d: SimulationNode) => y(d.xValue))
+          .strength(isMobile ? mainAxisStrength : secondaryAxisStrength)
       )
-      .alpha(yearChanged ? 0.05 : 0.3)
+      .force('charge', d3.forceManyBody().strength(-15))
+      .force(
+        'collide',
+        d3.forceCollide((d: SimulationNode) => d.r + (isMobile ? 2 : 3.5)).strength(0.9)
+      )
+      .alphaDecay(0.03)
+      .alpha(0.3)
       .restart();
     return () => {
       simulation.current.stop();
     };
     // 'nodes' can't be in the dependencies because we don't want to update the simulation when nodes change (when simulation ticks)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataset, height, isMobile, radiusSize, width, yearChanged]);
+  }, [dataset, height, isMobile, radiusSize, width]);
 
   const getTextSize = (text: string) => {
     if (typeof window !== 'undefined') {
@@ -212,7 +210,7 @@ const BeeswarmChart: FC<BeeswarmChartProps> = ({
                   cx={node.x}
                   cy={node.y}
                   r={node.r}
-                  fill={node.colorScale}
+                  fill={node.fill}
                   className={classNames('transition-shadow duration-300 ease-out', {
                     'drop-shadow-yellow': tooltipOpen === node.name,
                     'drop-shadow-none': tooltipOpen !== node.name,

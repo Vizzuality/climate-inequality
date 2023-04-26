@@ -3,7 +3,6 @@ export type BeeswarmDataset = {
   xValue: number;
   radio: number;
   color: number;
-  colorScale?: string;
 };
 
 export type BeeswarmChartProps = {
