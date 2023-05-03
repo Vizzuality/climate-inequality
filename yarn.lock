@@ -3462,6 +3462,86 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-spring/animated@npm:~9.7.2":
+  version: 9.7.2
+  resolution: "@react-spring/animated@npm:9.7.2"
+  dependencies:
+    "@react-spring/shared": ~9.7.2
+    "@react-spring/types": ~9.7.2
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 08f2f1e54468776b2abf76e3c3504129b8d965875781bc1cfd40adddff8f310869ecfb6d18e937df8ed63a01b3d0cb2335fb531be03ddf25f6f58583a91e08e7
+  languageName: node
+  linkType: hard
+
+"@react-spring/core@npm:~9.7.2":
+  version: 9.7.2
+  resolution: "@react-spring/core@npm:9.7.2"
+  dependencies:
+    "@react-spring/animated": ~9.7.2
+    "@react-spring/rafz": ~9.7.2
+    "@react-spring/shared": ~9.7.2
+    "@react-spring/types": ~9.7.2
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 7d14369d6bc3cb4f51bce946a0499484bd03a06b2602edd1f0478806759fd2a5f0800892cdf8d38a3bd4ef949f3c61de65933c46784683ea757f16db710a04fd
+  languageName: node
+  linkType: hard
+
+"@react-spring/parallax@npm:^9.7.2":
+  version: 9.7.2
+  resolution: "@react-spring/parallax@npm:9.7.2"
+  dependencies:
+    "@react-spring/shared": ~9.7.2
+    "@react-spring/web": ~9.7.2
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: dd9a0cfc7185d5ed6b7ba6238bd70fbf267671fb305279c51bb96fef63d80531c7c209b03fedc47f8c960b3cffee8239953b69484d63d67b88c751c60419089f
+  languageName: node
+  linkType: hard
+
+"@react-spring/rafz@npm:~9.7.2":
+  version: 9.7.2
+  resolution: "@react-spring/rafz@npm:9.7.2"
+  checksum: 88ad6275ed172745c7cd309e6a06bb52b76b6f391510afcf8ad12d1fc50950e74f902f96bcaae0895ab75e47a1d809d36fe843ce8d3d0d2ea2d6700ff9e03d81
+  languageName: node
+  linkType: hard
+
+"@react-spring/shared@npm:~9.7.2":
+  version: 9.7.2
+  resolution: "@react-spring/shared@npm:9.7.2"
+  dependencies:
+    "@react-spring/rafz": ~9.7.2
+    "@react-spring/types": ~9.7.2
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: f3041a537dddad63c64e68890f3276b72c4e2d5828621a09dbd722edb7a12edc0026555118f8305b969253f44e409ddd411dd5b99ec4e04edea32bee5e5f57fd
+  languageName: node
+  linkType: hard
+
+"@react-spring/types@npm:~9.7.2":
+  version: 9.7.2
+  resolution: "@react-spring/types@npm:9.7.2"
+  checksum: 145a79d2f40dfc9f0a4b54db17890c6471b4e50563c01951ca13022977b0d8009865c1839cf07a762fd33ae0b83f2d6972e2d0fe50bd3105942b9cea5253612e
+  languageName: node
+  linkType: hard
+
+"@react-spring/web@npm:^9.7.2, @react-spring/web@npm:~9.7.2":
+  version: 9.7.2
+  resolution: "@react-spring/web@npm:9.7.2"
+  dependencies:
+    "@react-spring/animated": ~9.7.2
+    "@react-spring/core": ~9.7.2
+    "@react-spring/shared": ~9.7.2
+    "@react-spring/types": ~9.7.2
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: f872dfd9bbbfc27f32e4406076729a36169e2da3785709fbf981b7d3a77a1a430d7f295b300a9acc8cb4805d0965e6d9a54914a4263abfd96806b7ae53ba69cd
+  languageName: node
+  linkType: hard
+
 "@react-stately/checkbox@npm:^3.2.0":
   version: 3.2.0
   resolution: "@react-stately/checkbox@npm:3.2.0"
@@ -5979,9 +6059,9 @@ __metadata:
   linkType: hard
 
 "@types/d3-selection@npm:*":
-  version: 3.0.4
-  resolution: "@types/d3-selection@npm:3.0.4"
-  checksum: b1e486db7f020610c854996a96b2f59a43b89d48bc7ac2ef9479f6f6e6324d3b21d7dfc8031a0b6d049a84b769b14eca65d73fc42613ab0044ef67973a9fe6ca
+  version: 3.0.5
+  resolution: "@types/d3-selection@npm:3.0.5"
+  checksum: 77ea35c92273cd2d736355ab5a4cf6477086b064a1f608489a6fef4198ee6bc1d5440e5dfd880099265ac96c4f4b4fda659d89fbaaef37ba03708663196ba8ad
   languageName: node
   linkType: hard
 
@@ -6229,6 +6309,22 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: e60b153664572116dfea673c5bda7778dbff150498f44f998e34b5886d8afc47f16799280e4b6e241c0472aef1bc36add771c569c68fc5125fc2ae519a3eb9ac
+  languageName: node
+  linkType: hard
+
+"@types/lodash-es@npm:^4.17.7":
+  version: 4.17.7
+  resolution: "@types/lodash-es@npm:4.17.7"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 4b1f39fd1d921311c37a846c0e0df9d1fa23e27448a6ad1efd7574e703abd2b2fa5e8f3b5037146000f167ba231d0d01e52747d902654151b4ceeff9f2a9b380
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
+  version: 4.14.194
+  resolution: "@types/lodash@npm:4.14.194"
+  checksum: 113f34831c461469d91feca2dde737f88487732898b4d25e9eb23b087bb193985f864d1e1e0f3b777edc5022e460443588b6000a3b2348c966f72d17eedc35ea
   languageName: node
   linkType: hard
 
@@ -9179,11 +9275,11 @@ __metadata:
   linkType: hard
 
 "d3-array@npm:2 - 3, d3-array@npm:2.10.0 - 3, d3-array@npm:2.5.0 - 3, d3-array@npm:3, d3-array@npm:^3.2.0":
-  version: 3.2.2
-  resolution: "d3-array@npm:3.2.2"
+  version: 3.2.3
+  resolution: "d3-array@npm:3.2.3"
   dependencies:
     internmap: 1 - 2
-  checksum: 98af3db792685ceca5d9c3721efba0c567520da5532b2c7a590fd83627a598ea225d11c2cecbad404dc154120feb5ea6df0ded38f82ddf342c714cfd0c6143d1
+  checksum: 41d6a4989b73e0d2649a880b2f29a7e7cc059db0eba36cd29a79e0118ebdf6b78922a84cde0733cd54cb4072f3442ec44f3563902e00ea42892442d60e99f961
   languageName: node
   linkType: hard
 
@@ -9233,11 +9329,11 @@ __metadata:
   linkType: hard
 
 "d3-delaunay@npm:6":
-  version: 6.0.2
-  resolution: "d3-delaunay@npm:6.0.2"
+  version: 6.0.4
+  resolution: "d3-delaunay@npm:6.0.4"
   dependencies:
     delaunator: 5
-  checksum: 80b18686dd7a5919a570000061f1515d106b7c7e3cba9da55706c312fc8f6de58a72674f2ea4eadc6694611f2df59f82c8b9d304845dd8b7903ee1f303aa5865
+  checksum: ce6d267d5ef21a8aeadfe4606329fc80a22ab6e7748d47bc220bcc396ee8be84b77a5473033954c5ac4aa522d265ddc45d4165d30fe4787dd60a15ea66b9bbb4
   languageName: node
   linkType: hard
 
@@ -9465,9 +9561,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3@npm:^7.8.2":
-  version: 7.8.2
-  resolution: "d3@npm:7.8.2"
+"d3@npm:^7.8.4":
+  version: 7.8.4
+  resolution: "d3@npm:7.8.4"
   dependencies:
     d3-array: 3
     d3-axis: 3
@@ -9499,7 +9595,7 @@ __metadata:
     d3-timer: 3
     d3-transition: 3
     d3-zoom: 3
-  checksum: e7bf5918f2a97d0c0cc489d64348b323446aa824c32b65f0888846c26f80ed05dbee18a4b7c9a487b3e60d9d404e4672d169573fe63439e3e53abd5812bcd766
+  checksum: 8dfea4d026e5597ab9c46035df7f0ca4f3891b2b52b21b181bd8660fc61d85f0bbe3cc2b8f1e922978084156cb017cbbfa350a8e42349310642023a9f1517471
   languageName: node
   linkType: hard
 
@@ -11410,6 +11506,8 @@ __metadata:
     "@react-aria/slider": 3.2.0
     "@react-aria/utils": 3.13.2
     "@react-aria/visually-hidden": 3.4.0
+    "@react-spring/parallax": ^9.7.2
+    "@react-spring/web": ^9.7.2
     "@react-stately/searchfield": 3.3.0
     "@react-stately/slider": 3.2.0
     "@react-types/searchfield": 3.3.2
@@ -11428,6 +11526,7 @@ __metadata:
     "@types/d3-ease": ^3.0.0
     "@types/d3-force": ^3.0.4
     "@types/google.analytics": 0.0.42
+    "@types/lodash-es": ^4.17.7
     "@types/react": 18.0.15
     "@types/react-dom": 18.0.6
     "@typescript-eslint/eslint-plugin": 5.48.2
@@ -11440,7 +11539,7 @@ __metadata:
     axios: 0.21.1
     classnames: 2.3.1
     cypress: 12.1.0
-    d3: ^7.8.2
+    d3: ^7.8.4
     d3-ease: 2.0.0
     d3-force: ^3.0.0
     downshift: 6.1.3

@@ -1,52 +1,58 @@
-/* eslint-disable prettier/prettier */
 import Head from 'next/head';
 
-import EmissionChart from 'containers/emission-chart';
+import Footer from 'containers/footer';
 import Header from 'containers/header';
+import {
+  Title,
+  OurVision,
+  Distribution,
+  Inequality,
+  EmissionsDistribution,
+  ClimateCrisis,
+  Multidimensional,
+  Countries,
+  ClimateInjustice,
+  ZoomingIn,
+  Understanding,
+  Investment,
+  Prioritising,
+} from 'containers/home';
 
-
-export const Arrow = () => {
+const Home: React.FC = () => {
   return (
-    <svg
-      className="relative w-6 h-12"
-      width="8"
-      height="34"
-      viewBox="0 0 8 34"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        className="fill-500"
-        d="M3.64645 16.3536C3.84171 16.5488 4.15829 16.5488 4.35355 16.3536L7.53553 13.1716C7.7308 12.9763 7.7308 12.6597 7.53553 12.4645C7.34027 12.2692 7.02369 12.2692 6.82843 12.4645L4 15.2929L1.17157 12.4645C0.97631 12.2692 0.659728 12.2692 0.464466 12.4645C0.269203 12.6597 0.269203 12.9763 0.464466 13.1716L3.64645 16.3536ZM3.5 -2.18557e-08L3.5 16L4.5 16L4.5 2.18557e-08L3.5 -2.18557e-08Z"
-      />
-    </svg>
+    <div>
+      <Head>
+        <title>Climate inequality</title>
+      </Head>
+      <main>
+        <div className="container">
+          <Header />
+        </div>
+        <div className="py-20">
+          <Title />
+          <OurVision />
+          <OurVision section={1} />
+          <Inequality />
+          <Inequality type="wealth" />
+          <Distribution />
+          <Distribution isOnePercent={false} />
+          <EmissionsDistribution />
+          <ClimateCrisis />
+          <Multidimensional />
+          <Countries />
+          <Countries isReadness />
+          <ClimateInjustice />
+          <ZoomingIn />
+          <Understanding />
+          <Investment />
+          <Prioritising />
+        </div>
+        <div className="container">
+          <Footer />
+        </div>
+      </main>
+    </div>
   );
 };
-
-const Home: React.FC = () => (
-  <div>
-    <Head>
-      <title>Climate inequality</title>
-    </Head>
-    <main className="container">
-      <Header />
-      <div className="container py-20">
-        <div className="items-center justify-start pb-2 text-sm text-left text-500">
-          Vizzuality’s look at climate action and equality.
-        </div>
-        <div className="flex items-center justify-start w-5/6 pb-6 font-serif text-4xl text-left text-white">
-          We believe in a sustainable and just future for all, where equality is core.
-        </div>
-        <div className="w-9/12 pb-16 text-xl font-light leading-8 text-left text-white">
-          The climate crisis threatens that reality. To create the world <br /> we believe in, we
-          need to understand these dynamics.
-        </div>
-        <Arrow />
-        <div>
-          <EmissionChart />
-        </div>
-      </div>
-    </main>
-  </div>
-);
 
 export default Home;

@@ -1,0 +1,22 @@
+<svg width="1230" height="250" viewBox="0 0 1230 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path opacity="0.6" fill-rule="evenodd" clip-rule="evenodd" d="M1229 8L1108 8C1108 101 655.013 156.434 655.013 239L1226.79 239C1226.79 156.434 1229 90.5662 1229 8Z" fill="#FFE647"/>
+<path opacity="0.6" fill-rule="evenodd" clip-rule="evenodd" d="M1229.5 7.5L1215.5 7.5C1215.5 87.5313 1022.5 159.469 1022.5 239.5L1227.5 239.5C1227.5 159.469 1229.5 87.5312 1229.5 7.5Z" fill="#FFE753" fill-opacity="0.4" stroke="black"/>
+<path opacity="0.6" fill-rule="evenodd" clip-rule="evenodd" d="M1229.5 7.5L1227.5 7.5C1227.5 87.5312 1141.5 159.969 1141.5 240L1227 240C1227 159.969 1229.5 87.5312 1229.5 7.5Z" fill="#FFE753" fill-opacity="0.4" stroke="black"/>
+<line x1="258.098" y1="300.5" x2="322.879" y2="300.5" stroke="black"/>
+<rect x="655.013" y="239" width="571.722" height="7" fill="#FFE229"/>
+<rect opacity="0.5" width="601.542" height="8" fill="#FFE229"/>
+<rect opacity="0.5" x="614.91" width="481.234" height="8" fill="#FFE229"/>
+<rect x="1108" width="121" height="8" fill="#FFE229"/>
+<rect x="1216" width="13" height="8" fill="#FFE229"/>
+<rect x="1229" width="-1" height="8" rx="-0.5" fill="#FFE229"/>
+<rect opacity="0.5" y="239" width="143.959" height="7" fill="#FFE229"/>
+<rect opacity="0.5" x="158.355" y="239" width="481.234" height="7" fill="#FFE229"/>
+<rect x="1023" y="239" width="203.599" height="7" fill="#FFE229"/>
+<rect x="1141.39" y="239" width="85.347" height="7" fill="#FFE229"/>
+<path opacity="0.1" fill-rule="evenodd" clip-rule="evenodd" d="M1096 8L614.999 8C614.999 107 158.355 156.434 158.355 239L639.272 239C639.272 146.5 1073.94 92 1096 8Z" fill="#FFE647"/>
+<path opacity="0.1" fill-rule="evenodd" clip-rule="evenodd" d="M600.999 8L0.499268 8C0.499258 90.5662 4.45664e-05 156.434 3.54056e-05 239L143.859 239C143.859 139 600.999 94.5 600.999 8Z" fill="#FFE647"/>
+<line x1="1022.5" y1="249" x2="1022.5" y2="239" stroke="black"/>
+<line x1="1141.5" y1="249" x2="1141.5" y2="239" stroke="black"/>
+<line x1="1215.5" y1="2.18552e-08" x2="1215.5" y2="9" stroke="black"/>
+<line x1="1227.5" y1="2.18552e-08" x2="1227.5" y2="9" stroke="black"/>
+</svg>
