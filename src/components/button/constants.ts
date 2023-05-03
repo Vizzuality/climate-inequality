@@ -1,16 +1,16 @@
 export const THEME = {
-  primary:
-    'text-black bg-blue-500 hover:bg-blue-400 active:bg-blue-300 border border-blue-500 hover:border-blue-400 active:border-blue-300',
-  'primary-alt':
-    'text-blue-500 bg-transparent hover:bg-transparent active:bg-transparent border border-blue-500 hover:border-blue-400 active:border-blue-300',
-
   secondary:
-    'text-white bg-gray-500 hover:bg-gray-400 active:bg-gray-300 border border-gray-500 hover:border-gray-400 active:border-gray-300',
+    'text-black bg-white hover:bg-blue-400 active:bg-blue-300 border border-white hover:border-blue-400 active:border-blue-300',
   'secondary-alt':
-    'text-gray-300 bg-transparent hover:bg-transparent active:bg-transparent border border-gray-400 hover:border-gray-300 active:border-gray-200',
+    'text-white bg-transparent hover:bg-transparent active:bg-transparent border border-white hover:border-blue-400 active:border-blue-300',
+
+  primary:
+    'text-white bg-500 hover:bg-gray-400 active:bg-300 border border-500 hover:border-gray-400 active:border-300',
+  'primary-alt':
+    'text-300 bg-transparent hover:bg-transparent active:bg-transparent border border-gray-400 hover:border-300 active:border-gray-200',
 
   white:
-    'text-gray-700 bg-white hover:text-white hover:bg-transparent active:bg-transparent border border-gray-400 hover:border-gray-300 active:border-gray-200',
+    'text-gray-700 bg-white hover:text-white hover:bg-transparent active:bg-transparent border border-gray-400 hover:border-300 active:border-gray-200',
 
   danger:
     'text-red-700 bg-transparent hover:text-white hover:bg-red-700 active:bg-red-600 border border-red-700 hover:border-red-600 active:border-red-500',

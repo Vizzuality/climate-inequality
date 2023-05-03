@@ -11,7 +11,7 @@ export interface AnchorButtonProps {
 // Button props
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
   AnchorButtonProps & {
-    href?: undefined;
+    href?: string;
   };
 
 // Anchor props

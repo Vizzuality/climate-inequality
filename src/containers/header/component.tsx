@@ -12,7 +12,7 @@ export const Header: FC = () => (
           <Logo />
         </div>
         <Link
-          className="flex-shrink-0 flex-grow-0 text-center text-lg font-semibold text-500"
+          className="flex-shrink-0 flex-grow-0 text-center text-lg font-semibold text-500 hover:text-100"
           href="/quiz"
         >
           Take the quiz.
