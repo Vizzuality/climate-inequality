@@ -77,8 +77,8 @@ const QUESTIONS: Question[] = [
     text: (
       <div key="3">
         Inequality in carbon emissions is evident as the wealthiest countries, representing only{' '}
-        <span className="text-500">16%</span>% of the world population, are responsible for almost{' '}
-        <span className="text-500">40%</span>% of CO2 emissions. In contrast, the two categories of
+        <span className="text-500">16%</span> of the world population, are responsible for almost{' '}
+        <span className="text-500">40%</span> of CO2 emissions. In contrast, the two categories of
         the poorest countries in the World Bank classification, which account for nearly 60% of the
         world's population, are responsible for less than 15% of emissions.
       </div>

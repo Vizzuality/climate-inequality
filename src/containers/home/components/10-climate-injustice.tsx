@@ -1,9 +1,11 @@
+import EmissionChart from 'containers/emission-chart/component';
+
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title';
 
 const ClimateInjustice = () => {
   return (
-    <div className="container mt-24 flex min-h-screen flex-col justify-around">
+    <div className="container mt-24 flex min-h-screen flex-col justify-around space-y-20">
       <div>
         <SectionTitle>Climate injustice.</SectionTitle>
         <div className="mt-2 flex flex-col gap-6 sm:flex-row sm:gap-14">
@@ -40,7 +42,7 @@ const ClimateInjustice = () => {
           </div>
         </div>
       </div>
-      <div>CHART</div>
+      <EmissionChart />
     </div>
   );
 };

@@ -9,15 +9,16 @@ import { RadioButtonProps } from './types';
 
 const { Option } = RadioGroup;
 
-const RadioButton: FC<RadioButtonProps> = ({ value, onChange, options, name, id }) => {
+const RadioButton: FC<RadioButtonProps> = ({ value, onChange, options, name, id, size = 'md' }) => {
   return (
-    <RadioGroup id={id || name} onChange={onChange} name={name} value={value} className="flex items-center overflow-hidden border rounded-full cursor-pointer border-500 w-fit">
+    <RadioGroup id={id || name} onChange={onChange} name={name} value={value} className="flex border rounded-full cursor-pointer border-500 w-fit">
       {options.map((option) => (
         <Option key={option.value} value={option.value}>
           {({ checked }) => (
-            <div className={classNames("px-4 py-1 text-xs border-none transition-all duration-500 bg-500", {
+            <div className={classNames("px-4 text-xs transition-all duration-500 bg-500 font-semibold", {
               'bg-opacity-100 text-black rounded-full': checked,
-              'bg-opacity-0 rounded-none border-none text-500': !checked,
+              'bg-opacity-0 rounded-none  text-600': !checked,
+              'py-1.5': size === 'md',
             })}>{option.label}</div>
           )}
         </Option>

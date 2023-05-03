@@ -2,7 +2,7 @@ export type DataType = Record<string, string | number>[];
 
 export type EmissionChartData = {
   emission: 'absolute' | 'percapita';
-  comparation: 'vulnerability' | 'readness';
+  comparation: 'vulnerability' | 'readiness';
   population: 'country' | 'region';
 };
 

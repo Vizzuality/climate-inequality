@@ -3,7 +3,6 @@ export type BeeswarmDataset = {
   xValue: number;
   radio: number;
   color: number;
-  colorScale?: string;
 };
 
 export type BeeswarmChartProps = {
@@ -17,4 +16,5 @@ export type BeeswarmChartProps = {
   isMobile?: boolean;
   /** whether the last param changed was the year  */
   yearChanged?: boolean;
+  emissionVariation?: [number, number];
 };

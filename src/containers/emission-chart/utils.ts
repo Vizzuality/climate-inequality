@@ -26,3 +26,11 @@ export const useEmissionChartData = (data: EmissionChartData) =>
     const income = rawData[`income_percapita_${data.population}`] as unknown as EmissionRawData[];
     return { emission, comparation, income };
   }, [data]);
+
+export const useMinMax = (dataset: { [key: string]: number | string }[]): [number, number] =>
+  useMemo(() => {
+    const flattedData = dataset
+      .map((data) => Object.values(data).filter((v) => typeof v === 'number') as number[])
+      .flat();
+    return [Math.min(...flattedData), Math.max(...flattedData)];
+  }, [dataset]);
