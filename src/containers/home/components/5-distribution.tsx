@@ -24,12 +24,12 @@ const DistributionDefault = ({ isOnePercent = false }) => {
         </SectionSubtitle>
       </div>
       <div>
-        <p className="font-serif text-xs text-ligth-gray sm:hidden">
+        <p className="font-serif text-xs text-light-gray sm:hidden">
           Distribution of pre-tax national income by population group (2021).
         </p>
       </div>
 
-      <div className="mt-5 flex w-full justify-between text-xs text-ligth-gray sm:text-sm">
+      <div className="mt-5 flex w-full justify-between text-xs text-light-gray sm:text-sm">
         <p className="hidden font-serif sm:block">
           Distribution of pre-tax national income by population group (2021).
         </p>

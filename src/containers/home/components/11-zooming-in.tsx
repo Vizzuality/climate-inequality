@@ -170,7 +170,7 @@ const ZoomingIn = () => {
           );
         })}
       </div>
-      <div className="mt-6 flex flex-col justify-between gap-8 text-ligth-gray lg:mt-0 lg:flex-row lg:gap-0">
+      <div className="mt-6 flex flex-col justify-between gap-8 text-light-gray lg:mt-0 lg:flex-row lg:gap-0">
         <div className="flex justify-between gap-6 text-2xs">
           <div className="w-1/2 max-w-[180px] flex-1">
             <p>Average pre-tax national income by population group (€/year)</p>
@@ -184,8 +184,8 @@ const ZoomingIn = () => {
             <p className="w-32">Average per capita group emissions in tCO2e/ca</p>
             <Icon className="h-12 w-12" icon={CircleLegend} />
             <div className="flex flex-col justify-between">
+              <p>{parseInt(rDomain[1].toLocaleString(), 10)}</p>
               <p>{rDomain[0].toLocaleString()}</p>
-              <p>{rDomain[1].toLocaleString()}</p>
             </div>
           </div>
         </div>

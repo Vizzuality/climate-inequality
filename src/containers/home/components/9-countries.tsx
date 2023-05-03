@@ -76,7 +76,7 @@ const Countries = ({ isReadness = false }) => {
             </div>
           </div>
         </div>
-        <div className="mt-9 w-full text-sm text-ligth-gray sm:mt-0 sm:-translate-y-full sm:text-end">
+        <div className="mt-9 w-full text-sm text-light-gray sm:mt-0 sm:-translate-y-full sm:text-end">
           <p>
             Source:{' '}
             <a
