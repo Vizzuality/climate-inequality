@@ -232,7 +232,7 @@ const EmissionChart = () => {
             <p className="w-16 sm:w-24">{legendText}</p>
             <Icon icon={emissionRadioLegendIcon} className="h-[45px] w-[47px]" />
             <div className="flex flex-col justify-between">
-              <span>{emissionVariation[1].toLocaleString()}</span>
+              <span>{Math.round(Number(emissionVariation[1])).toLocaleString()}</span>
               <span>{emissionVariation[0].toLocaleString()}</span>
             </div>
           </div>
