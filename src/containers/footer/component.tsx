@@ -9,14 +9,14 @@ import Twitter from 'svgs/social/twitter.svg';
 
 const Footer = () => {
   return (
-    <div className="container mb-10">
-      <div className="flex flex-wrap justify-between py-10 text-xl font-bold">
-        <p className="w-9/12">
+    <div className="mb-10">
+      <div className="grid grid-cols-12 py-10 text-xl font-bold">
+        <p className="col-span-12 inline pr-6 lg:col-span-9">
           At Vizzuality, we help organizations tackle global challenges by turning knowledge into
           action. <span className="text-green">Interested in what we could achieve together?</span>
         </p>
         <Button
-          className="h-20 w-72 text-xl"
+          className="col-span-6 mt-10 grid h-24 whitespace-nowrap text-xl lg:col-span-3 lg:mt-0 lg:h-20"
           size="xl"
           theme="secondary"
           href={'mailto:hello@vizzuality.com'}
