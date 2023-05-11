@@ -5,7 +5,7 @@ import InvestmentsIcon from 'svgs/ui/investments.svg';
 
 const Investment = () => {
   return (
-    <div className="flex min-h-screen bg-500 sm:h-screen sm:min-h-fit">
+    <div className="flex min-h-screen bg-500">
       <div className="container flex flex-col justify-between py-14 text-black sm:h-full">
         <div className="sm:w-1/2">
           <SectionTitle className="mb-6">When needs and investment do not align.</SectionTitle>
@@ -27,22 +27,24 @@ const Investment = () => {
         <div className="mt-16 sm:mt-0">
           <Icon className="w-full" icon={InvestmentsIcon} />
         </div>
-        <div className="flex flex-col gap-8 sm:flex-row sm:gap-0">
-          <p className="flex-1 font-serif text-sm">
-            The trend over time in total commitments and disbursements of finance for Nature Based
-            solutions approaches to address climate change from 2016-2020
-          </p>
-          <p className="flex-1 text-sm sm:text-right">
-            Source:{' '}
-            <a
-              href="https://www.sei.org/wp-content/uploads/2022/11/sei-wp-assessing-finance-nature-based-solutions-2022.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline"
-            >
-              Stockholm Environment Institute
-            </a>
-          </p>
+        <div className="mt-7 flex w-full flex-1 items-end sm:mt-12">
+          <div className="flex flex-col gap-8 sm:flex-row sm:gap-0">
+            <p className="flex-1 font-serif text-sm">
+              The trend over time in total commitments and disbursements of finance for Nature Based
+              solutions approaches to address climate change from 2016-2020
+            </p>
+            <p className="flex-1 text-sm sm:text-right">
+              Source:{' '}
+              <a
+                href="https://www.sei.org/wp-content/uploads/2022/11/sei-wp-assessing-finance-nature-based-solutions-2022.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+              >
+                Stockholm Environment Institute
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
