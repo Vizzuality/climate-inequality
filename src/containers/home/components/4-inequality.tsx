@@ -1,5 +1,15 @@
+import { useRef, useState } from 'react';
+
+import { motion, useMotionValueEvent, useInView } from 'framer-motion';
+
+import Icon from 'components/icon/component';
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
+
+import FinalDiagram from 'svgs/ui/diagram.svg';
+
+import RiveScrollAnimation from '../rive-components/rive-scroll';
+import { useScrollY } from '../utils';
 
 const contents = {
   intersectional: {
@@ -45,23 +55,96 @@ const contents = {
   },
 };
 
-const Inequality = ({ type = 'intersectional' }: { type?: 'intersectional' | 'wealth' }) => {
-  const { p1, p2, title, subtitle, image } = contents[type];
+const Inequality = () => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScrollY({
+    target: ref,
+    offset: ['start end', 'end end'],
+  });
+
+  const isInView = useInView(ref);
+
+  const [y, setY] = useState(0);
+
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    const progress = latest * 100;
+    setY(progress);
+  });
+
+  const animationScroll = y;
+
+  const opacity = y / 50;
 
   return (
-    <div className="container mt-14 flex min-h-screen w-full flex-col-reverse items-center justify-between gap-5 sm:mt-0 sm:flex-row sm:gap-10">
-      <div className="max-w-lg flex-1">
-        <SectionTitle>{title}</SectionTitle>
-        <SectionSubtitle className="mt-2 mb-6" size="small">
-          {subtitle}
-        </SectionSubtitle>
-        <div className="mt-4 text-sm sm:text-base">
-          <p>{p1}</p>
-          <p className="mt-4 text-sm sm:text-base">{p2}</p>
-        </div>
-      </div>
-      <div className="sm:flex-1">
-        <img alt="inequality diagram" src={image} className="w-full" width={625} height={509} />
+    <div ref={ref} className="flex h-[200vh]">
+      <motion.div
+        className="absoloute flex-1"
+        animate={{
+          opacity,
+        }}
+      >
+        <motion.div className="container flex min-h-screen w-full flex-col-reverse items-center justify-between gap-5 sm:mt-0 sm:flex-row sm:gap-10">
+          <div className="max-w-lg flex-1">
+            <SectionTitle>{contents.intersectional.title}</SectionTitle>
+            <SectionSubtitle className="mt-2 mb-6" size="small">
+              {contents.intersectional.subtitle}
+            </SectionSubtitle>
+            <div className="mt-4 text-sm sm:text-base">
+              <p>{contents.intersectional.p1}</p>
+              <p className="mt-4 text-sm sm:text-base">{contents.intersectional.p2}</p>
+            </div>
+          </div>
+        </motion.div>
+        <motion.div className="container flex min-h-screen w-full flex-col-reverse items-center justify-between gap-5 sm:mt-0 sm:flex-row sm:gap-10">
+          <div className="max-w-lg flex-1">
+            <SectionTitle>{contents.wealth.title}</SectionTitle>
+            <SectionSubtitle className="mt-2 mb-6" size="small">
+              {contents.wealth.subtitle}
+            </SectionSubtitle>
+            <div className="mt-4 text-sm sm:text-base">
+              <p>{contents.wealth.p1}</p>
+              <p className="mt-4 text-sm sm:text-base">{contents.wealth.p2}</p>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+      <div className="z-50 flex-1 items-center justify-center overflow-hidden">
+        {isInView && (
+          <motion.div
+            // animate={{ opacity: 1 }}
+            animate={{ opacity: y > 0 && y < 100 ? 1 : 0 }}
+            initial={{ opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            style={{
+              top: y < 43 ? 'auto' : `calc(100vh/2 - 45vw/2)`,
+              position: y > 43 ? 'fixed' : 'relative',
+            }}
+          >
+            <RiveScrollAnimation
+              scrollY={animationScroll}
+              fileName="diagram"
+              stateMachine="Default"
+              stateMachineInput="scrollPos"
+              className="diagram-animation h-[45vw] w-[45vw]"
+              autoplay
+            />
+          </motion.div>
+        )}
+        <motion.div
+          className="mt-[100vh] w-full items-center justify-center"
+          animate={{ opacity: y >= 100 ? 1 : 0 }}
+          initial={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+          style={{
+            display: y < 80 ? 'none' : 'flex',
+          }}
+        >
+          <div className="translate-x-[34.5%] translate-y-[26%]">
+            <Icon icon={FinalDiagram} className="h-[45vw] w-[45vw]" />
+          </div>
+        </motion.div>
       </div>
     </div>
   );

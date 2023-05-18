@@ -1,92 +1,174 @@
-import Head from 'next/head';
+import { useMemo } from 'react';
 
-import { stepAtom } from 'store/home';
+import Image from 'next/image';
+
+import cn from 'classnames';
+
+import Title from './components/1-title';
+import OurVision from './components/2-our-vision';
+import Inequality from './components/4-inequality';
+import Distribution from './components/5-distribution';
+import EmissionsDistribution from './components/6-emissions-distribution';
+import ClimateCrisis from './components/7-climate-crisis';
+import Multidimensional from './components/8-multidimensional';
+import Countries from './components/9-countries';
+import ClimateInjustice from './components/10-climate-injustice';
+import ZoomingIn from './components/11-zooming-in';
+import Understanding from './components/12-understanding';
+import Investment from './components/13-investment';
+import Prioritising from './components/14-prioritising';
+import { lastStepAtom, stepAtom } from 'store/home';
 
 import { AnimatePresence } from 'framer-motion';
-import { useRecoilValue } from 'recoil';
-
-import Header from 'containers/header';
-import Intro from 'containers/home/intro';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useDebouncedCallback } from 'use-debounce';
 
 import FadeY from './animations/fadeY';
-import RiveScrollComponent from './rive-components/rive-scroll';
-import ScrollList from './scroll-list';
-import {
-  Text1 as LayersText1,
-  Text2 as LayersText2,
-  Text3 as LayersText3,
-  Text4 as LayersText4,
-} from './texts';
 
-export const Arrow = () => {
+import { Media } from 'components/media-query';
+
+import ScrollItem from './scroll-list/item';
+import RiveScrollAnimation from './rive-components/rive-scroll';
+
+const Home = () => {
+  const sectionStep = useRecoilValue(stepAtom);
+  const setStep = useSetRecoilState(stepAtom);
+  const setLastStep = useSetRecoilState(lastStepAtom);
+
+  const ANIMATE_GLOBE = useMemo(() => {
+    if (sectionStep >= 10) {
+      return 'animate';
+    }
+
+    return 'exit';
+  }, [sectionStep]);
+
+  const onChange = useDebouncedCallback((id: number) => {
+    setLastStep(sectionStep);
+    console.log({ sectionStep: id });
+    setStep(id);
+  }, 100);
+
   return (
-    <svg
-      className="relative h-12 w-6"
-      width="8"
-      height="34"
-      viewBox="0 0 8 34"
-      xmlns="http://www.w3.org/2000/svg"
+    <div
+    // className={}
     >
-      <path
-        className="fill-500"
-        d="M3.64645 16.3536C3.84171 16.5488 4.15829 16.5488 4.35355 16.3536L7.53553 13.1716C7.7308 12.9763 7.7308 12.6597 7.53553 12.4645C7.34027 12.2692 7.02369 12.2692 6.82843 12.4645L4 15.2929L1.17157 12.4645C0.97631 12.2692 0.659728 12.2692 0.464466 12.4645C0.269203 12.6597 0.269203 12.9763 0.464466 13.1716L3.64645 16.3536ZM3.5 -2.18557e-08L3.5 16L4.5 16L4.5 2.18557e-08L3.5 -2.18557e-08Z"
-      />
-    </svg>
-  );
-};
-
-const Home: React.FC = () => {
-  const step = useRecoilValue(stepAtom);
-  const renderIntro = () => (
-    <div className="container py-20" key="text-layers-0">
-      <div className="items-center justify-start pb-2 text-left text-sm text-500">
-        Vizzuality’s look at climate action and equality.
+      <div className="min-h-screen">
+        <Title handleScrollToNext={() => console.log('next')} />
       </div>
-      <div className="flex w-5/6 items-center justify-start pb-6 text-left font-serif text-4xl text-white">
-        We believe in a sustainable and just future for all, where equality is core.
-      </div>
-      <div className="w-9/12 pb-16 text-left text-xl font-light leading-8 text-white">
-        The climate crisis threatens that reality. To create the world <br /> we believe in, we need
-        to understand these dynamics.
-      </div>
-      <Arrow />
-    </div>
-  );
-  const renderIfSteps = (step, steps: number[]) => steps.includes(step);
+      <OurVision />
+      <Inequality />
+      <Distribution />
+      <EmissionsDistribution />
+      <ClimateCrisis />
+      <Multidimensional />
+      <Countries />
+      <ClimateInjustice />
+      {/* <Media lessThan="sm" className="px-10">
+        <ScrollItem sectionStep={2} onChange={onChange}>
+          <LayersText1 />
+          <LayersChart initialStep={2} currentStep={2} />
+        </ScrollItem>
+        <ScrollItem sectionStep={3} onChange={onChange}>
+          <LayersText2 />
+          <LayersChart initialStep={2} currentStep={3} />
+        </ScrollItem>
+        <ScrollItem sectionStep={4} onChange={onChange}>
+          <LayersText3 />
+          <LayersChart initialStep={2} currentStep={4} />
+        </ScrollItem>
+        <ScrollItem sectionStep={5} onChange={onChange}>
+          <LayersText4 />
+          <LayersChart initialStep={2} currentStep={5} />
+        </ScrollItem>
+        <ScrollItem sectionStep={6} onChange={onChange}>
+          <CirclesText1 />
+          <LayersChart initialStep={2} currentStep={6} />
+        </ScrollItem>
+        <ScrollItem sectionStep={7} onChange={onChange}>
+          <CirclesText2 />
+          <CirclesChart initialStep={6} currentStep={7} />
+        </ScrollItem>
+        <ScrollItem sectionStep={8} onChange={onChange}>
+          <CirclesText3 />
+          <CirclesChart initialStep={6} currentStep={8} />
+        </ScrollItem>
+        <ScrollItem sectionStep={9} onChange={onChange}>
+          <CirclesText4 />
+          <CirclesChart initialStep={6} currentStep={9} />
+        </ScrollItem>
+        <ScrollItem sectionStep={10} onChange={onChange}>
+          <div className="flex flex-col">
+            <GlobeText />
+            <div className="-mx-10">
+              <Image
+                width={414}
+                height={317}
+                src="/images/globe/globe-mobile.jpg"
+                alt="Globe with Foodscapes image"
+                className="object-fill"
+              />
+            </div>
+          </div>
+        </ScrollItem>
+      </Media>
 
-  const renderAnimations = () => (
-    <div className="fixed top-0 z-0 h-screen">
-      {renderIfSteps(step, [1, 2, 3]) && <RiveScrollComponent fileName={'circle.riv'} />}
-      {/* <AnimatePresence>
-        <FadeY key="circle">
-        </FadeY>
-      </AnimatePresence> */}
-    </div>
-  );
+      <Media greaterThanOrEqual="sm">
+        <Wrapper>
+          <div className="grid grid-cols-12 gap-6">
+            <div className="relative z-10 col-span-5 xl:col-span-4 xl:col-start-2">
+              <ScrollItem sectionStep={2} onChange={onChange}>
+                <LayersText1 />
+              </ScrollItem>
+              <ScrollItem sectionStep={3} onChange={onChange}>
+                <LayersText2 />
+              </ScrollItem>
+              <ScrollItem sectionStep={4} onChange={onChange}>
+                <LayersText3 />
+              </ScrollItem>
+              <ScrollItem sectionStep={5} onChange={onChange}>
+                <LayersText4 />
+              </ScrollItem>
+              <ScrollItem sectionStep={6} onChange={onChange}>
+                <CirclesText1 />
+              </ScrollItem>
+              <ScrollItem sectionStep={7} onChange={onChange}>
+                <CirclesText2 />
+              </ScrollItem>
+              <ScrollItem sectionStep={8} onChange={onChange}>
+                <CirclesText3 />
+              </ScrollItem>
+              <ScrollItem sectionStep={9} onChange={onChange}>
+                <CirclesText4 />
+              </ScrollItem>
+              <ScrollItem sectionStep={10} onChange={onChange}>
+                <GlobeText />
+              </ScrollItem>
+            </div>
 
-  return (
-    <div>
-      <Head>
-        <title>Climate inequality</title>
-      </Head>
-      <main className="relative">
-        <div className="container">
-          <Header />
-          {renderIntro()}
-          <Intro />
-          <ScrollList>
-            <div className="h-full" />
-            <LayersText1 key="text-layers-1" sticky={2} />
-            {/* <LayersText2 key="text-layers-2" />
-            <LayersText3 key="text-layers-3" />
-            <LayersText4 key="text-layers-4" /> */}
-          </ScrollList>
-          {renderIntro()}
-          {renderIntro()}
-          {renderIntro()}
-        </div>
-        {renderAnimations()}
-      </main>
+            <div className="lg:h-small-screen sticky top-0 z-0 h-96 lg:col-span-5 lg:col-start-7">
+              <AnimatePresence>
+                {[2, 3, 4, 5, 6, 7, 8, 9].includes(sectionStep) && (
+                  <FadeY key="layers-chart">
+                    <div className="flex h-full flex-col items-center justify-center">
+                      <LayersChart initialStep={2} />
+                      <CirclesChart initialStep={6} />
+                    </div>
+                  </FadeY>
+                )}
+
+                <FadeY animate={ANIMATE_GLOBE}>
+                  <GlobeMap currentId="desktop-globe" />
+                </FadeY>
+              </AnimatePresence>
+            </div>
+          </div>
+        </Wrapper>
+      </Media> */}
+
+      {/* <ScrollItem sectionStep={11} onChange={onChange}>
+        <Outro />
+      </ScrollItem> */}
     </div>
   );
 };

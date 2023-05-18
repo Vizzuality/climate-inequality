@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 export const getSpiralPoints = (count: number, radius: number, startAngle: number) => {
   const points = [];
   const angleStep = (Math.PI * 2 * 3) / count; // Math.PI * 2 = 360 degrees
@@ -133,7 +135,7 @@ export const STEPS = [
       </div>
     ),
     getPositions: ({ width, height, count }) => {
-      let pos = [];
+      const pos = [];
 
       for (let i = 0; i < count; i++) {
         const x = Math.random() * width - width / 2;
@@ -176,7 +178,7 @@ export const STEPS = [
       </div>
     ),
     getPositions: ({ width, height, count }) => {
-      let pos = [];
+      const pos = [];
 
       for (let i = 0; i < count; i++) {
         const x = Math.random() * width - width / 2;
@@ -209,9 +211,9 @@ export const STEPS = [
     id: 2,
     animationStep: 2,
     content: (
-      <div className="relative px-4 -translate-y-20">
-        <div className="w-48 h-48 mx-auto" />
-        <div className="absolute w-screen max-w-2xl px-4 mt-10 text-center -translate-x-1/2 left-1/2 top-full">
+      <div className="relative -translate-y-20 px-4">
+        <div className="mx-auto h-48 w-48" />
+        <div className="absolute left-1/2 top-full mt-10 w-screen max-w-2xl -translate-x-1/2 px-4 text-center">
           <p>Science. Policy. People.</p>
 
           <p>
@@ -221,7 +223,7 @@ export const STEPS = [
       </div>
     ),
     getPositions: ({ radius, count }) => {
-      let pos = [];
+      const pos = [];
 
       for (let i = 0; i < count; i++) {
         const randomAngle = i * (360 / count) - 90 + Math.random() * 180;
@@ -257,9 +259,9 @@ export const STEPS = [
     id: 3,
     animationStep: 2,
     content: (
-      <div className="relative px-4 -translate-y-20">
-        <div className="w-48 h-48 mx-auto" />
-        <div className="absolute w-screen max-w-2xl px-4 mt-10 text-center -translate-x-1/2 left-1/2 top-full">
+      <div className="relative -translate-y-20 px-4">
+        <div className="mx-auto h-48 w-48" />
+        <div className="absolute left-1/2 top-full mt-10 w-screen max-w-2xl -translate-x-1/2 px-4 text-center">
           <p>
             To <span className="text-brand-700">protect, manage and restore</span> our natural
             ecosystems — creating jobs, protecting livelihoods, increasing biodiversity, and
@@ -269,7 +271,7 @@ export const STEPS = [
       </div>
     ),
     getPositions: ({ radius, count }) => {
-      let pos = [];
+      const pos = [];
 
       for (let i = 0; i < count; i++) {
         const randomAngle = i * (360 / count) - 90 + Math.random() * 180;
@@ -305,15 +307,15 @@ export const STEPS = [
     id: 4,
     animationStep: 4,
     content: (
-      <div className="relative px-4 -translate-y-20">
-        <div className="w-48 h-48 mx-auto" />
-        <div className="absolute w-screen max-w-2xl px-4 mt-10 text-center -translate-x-1/2 left-1/2 top-full">
+      <div className="relative -translate-y-20 px-4">
+        <div className="mx-auto h-48 w-48" />
+        <div className="absolute left-1/2 top-full mt-10 w-screen max-w-2xl -translate-x-1/2 px-4 text-center">
           <p className="uppercase tracking-[0.32em]">Coming soon</p>
         </div>
       </div>
     ),
     getPositions: ({ radius, count, startAngle }) => {
-      let pos = [];
+      const pos = [];
 
       for (let i = 0; i < count; i++) {
         const angle = i * (360 / count) - 90 + startAngle;
@@ -344,16 +346,16 @@ export const STEPS = [
     id: 5,
     animationStep: 4,
     content: (
-      <div className="relative px-4 -translate-y-20">
-        <div className="w-48 h-48 mx-auto" />
-        <div className="absolute w-screen max-w-2xl px-4 mt-10 text-center -translate-x-1/2 left-1/2 top-full">
+      <div className="relative -translate-y-20 px-4">
+        <div className="mx-auto h-48 w-48" />
+        <div className="absolute left-1/2 top-full mt-10 w-screen max-w-2xl -translate-x-1/2 px-4 text-center">
           <h1 className="text-3xl font-semibold tracking-wider md:text-4xl">naturebase</h1>
           <h2 className="md:text-lg">natural climate solutions in action</h2>
         </div>
       </div>
     ),
     getPositions: ({ radius, count, startAngle }) => {
-      let pos = [];
+      const pos = [];
 
       for (let i = 0; i < count; i++) {
         const angle = i * (360 / count) - 90 + startAngle;

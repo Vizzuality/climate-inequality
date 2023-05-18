@@ -1,22 +1,6 @@
 import { RecoilRoot } from 'recoil';
 
-import Footer from 'containers/footer';
-import Header from 'containers/header';
-import {
-  Title,
-  OurVision,
-  Distribution,
-  Inequality,
-  EmissionsDistribution,
-  ClimateCrisis,
-  Multidimensional,
-  Countries,
-  ClimateInjustice,
-  ZoomingIn,
-  Understanding,
-  Investment,
-  Prioritising,
-} from 'containers/home';
+import { Home } from 'containers/home';
 
 import MetaTags from 'components/meta-tags/meta-tags-component';
 
@@ -60,4 +44,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default HomePage;
