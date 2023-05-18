@@ -1,3 +1,41 @@
+// import { PropsWithChildren, useEffect, useRef } from 'react';
+
+// import { useInView } from 'framer-motion';
+// // import { useMediaQuery } from 'usehooks-ts';
+
+// import { screens } from 'styles/styles.config';
+// interface ScrollItemProps extends PropsWithChildren {
+//   sectionStep: number;
+//   onChange: (sectionStep: number) => void;
+// }
+// const ScrollItem = ({ children, sectionStep, onChange }: ScrollItemProps) => {
+//   const lg = true;
+
+//   const ref = useRef<HTMLDivElement>(null);
+//   const inView = useInView(ref, {
+//     amount: 0.5,
+//     margin: '0% 0% 0% 0%',
+//     ...(!lg && {
+//       amount: 0,
+//       margin: '0% 0% -50% 0%',
+//     }),
+//   });
+
+//   useEffect(() => {
+//     if (inView) {
+//       onChange(sectionStep);
+//     }
+//   }, [sectionStep, inView, onChange]);
+
+//   return (
+//     <section ref={ref} id={`scroll-${sectionStep}`} className="lg:h-small-screen lg:min-h-[100vh]">
+//       {children}
+//     </section>
+//   );
+// };
+
+// export default ScrollItem;
+
 import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 
 import cx from 'classnames';
@@ -25,13 +63,13 @@ const clamp = (v) => {
 };
 
 interface ScrollItemProps extends PropsWithChildren {
-  step: number;
-  onChange: (step: number) => void;
+  sectionStep: number;
+  onChange: (sectionStep: number) => void;
   sticky?: number;
 }
 
-const ScrollItem = ({ children, step, onChange, sticky }: ScrollItemProps) => {
-  const s = useRecoilValue(stepAtom);
+const ScrollItem = ({ children, sectionStep, onChange, sticky }: ScrollItemProps) => {
+  const currentStep = useRecoilValue(stepAtom);
   const [isSticky, setIsSticky] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.5 });
@@ -41,44 +79,58 @@ const ScrollItem = ({ children, step, onChange, sticky }: ScrollItemProps) => {
     offset: ['start end', `${itemOffset} start`],
   });
   const stickyThreshold = 0.4;
-  const log = (...p) => children.key === 'text-layers-1' && console.log(...p);
+  const log = (...p) => (children as any).key === 'text-layers-1' && console.log(...p);
 
-  const opacity = useTransform(scrollYProgress, (v) => v);
+  const opacity = useTransform(scrollYProgress, (v) => {
+    // console.log({ v });
+    return v;
+  });
+
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    log('v', Math.floor(latest * 10) / 10, children);
+    // console.log('v', Math.floor(latest * 10) / 10, children);
     if (sticky > 0) {
-      if (latest > stickyThreshold && latest < 1 - stickyThreshold) {
-        setIsSticky(latest > stickyThreshold && latest < 1 - stickyThreshold);
-      }
+      // if (latest > stickyThreshold && latest < 1 - stickyThreshold) {
+      //   setIsSticky(true);
+      // }
       // if (latest < stickyThreshold || (latest > 1 - stickyThreshold && sticky > 0)) {
       //   setIsSticky(true);
       // }
+      // console.log(
+      //   currentStep,
+      //   sectionStep,
+      //   sticky,
+      //   currentStep >= sectionStep,
+      //   currentStep <= sectionStep + (sticky - 1)
+      // );
+      if (currentStep >= sectionStep && currentStep <= sectionStep + (sticky - 1)) {
+        setIsSticky(true);
+      }
     }
   });
+  // console.log(isSticky);
   useEffect(() => {
-    if (inView && s !== step) {
-      log('---', s, step);
-      onChange(step);
+    if (inView) {
+      // console.log('---', { currentStep, sectionStep });
+      onChange(sectionStep);
     }
-  }, [s, step, inView, onChange]);
+  }, [currentStep, sectionStep, inView, onChange]);
   const stickyClasses = isSticky ? `fixed top-0` : 'relative';
 
   return (
     <motion.section
       ref={ref}
-      className={'h-small-screen'}
       style={{
-        opacity,
+        opacity: 1,
       }}
+      className={cx('', {
+        'fixed top-0':
+          sticky > 0 && currentStep >= sectionStep && currentStep <= sectionStep + (sticky - 1),
+        // [`h-[${sticky * 100}vh] bg-300 bg-opacity-10`]: sticky > 0,
+        'h-screen': !sticky,
+      })}
     >
-      {sticky ? (
-        <div className={cx('h-screen bg-700 bg-opacity-50', { [stickyClasses]: sticky > 0 })}>
-          {children}
-        </div>
-      ) : (
-        children
-      )}
-      {sticky > 0 && <motion.div className="relative -mt-[99vh] h-screen" />}
+      {sticky ? (sticky > 0 ? children : null) : children}
+      {/* {sticky > 0 && <motion.div className="relative -mt-[99vh] h-screen" />} */}
     </motion.section>
   );
 };

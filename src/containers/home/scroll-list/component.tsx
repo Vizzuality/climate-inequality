@@ -28,7 +28,7 @@ const ScrollList = ({ children }: ScrollListProps) => {
         props: { sticky },
       } = child;
       return (
-        <ScrollItem key={`scroll-${index}`} step={index} onChange={onChange} sticky={sticky}>
+        <ScrollItem key={`scroll-${index}`} sectionStep={index} onChange={onChange} sticky={sticky}>
           {child}
         </ScrollItem>
       );

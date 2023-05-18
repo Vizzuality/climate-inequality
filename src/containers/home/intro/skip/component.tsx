@@ -1,12 +1,12 @@
 import { useCallback } from 'react';
 
 import { motion } from 'framer-motion';
-import { usePlausible } from 'next-plausible';
+// import { usePlausible } from 'next-plausible';
 
 import Button from 'components/button';
 
 const Skip = () => {
-  const plausible = usePlausible();
+  // const plausible = usePlausible();
 
   const scrollTo = useCallback((id) => {
     document.documentElement.className = '';
@@ -35,14 +35,14 @@ const Skip = () => {
       initial={{ opacity: 0, y: -5 }}
       animate={{ opacity: 1, y: 0, transition: { delay: 1 } }}
       key="step-navigation"
-      className="absolute z-20 top-4 md:top-auto md:bottom-7 right-4"
+      className="absolute top-4 right-4 z-20 md:top-auto md:bottom-7"
     >
       <Button
         theme="secondary"
         size="xs"
         onClick={() => {
           scrollTo('about');
-          plausible('skip-intro');
+          // plausible('skip-intro');
         }}
       >
         Skip intro

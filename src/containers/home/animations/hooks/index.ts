@@ -1,9 +1,42 @@
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 
-import { useAnimatedCounter } from 'hooks/animations';
+import { animate } from 'framer-motion';
+
 import { useScrollDirection } from 'hooks/home';
 
 import { STEP_DURATION } from 'containers/home/animations/constants';
+
+const useAnimatedCounter = (
+  from = 0,
+  to = 100,
+  duration = 1,
+  format = (f) => f,
+  enabled = true
+) => {
+  const controlsRef = useRef(null);
+  const [counter, setCounter] = useState<number>(from);
+
+  useEffect(() => {
+    controlsRef.current = animate(from, to, {
+      duration,
+      onUpdate(value) {
+        setCounter(value);
+      },
+    });
+
+    return () => controlsRef.current.stop();
+  }, [from, to, duration]);
+
+  useEffect(() => {
+    if (enabled) {
+      controlsRef.current.play();
+    } else {
+      controlsRef.current.pause();
+    }
+  }, [enabled]);
+
+  return format(counter);
+};
 
 export const useSoyCounter = (substep) => {
   const lastTo = useRef(0);

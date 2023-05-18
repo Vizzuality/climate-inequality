@@ -11,3 +11,4 @@ export { default as ZoomingIn } from './components/11-zooming-in';
 export { default as Understanding } from './components/12-understanding';
 export { default as Investment } from './components/13-investment';
 export { default as Prioritising } from './components/14-prioritising';
+export { default as Home } from './component';

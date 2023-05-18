@@ -1,67 +1,65 @@
+import { useRef } from 'react';
+
+import { motion } from 'framer-motion';
+
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
 
+import RiveScrollAnimation from '../rive-components/rive-scroll';
+import { useScrollY } from '../utils';
+
 const EmissionsDistribution = () => {
+  const target = useRef(null);
+
+  const { scrollY: y } = useScrollY({ target, offset: ['start 0.25', 'end end'] });
+
+  const animationY = y <= 2 ? 2 : y;
+
   return (
     <div
-      className="container my-14 flex
-    min-h-screen flex-col justify-evenly sm:my-0"
+      ref={target}
+      className="mt-14 flex h-[100vh] flex-col items-center  overflow-hidden pt-20 pb-10 sm:mt-[45vh]"
     >
-      <div className="max-w-lg">
-        <SectionTitle>Distribution of emissions.</SectionTitle>
-        <SectionSubtitle className="mt-2 mb-6" size="small">
-          The top 10% are responsible for nearly 50% of emissions.
-        </SectionSubtitle>
-        <p className="text-base">
-          The wealthiest people are better positioned to deal with the impacts and adaptations to
-          the climate crisis. Meanwhile, the people who contribute least to the crisis also have the
-          least financial resources to react to its impacts.
-        </p>
-      </div>
-      <div>
-        <div className="w-full text-xs sm:text-sm">
-          <div className="flex items-end justify-end">
-            <div className="w-full">
-              <div className="mb-5 text-end">Top 0.1%</div>
-              <div className="mb-4 mr-[1%] text-end">Top 1%</div>
-              <div className="mb-3 flex sm:text-center">
-                <p className="flex-[5]">Bottom 50%</p>
-                <p className="flex-[4]">Middle 40%</p>
-                <p className="flex-1 whitespace-nowrap text-white text-opacity-50 sm:text-500 sm:text-opacity-100">
-                  Top 10%
-                </p>
-              </div>
-            </div>
-            <div className="flex items-end">
-              <div className="absolute h-[50px] w-[1%] -translate-x-[calc(100%-1px)] border-l border-dashed border-white"></div>
-              <div className="h-[90px] w-0 -translate-x-[1px] border-r border-dashed border-white"></div>
-            </div>
-          </div>
-          <div>
-            <img
-              className="hidden w-full sm:block"
-              alt=""
-              src="/images/emission-distribution.svg"
-              height={240}
-              width={1230}
-            />
-            <img
-              className="w-full sm:hidden"
-              alt=""
-              src="/images/emission-distribution-sm.svg"
-              width={322}
-              height={141}
-            />
-          </div>
-          <div className="mt-1 flex w-full text-center text-xs sm:text-sm">
-            <p className="w-[12%]">12%</p>
-            <p className="w-[40%]">40.4%</p>
-            <p className="w-[48%] text-500">47.6%</p>
-          </div>
+      <motion.div
+        className="container pb-8"
+        style={{
+          opacity: y / 50,
+        }}
+      >
+        <div className=" max-w-lg">
+          <SectionTitle>Distribution of emissions.</SectionTitle>
+          <SectionSubtitle className="mt-2 mb-6" size="small">
+            The top 10% are responsible for nearly 50% of emissions.
+          </SectionSubtitle>
+          <p className="text-base">
+            The wealthiest people are better positioned to deal with the impacts and adaptations to
+            the climate crisis. Meanwhile, the people who contribute least to the crisis also have
+            the least financial resources to react to its impacts.
+          </p>
         </div>
-        <p className="mt-4 text-center font-serif text-xs sm:text-sm">Share of emissions</p>
-      </div>
-      <div className="place-items-end text-xs sm:self-end sm:text-sm">
+      </motion.div>
+      <motion.div
+        className="flex h-[50vh] w-full items-center"
+        style={{
+          height: y < 15 ? `${y * 2}vh` : y > 20 ? '40vh' : `calc(30vh + ${y - 15}vh)`,
+        }}
+      >
+        <RiveScrollAnimation
+          scrollY={animationY}
+          fileName="chart_share_of_emissions"
+          stateMachine="Default"
+          stateMachineInput="scrollPos"
+          className="diagram-animation container absolute h-[50vh] w-screen"
+          autoplay
+        />
+      </motion.div>
+
+      <motion.div
+        className="container mt-auto place-items-end text-xs sm:self-end sm:text-sm"
+        style={{
+          opacity: y / 50,
+        }}
+      >
         <p className="sm:text-end">
           Source:{' '}
           <a
@@ -73,7 +71,7 @@ const EmissionsDistribution = () => {
             World Inequality Database
           </a>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 };

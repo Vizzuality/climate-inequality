@@ -5,7 +5,7 @@ import SectionTitle from 'components/section-title';
 
 const ClimateInjustice = () => {
   return (
-    <div className="container mt-24 flex min-h-screen flex-col justify-around space-y-20">
+    <div className="container flex min-h-screen flex-col justify-around space-y-20 py-24">
       <div>
         <SectionTitle>Climate injustice.</SectionTitle>
         <div className="mt-2 flex flex-col gap-6 sm:flex-row sm:gap-14">
