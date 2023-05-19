@@ -155,7 +155,7 @@ const QUESTIONS: Question[] = [
       'are men.',
     ],
     answers: [{ value: '50' }, { value: '50' }],
-    solutions: [{ value: '18' }, { value: '72' }],
+    solutions: [{ value: '18' }, { value: '82' }],
     isComplementary: true,
     text: (
       <div key="4">

@@ -77,12 +77,12 @@ const QuizPage: React.FC = () => {
     } else if (type === 'sentence') {
       //To be correct the answer on both of the circles must be right on a range of +-10%
       const solutions = getSolution(currentQuestion);
-      isCorrect = answers.every((answer, i) => {
+      isCorrect = [circleAnswer1, circleAnswer2].every((answer, i) => {
         const solution = Number(solutions[i].value);
-        const userAnswer = Number(answer.value);
-        userAnswer >= solution * 0.9 && userAnswer <= solution * 1.1;
+        const minCorrectAnswer = Math.floor(solution * 0.9);
+        const maxCorrectAnswer = Math.round(solution * 1.1);
+        return solution >= minCorrectAnswer && solution <= maxCorrectAnswer;
       });
-
       setCircleAnswer1(parseInt(solutions[0].value, 10));
       setCircleAnswer2(parseInt(solutions[1].value, 10));
     }
