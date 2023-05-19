@@ -3,8 +3,8 @@ import SectionTitle from 'components/section-title';
 
 const ClimateCrisis = () => {
   return (
-    <div className="min-h-fit w-full overflow-hidden bg-white">
-      <div className="flex min-h-screen flex-col justify-between gap-6 pt-14 lg:mt-0 lg:h-screen lg:justify-start lg:gap-0 lg:pt-[104px]">
+    <div className="w-full bg-white">
+      <div className="flex min-h-screen flex-col justify-between gap-6 pt-14 lg:mt-0 lg:justify-start lg:gap-0 lg:pt-[104px]">
         <div className="flex-0 container mb-6 lg:mb-20">
           <SectionTitle className="mb-4" color="green">
             Climate crisis and inequality.
@@ -13,17 +13,15 @@ const ClimateCrisis = () => {
             The climate crisis multiplies the threats of existing inequality.
           </SectionSubtitle>
         </div>
-        <div className="flex h-full w-full flex-1 flex-col-reverse items-center justify-end gap-8 lg:mt-0 lg:h-full lg:flex-row lg:gap-0">
-          <div className="h-full w-full lg:flex-[3]">
-            <div
-              className="h-full min-h-[484px] w-full"
-              style={{
-                backgroundImage: 'url("/images/climate-crisis.png")',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
-            />
-          </div>
+        <div className="flex h-full w-full flex-1 flex-col-reverse items-center gap-8 lg:mt-0 lg:h-screen lg:flex-row lg:justify-end lg:gap-0">
+          <div
+            className="h-full min-h-[484px] w-full place-self-end lg:h-[50vh] lg:flex-[3] 2xl:h-[60vh]"
+            style={{
+              backgroundImage: 'url("/images/climate-crisis.png")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
           <div className="container text-sm text-900 lg:flex-[2.5] xl:text-base">
             <p>
               We are all affected by the climate crisis, but{' '}

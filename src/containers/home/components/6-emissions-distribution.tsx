@@ -5,7 +5,7 @@ const EmissionsDistribution = () => {
   return (
     <div
       className="container my-14 flex
-    h-screen flex-col justify-evenly sm:my-0"
+    min-h-screen flex-col justify-evenly sm:my-0"
     >
       <div className="max-w-lg">
         <SectionTitle>Distribution of emissions.</SectionTitle>
