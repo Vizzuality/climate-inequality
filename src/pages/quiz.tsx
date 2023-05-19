@@ -16,7 +16,7 @@ const QuizPage: React.FC = () => {
       <Head>
         <title>Quiz</title>
       </Head>
-      <main className="container flex h-screen flex-col">
+      <main className="container">
         <div className="flex items-center justify-between py-6">
           <div className="flex items-center justify-center gap-x-2">
             <Logo />

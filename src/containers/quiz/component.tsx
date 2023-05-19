@@ -29,9 +29,11 @@ const QuizPage: React.FC = () => {
   );
 
   useEffect(() => {
-    setCircleAnswer1(answers && parseInt(answers[0].value, 10));
-    setCircleAnswer2(answers && parseInt(answers[1].value, 10));
-  }, [answers]);
+    if (type === 'sentence') {
+      setCircleAnswer1(answers && parseInt(answers[0].value, 10));
+      setCircleAnswer2(answers && parseInt(answers[1].value, 10));
+    }
+  }, [answers, type]);
 
   const canAdjustAnswer =
     !isSolutionMode &&
@@ -93,67 +95,64 @@ const QuizPage: React.FC = () => {
     setIsSolutionMode(false);
   };
 
-  const renderQuestion = () => {
-    if (!question) return;
-    if (currentQuestion?.type === 'multiple') {
-      return (
-        <>
-          <div className="mb-5 text-2xl text-white">{question}</div>
-          <p className="mb-14 text-base leading-snug text-white/80">Select your answer.</p>
-          <div className="inline-flex w-full items-start justify-between gap-x-6 pb-6">
-            {renderAnswers(answers, handleAnswerClick, isSolutionMode, selectedAnswer as number)}
-          </div>
-        </>
-      );
-    }
-    return (
-      <>
-        <div className="mb-5 text-2xl text-white">
-          <div>
-            {question[0]}
-            <div className="inline-flex w-20 -translate-y-1.5 justify-center border-b-2 border-white text-lg text-500">
-              {circleAnswer1}
-
-              {currentQuestion.isPercentage ? ' %' : ''}
-            </div>
-            {question[1]}
-
-            <div className="inline-flex w-20 -translate-y-1.5 justify-center border-b-2 border-white text-lg text-500">
-              {circleAnswer2}
-              {currentQuestion.isPercentage ? ' %' : ''}
-            </div>
-            {question[3]}
-          </div>
-        </div>
-        <p className="mb-5 text-base leading-snug text-white/80">
-          Drag the circles to change value and validate when you are happy with your answer
-        </p>
-        <div className="flex h-56 w-full">
-          {renderCircles(
-            isSolutionMode,
-            circleAnswer1,
-            setCircleAnswer1,
-            circleAnswer2,
-            setCircleAnswer2,
-            currentQuestion?.isPercentage,
-            currentQuestion?.max
-          )}
-        </div>
-        {!isSolutionMode && (
-          <div className="mt-12 flex justify-end">
-            {renderButton(handleAnswerClick, 'Validate.')}
-          </div>
-        )}
-      </>
-    );
-  };
-
   return (
-    <div>
+    <div className="flex flex-1 flex-col">
       <div className="container pt-10">
         <div className="mb-5 pb-4">
           {renderStep(currentStep, 4)}
-          <div className="mt-3">{renderQuestion()}</div>
+          <div className="mt-3">
+            {!currentQuestion ? null : currentQuestion?.type === 'multiple' ? (
+              <>
+                <div className="mb-5 text-2xl leading-tight text-white">{question}</div>
+                <p className="mb-14 text-base leading-snug text-white/80">Select your answer.</p>
+                <div className="inline-flex w-full items-start justify-between gap-x-6">
+                  {renderAnswers(
+                    answers,
+                    handleAnswerClick,
+                    isSolutionMode,
+                    selectedAnswer as number
+                  )}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="mb-5 text-2xl leading-tight text-white">
+                  <div>
+                    {question[0]}
+                    <div className="mx-2 inline-flex w-20 -translate-y-1.5 justify-center border-b-2 border-white text-lg text-500">
+                      {circleAnswer1}
+                      {currentQuestion.isPercentage ? ' %' : ''}
+                    </div>
+                    {question[1]}
+                    <div className="mx-2 inline-flex w-20 -translate-y-1.5 justify-center border-b-2 border-white text-lg text-500">
+                      {circleAnswer2}
+                      {currentQuestion.isPercentage ? ' %' : ''}
+                    </div>
+                    {question[2]}
+                  </div>
+                </div>
+                <p className="mb-5 text-base leading-snug text-white/80">
+                  Drag the circles to change value and validate when you are happy with your answer
+                </p>
+                <div className="flex h-56 w-full">
+                  {renderCircles(
+                    isSolutionMode,
+                    circleAnswer1,
+                    setCircleAnswer1,
+                    circleAnswer2,
+                    setCircleAnswer2,
+                    currentQuestion?.isPercentage,
+                    currentQuestion?.max
+                  )}
+                </div>
+                {!isSolutionMode && (
+                  <div className="mt-12 flex justify-end">
+                    {renderButton(handleAnswerClick, 'Validate.')}
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
         {isSolutionMode && (
           <div>

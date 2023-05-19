@@ -39,10 +39,10 @@ const QUESTIONS: Question[] = [
         of Parties (COP) of the United Nations Framework Convention on Climate Change (UNFCCC),
         remains unequal. Despite being a crucial platform shaping climate change policy, the latest
         COP27 demonstrated that there has been little progress in promoting gender balance. Women
-        constituted just 35.6% of all national Party delegates and an even lower 20.0% of Heads of
-        Delegation. These imbalances are not uniform across different countries and regions. While
-        women's participation is often higher than 45% in Eastern and Western Europe, it falls below
-        35% in Africa and the Asia-Pacific region.
+        constituted just <span className="text-500">35.6%</span> of all national Party delegates and
+        an even lower 20.0% of Heads of Delegation. These imbalances are not uniform across
+        different countries and regions. While women's participation is often higher than 45% in
+        Eastern and Western Europe, it falls below 35% in Africa and the Asia-Pacific region.
       </div>
     ),
     sourceLink: `https://www.genderclimatetracker.org/participation-stats/quick-analysishttps://www.genderclimatetracker.org/participation-stats/quick-analysis`,
@@ -151,7 +151,7 @@ const QUESTIONS: Question[] = [
     id: 5,
     question: [
       'According to US 2019 data on wage distribution among the top 1% earners,',
-      'are women   and',
+      'are women and',
       'are men.',
     ],
     answers: [{ value: '50' }, { value: '50' }],
