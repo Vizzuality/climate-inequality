@@ -18,7 +18,7 @@ export type SentenceQuestion = Omit<MultipleQuestion, 'type' | 'question'> & {
   isPercentage: boolean;
   isComplementary?: boolean;
   isDependent?: boolean;
-  max?: number;
+  max: number;
 };
 
 export type Question = MultipleQuestion | SentenceQuestion;
@@ -120,6 +120,7 @@ const QUESTIONS: Question[] = [
       'https://www.imf.org/en/Publications/fandd/issues/2021/09/climate-change-and-inequality-guivarch-mejean-taconet',
     type: 'sentence',
     isPercentage: true,
+    max: 100,
   },
   {
     id: 4,
@@ -170,6 +171,7 @@ const QUESTIONS: Question[] = [
     sourceLink: 'https://wir2022.wid.world/chapter-5/',
     type: 'sentence',
     isPercentage: true,
+    max: 100,
   },
   {
     id: 6,
@@ -306,6 +308,7 @@ const QUESTIONS: Question[] = [
     type: 'sentence',
     isPercentage: true,
     isComplementary: true,
+    max: 100,
   },
   {
     id: 12,
@@ -382,6 +385,7 @@ const QUESTIONS: Question[] = [
     sourceLink: 'https://wir2022.wid.world/chapter-6/',
     type: 'sentence',
     isPercentage: true,
+    max: 100,
   },
   {
     id: 15,

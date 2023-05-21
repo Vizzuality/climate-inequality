@@ -16,41 +16,29 @@ type FinalScreenProps = {
 
 const contentTransition = { duration: 1, delay: 1 };
 
+const Answers = ({ userAnswers }: Pick<FinalScreenProps, 'userAnswers'>) => (
+  <motion.div
+    initial={{ width: 0 }}
+    animate={{ width: 200 }}
+    transition={contentTransition}
+    className="flex h-8 justify-between gap-6"
+  >
+    {userAnswers.map((answer, i) => (
+      <motion.div
+        key={i}
+        initial={{ translateX: 0 }}
+        animate={{ translateX: 56 * i }}
+        className="absolute h-8 w-8 shrink-0"
+        transition={contentTransition}
+      >
+        <Icon icon={answer ? CorrectIcon : IncorrectIcon} className="h-8 w-8" />
+      </motion.div>
+    ))}
+  </motion.div>
+);
+
 const FinalScreen = ({ userAnswers, handleTryAnother, isLast }: FinalScreenProps) => {
   const correctAnswers = userAnswers.reduce((acc, answer) => (answer ? acc + 1 : acc), 0);
-
-  const Answers = () => (
-    <motion.div
-      initial={{ width: 0 }}
-      animate={{ width: 200 }}
-      transition={contentTransition}
-      className="flex h-8 justify-between gap-6"
-    >
-      {userAnswers.map((answer, i) => (
-        <motion.div
-          key={i}
-          initial={{ translateX: 0 }}
-          animate={{ translateX: 56 * i }}
-          className="absolute h-8 w-8 shrink-0"
-          transition={contentTransition}
-        >
-          <Icon icon={answer ? CorrectIcon : IncorrectIcon} className="h-8 w-8" />
-        </motion.div>
-      ))}
-    </motion.div>
-  );
-
-  // const SizeAnimation = ({ children }) => {
-  //   return (
-  //     <motion.div
-  //       initial={{ width: 0 }}
-  //       className="size-animation overflow-hidden"
-  //       animate={{ width: '100%' }}
-  //     >
-  //       {children}
-  //     </motion.div>
-  //   );
-  // };
 
   const PositionAnimation = ({
     children,
@@ -72,7 +60,6 @@ const FinalScreen = ({ userAnswers, handleTryAnother, isLast }: FinalScreenProps
 
   return (
     <div className="container flex h-full w-full flex-1 items-center justify-center overflow-hidden pt-10 pb-9 font-sans">
-      {/* <AnimatePresence> */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -93,9 +80,7 @@ const FinalScreen = ({ userAnswers, handleTryAnother, isLast }: FinalScreenProps
             </p>
           </div>
           <div className="flex flex-col items-center justify-center pt-14">
-            {/* <SizeAnimation> */}
-            <Answers />
-            {/* </SizeAnimation> */}
+            <Answers userAnswers={userAnswers} />
             <p className="mt-4 text-md font-semibold">
               You scored {correctAnswers} out of 4 questions.
             </p>
@@ -142,9 +127,7 @@ const FinalScreen = ({ userAnswers, handleTryAnother, isLast }: FinalScreenProps
           </div>
         </PositionAnimation>
       </motion.div>
-      {/* </AnimatePresence> */}
       <div className="absolute top-0 left-0 -z-10 flex h-screen w-screen items-center justify-center">
-        {/* <AnimatePresence> */}
         <motion.div
           initial={{ opacity: 0, height: '50vh', width: '50vw' }}
           animate={{ opacity: 0.3, height: '100vh', width: '100vw' }}
@@ -153,7 +136,6 @@ const FinalScreen = ({ userAnswers, handleTryAnother, isLast }: FinalScreenProps
           className="animated bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/images/quizz-final-bg.png')" }}
         ></motion.div>
-        {/* </AnimatePresence> */}
       </div>
     </div>
   );

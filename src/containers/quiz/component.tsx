@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import { renderAnswers, renderCircles, renderButton, renderStep } from './components';
 import FinalScreen from './components/final-screen';
-import type { Question } from './quiz-data';
+import type { Question, SentenceQuestion } from './quiz-data';
 import { useQuestions } from './utils';
 
 const QuizPage: React.FC = () => {
@@ -64,8 +64,8 @@ const QuizPage: React.FC = () => {
     );
   }
 
-  const getSolution = (question: Question) => {
-    return question.type === 'sentence' && question.solutions;
+  const getQuestion = (question: Question): SentenceQuestion => {
+    return question.type === 'sentence' && question;
   };
 
   const handleAnswerClick = (index?: number) => {
@@ -75,14 +75,16 @@ const QuizPage: React.FC = () => {
 
       isCorrect = answers[index].isCorrect;
     } else if (type === 'sentence') {
-      //To be correct the answer on both of the circles must be right on a range of +-10%
-      const solutions = getSolution(currentQuestion);
+      const { solutions, max } = getQuestion(currentQuestion);
+      //  Returns true if both answers are within 10% of the solution.
       isCorrect = [circleAnswer1, circleAnswer2].every((answer, i) => {
         const solution = Number(solutions[i].value);
-        const minCorrectAnswer = Math.floor(solution * 0.9);
-        const maxCorrectAnswer = Math.round(solution * 1.1);
-        return solution >= minCorrectAnswer && solution <= maxCorrectAnswer;
+        const tenPercentOfMax = max * 0.1;
+        const minCorrectAnswer = solution - tenPercentOfMax;
+        const maxCorrectAnswer = solution + tenPercentOfMax;
+        return answer >= minCorrectAnswer && answer <= maxCorrectAnswer;
       });
+      // Set the correct answers
       setCircleAnswer1(parseInt(solutions[0].value, 10));
       setCircleAnswer2(parseInt(solutions[1].value, 10));
     }
