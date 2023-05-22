@@ -86,7 +86,7 @@ const ZoomingIn = () => {
   const countries: string[] = useMemo(() => uniq(dataset.map((d) => d.country)), [dataset]);
 
   return (
-    <div className="container flex min-h-screen flex-col justify-between py-12 lg:py-16 2xl:justify-around">
+    <div className="container flex min-h-screen flex-col py-12 lg:py-16">
       <div className="lg:w-1/2">
         <SectionTitle className="mb-2">Zooming in on internal inequality.</SectionTitle>
         <SectionSubtitle className="mb-6" size="small">
@@ -105,7 +105,7 @@ const ZoomingIn = () => {
         </p>
       </div>
       <div
-        className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:-mt-20 lg:items-end lg:justify-between lg:gap-y-0 lg:gap-x-0"
+        className="mt-4 flex flex-wrap items-end justify-center gap-x-4 gap-y-2 lg:-mt-20 lg:justify-between lg:gap-y-0 lg:gap-x-0"
         ref={containerRef}
       >
         {countries.map((country) => {
@@ -170,37 +170,39 @@ const ZoomingIn = () => {
           );
         })}
       </div>
-      <div className="mt-6 flex flex-col justify-between gap-8 text-light-gray lg:mt-0 lg:flex-row lg:gap-0">
-        <div className="flex justify-between gap-6 text-2xs">
-          <div className="w-1/2 max-w-[180px] flex-1">
-            <p>Average pre-tax national income by population group (€/year)</p>
-            <Icon className="h-4 w-full" icon={ColorLegend} />
-            <div className="flex justify-between">
-              <p>{Math.round(cDomain[0]).toLocaleString()}</p>
-              <p>{Math.round(cDomain[1]).toLocaleString()}</p>
+      <div className="mt-7 flex w-full flex-1 items-end sm:mt-20">
+        <div className="flex h-fit w-full flex-col justify-between gap-8 text-light-gray sm:flex-row sm:gap-0">
+          <div className="flex justify-between gap-6 text-2xs">
+            <div className="w-1/2 max-w-[170px] flex-1">
+              <p>Average pre-tax national income by population group (€/year)</p>
+              <Icon className="h-4 w-full" icon={ColorLegend} />
+              <div className="flex justify-between">
+                <p>{Math.round(cDomain[0]).toLocaleString()}</p>
+                <p>{Math.round(cDomain[1]).toLocaleString()}</p>
+              </div>
+            </div>
+            <div className="flex h-min w-1/2 max-w-[200px] flex-1 gap-1">
+              <p className="w-32">Average per capita group emissions in tCO2e/ca</p>
+              <Icon className="h-12 w-12" icon={CircleLegend} />
+              <div className="flex flex-col justify-between">
+                <p>{parseInt(rDomain[1].toLocaleString(), 10)}</p>
+                <p>{rDomain[0].toLocaleString()}</p>
+              </div>
             </div>
           </div>
-          <div className="flex h-min w-1/2 flex-1 gap-1">
-            <p className="w-32">Average per capita group emissions in tCO2e/ca</p>
-            <Icon className="h-12 w-12" icon={CircleLegend} />
-            <div className="flex flex-col justify-between">
-              <p>{parseInt(rDomain[1].toLocaleString(), 10)}</p>
-              <p>{rDomain[0].toLocaleString()}</p>
-            </div>
+          <div className="text-xs sm:text-end">
+            <p>
+              Source:{' '}
+              <a
+                href="https://wid.world/data/"
+                className="underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                World Inequality Database
+              </a>
+            </p>
           </div>
-        </div>
-        <div className="text-xs">
-          <p>
-            Source:{' '}
-            <a
-              href="https://wid.world/data/"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              World Inequality Database
-            </a>
-          </p>
         </div>
       </div>
     </div>

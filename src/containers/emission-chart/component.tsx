@@ -248,7 +248,7 @@ const EmissionChart = () => {
               size="xs"
               onClick={handlePlayYears}
             >
-              <Icon icon={playing ? pauseIcon : playIcon} className="h-8 w-8 fill-500" />
+              <Icon icon={playing ? pauseIcon : playIcon} className="h-8 w-8" />
             </Button>
           </div>
           <div>
