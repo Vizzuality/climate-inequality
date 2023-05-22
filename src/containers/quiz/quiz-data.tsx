@@ -1,7 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 export type Answer = { value?: string; isCorrect?: boolean };
+export type QuestionType = 'multiple' | 'sentence';
 
 export type MultipleQuestion = {
+  id: number;
   question: string;
   type: 'multiple';
   sourceLink: string;
@@ -9,26 +11,51 @@ export type MultipleQuestion = {
   text: React.ReactElement;
 };
 
-export type SentenceQuestion = {
-  question: string;
+export type SentenceQuestion = Omit<MultipleQuestion, 'type' | 'question'> & {
   type: 'sentence';
-  sourceLink: string;
-  answers: Answer[];
+  question: [string, string, string];
   solutions: Answer[];
-  text: React.ReactElement;
   isPercentage: boolean;
+  isComplementary?: boolean;
+  isDependent?: boolean;
+  max: number;
 };
 
 export type Question = MultipleQuestion | SentenceQuestion;
 
 const QUESTIONS: Question[] = [
   {
+    id: 0,
+    question: 'What percentage of delegates at COP27 were women?',
+    answers: [
+      { value: '10.5' },
+      { value: '35.6', isCorrect: true },
+      { value: '43.2' },
+      { value: '50' },
+    ],
+    text: (
+      <div key="15">
+        The representation of women in global climate negotiations, specifically at the Conference
+        of Parties (COP) of the United Nations Framework Convention on Climate Change (UNFCCC),
+        remains unequal. Despite being a crucial platform shaping climate change policy, the latest
+        COP27 demonstrated that there has been little progress in promoting gender balance. Women
+        constituted just <span className="text-500">35.6%</span> of all national Party delegates and
+        an even lower 20.0% of Heads of Delegation. These imbalances are not uniform across
+        different countries and regions. While women's participation is often higher than 45% in
+        Eastern and Western Europe, it falls below 35% in Africa and the Asia-Pacific region.
+      </div>
+    ),
+    sourceLink: `https://www.genderclimatetracker.org/participation-stats/quick-analysishttps://www.genderclimatetracker.org/participation-stats/quick-analysis`,
+    type: 'multiple',
+  },
+  {
+    id: 1,
     question: 'How many people die every day in consequence of some form of inequality?',
     answers: [
-      { value: '21,300', isCorrect: true },
       { value: '3,400' },
-      { value: '67,800' },
       { value: '5,900' },
+      { value: '21,300', isCorrect: true },
+      { value: '67,800' },
     ],
     text: (
       <div key="1">
@@ -48,13 +75,14 @@ const QUESTIONS: Question[] = [
     type: 'multiple',
   },
   {
+    id: 2,
     question:
       'How much more carbon do 20 billionaires emit compared to 1 billion of the poorest people in the world?',
     answers: [
-      { value: '8,000', isCorrect: true },
-      { value: '30' },
       { value: '5' },
+      { value: '30' },
       { value: '600' },
+      { value: '8,000', isCorrect: true },
     ],
     text: (
       <div key="2">
@@ -71,7 +99,12 @@ const QUESTIONS: Question[] = [
     type: 'multiple',
   },
   {
-    question: `The wealthiest countries represent <answer1> % of the world population but contribute to <answer2> % of CO2 emissions.`,
+    id: 3,
+    question: [
+      'The wealthiest countries represent',
+      'of the world population but contribute to',
+      'of CO2 emissions.',
+    ],
     answers: [{ value: '50' }, { value: '50' }],
     solutions: [{ value: '16' }, { value: '40' }],
     text: (
@@ -87,14 +120,16 @@ const QUESTIONS: Question[] = [
       'https://www.imf.org/en/Publications/fandd/issues/2021/09/climate-change-and-inequality-guivarch-mejean-taconet',
     type: 'sentence',
     isPercentage: true,
+    max: 100,
   },
   {
+    id: 4,
     question:
       'How much will the healthcare costs associated with air pollution increase from 2015 to 2060?',
     answers: [
-      { value: '$21 billion to $176 billion', isCorrect: true },
-      { value: '$21 billion to $45 billion' },
       { value: '$21 billion to $30 billion' },
+      { value: '$21 billion to $45 billion' },
+      { value: '$21 billion to $176 billion', isCorrect: true },
       { value: '$21 billion to $355 billion' },
     ],
     text: (
@@ -114,10 +149,15 @@ const QUESTIONS: Question[] = [
     type: 'multiple',
   },
   {
-    question: `According to US 2019 data on wage distribution among the top 1% earners, <answer1> are women
-    and <answer2> are men.`,
+    id: 5,
+    question: [
+      'According to US 2019 data on wage distribution among the top 1% earners,',
+      'are women and',
+      'are men.',
+    ],
     answers: [{ value: '50' }, { value: '50' }],
-    solutions: [{ value: '70' }, { value: '20' }],
+    solutions: [{ value: '18' }, { value: '82' }],
+    isComplementary: true,
     text: (
       <div key="4">
         In most countries, there is a significant gender gap, particularly in top-income groups.
@@ -131,14 +171,16 @@ const QUESTIONS: Question[] = [
     sourceLink: 'https://wir2022.wid.world/chapter-5/',
     type: 'sentence',
     isPercentage: true,
+    max: 100,
   },
   {
+    id: 6,
     question:
       'How much more likely are black people to live in areas with higher increased temperature-related deaths?',
     answers: [
-      { value: '40%', isCorrect: true },
-      { value: '25%' },
       { value: '10%' },
+      { value: '25%' },
+      { value: '40%', isCorrect: true },
       { value: '80%' },
     ],
     text: (
@@ -156,13 +198,14 @@ const QUESTIONS: Question[] = [
     type: 'multiple',
   },
   {
+    id: 7,
     question:
       "How much of global carbon emissions are contributed by the world's wealthiest 1% compared to the bottom 50%?",
     answers: [
-      { value: 'x2 <div class="font-normal">(or twice as much)</div>', isCorrect: true },
-      { value: 'x1 <div class="font-normal">(or the same)</div>' },
-      { value: 'x1/2 <div class="font-normal">(or half)</div>' },
       { value: 'x1/3 <div class="font-normal">(or a third)</div>' },
+      { value: 'x1/2 <div class="font-normal">(or half)</div>' },
+      { value: 'x1 <div class="font-normal">(or the same)</div>' },
+      { value: 'x2 <div class="font-normal">(or twice as much)</div>', isCorrect: true },
     ],
     text: (
       <div key="6">
@@ -178,8 +221,13 @@ const QUESTIONS: Question[] = [
     type: 'multiple',
   },
   {
-    question: `In the US, the richest men live <answer1> years longer than the poorest portion of the population. And the richest women <answer2> years longer.`,
-    answers: [{ value: '50' }, { value: '50' }],
+    id: 8,
+    question: [
+      'In the US, the richest men live',
+      'years longer than the poorest portion of the population. And the richest women',
+      'years longer.',
+    ],
+    answers: [{ value: '20' }, { value: '20' }],
     solutions: [{ value: '15' }, { value: '10' }],
     text: (
       <div key="7">
@@ -194,16 +242,18 @@ const QUESTIONS: Question[] = [
     ),
     sourceLink: 'https://jamanetwork.com/journals/jama/article-abstract/2513561',
     type: 'sentence',
-    isPercentage: true,
+    isPercentage: false,
+    max: 50,
   },
   {
+    id: 9,
     question:
       'What has been the increase in heat-related deaths for people over 65 in the past 20 years?',
     answers: [
-      { value: '68%', isCorrect: true },
-      { value: '50%' },
-      { value: '25%' },
       { value: '12%' },
+      { value: '25%' },
+      { value: '50%' },
+      { value: '68%', isCorrect: true },
     ],
     text: (
       <div key="8">
@@ -218,9 +268,10 @@ const QUESTIONS: Question[] = [
     type: 'multiple',
   },
   {
+    id: 10,
     question:
       'How many of the richest people hold the same wealth as the 3.1 billion who make up the poorer half of humanity?',
-    answers: [{ value: '26', isCorrect: true }, { value: '2' }, { value: '97' }, { value: '153' }],
+    answers: [{ value: '2' }, { value: '10', isCorrect: true }, { value: '97' }, { value: '153' }],
     text: (
       <div key="9">
         According to a 2019 report by Oxfam International, <span className="text-500">10</span> of
@@ -235,8 +286,12 @@ const QUESTIONS: Question[] = [
     type: 'multiple',
   },
   {
-    question: `<answer1> % of all displaced people by climate change-related events are women while <answer2> % are men.
-    `,
+    id: 11,
+    question: [
+      '',
+      'of all displaced people by climate change-related events are women while',
+      'are men.',
+    ],
     answers: [{ value: '50' }, { value: '50' }],
     solutions: [{ value: '80' }, { value: '20' }],
     text: (
@@ -252,15 +307,18 @@ const QUESTIONS: Question[] = [
       'https://www.ohchr.org/en/stories/2022/07/climate-change-exacerbates-violence-against-women-and-girls#:~:text=It%20is%20estimated%20that%2080,High%20Commissioner%20for%20Human%20Rights',
     type: 'sentence',
     isPercentage: true,
+    isComplementary: true,
+    max: 100,
   },
   {
+    id: 12,
     question:
-      'How many billion tons of greenhouse gases were produced in 2021 from human activities? How many billion tons of greenhouse gases were produced in 2021 from human activities?',
+      'How many billion tons of greenhouse gases were produced in 2021 from human activities?',
     answers: [
-      { value: '~ 50', isCorrect: true },
       { value: '~ 10' },
-      { value: '164' },
       { value: '32' },
+      { value: '~ 50', isCorrect: true },
+      { value: '164' },
     ],
     text: (
       <div key="11">
@@ -277,13 +335,14 @@ const QUESTIONS: Question[] = [
     type: 'multiple',
   },
   {
+    id: 13,
     question:
       'How many people could fall into poverty as a result of the impacts of climate change by 2030?',
     answers: [
-      { value: '32 to 132 million', isCorrect: true },
       { value: '2 to 26 <br/> million' },
       { value: '14 to 58 million' },
       { value: '29 to 81 million' },
+      { value: '32 to 132 million', isCorrect: true },
     ],
     text: (
       <div key="12">
@@ -302,9 +361,15 @@ const QUESTIONS: Question[] = [
     type: 'multiple',
   },
   {
-    question: `The top 10% of emitters are responsible for close to <answer1> % of all emissions, while the bottom 50% produce <answer2> % of the total carbon output.`,
+    id: 14,
+    question: [
+      'The top 10% of emitters are responsible for close to',
+      'of all emissions, while the bottom 50% produce',
+      'of the total carbon output.',
+    ],
     answers: [{ value: '50' }, { value: '50' }],
     solutions: [{ value: '50' }, { value: '12' }],
+    isDependent: true,
     text: (
       <div key="13">
         The top 10% of carbon emitters contribute to nearly <span className="text-500">50%</span> of
@@ -320,15 +385,17 @@ const QUESTIONS: Question[] = [
     sourceLink: 'https://wir2022.wid.world/chapter-6/',
     type: 'sentence',
     isPercentage: true,
+    max: 100,
   },
   {
+    id: 15,
     question:
       'How much less economic losses due to extreme climate-related events did very high Human Development Index countries suffer compared to others?',
     answers: [
-      { value: '½ <div class="font-normal"> (half)</div>', isCorrect: true },
-      { value: ' ⅓ <div class="font-normal"> (a third)</div>' },
-      { value: '¼ <div class="font-normal"> (a fourth)</div>' },
       { value: '⅕ <div class="font-normal"> (a fifth)</div>' },
+      { value: '¼ <div class="font-normal"> (a fourth)</div>' },
+      { value: '⅓ <div class="font-normal"> (a third)</div>' },
+      { value: '½ <div class="font-normal"> (half)</div>', isCorrect: true },
     ],
     text: (
       <div key="14">
@@ -343,29 +410,6 @@ const QUESTIONS: Question[] = [
       </div>
     ),
     sourceLink: `https://www.lancetcountdown.org/data-platform/`,
-    type: 'multiple',
-  },
-  {
-    question: 'What percentage of delegates at COP27 were women?',
-    answers: [
-      { value: '35.6', isCorrect: true },
-      { value: '50' },
-      { value: '43.2' },
-      { value: '10.5' },
-    ],
-    text: (
-      <div key="15">
-        The representation of women in global climate negotiations, specifically at the Conference
-        of Parties (COP) of the United Nations Framework Convention on Climate Change (UNFCCC),
-        remains unequal. Despite being a crucial platform shaping climate change policy, the latest
-        COP27 demonstrated that there has been little progress in promoting gender balance. Women
-        constituted just 35.6% of all national Party delegates and an even lower 20.0% of Heads of
-        Delegation. These imbalances are not uniform across different countries and regions. While
-        women's participation is often higher than 45% in Eastern and Western Europe, it falls below
-        35% in Africa and the Asia-Pacific region.
-      </div>
-    ),
-    sourceLink: `https://www.genderclimatetracker.org/participation-stats/quick-analysishttps://www.genderclimatetracker.org/participation-stats/quick-analysis`,
     type: 'multiple',
   },
 ];

@@ -1,11 +1,7 @@
-import Button from 'components/button';
-import Icon from 'components/icon';
-import Logo from 'components/logo';
+import SocialIcons from 'containers/social-icons/component';
 
-import Facebook from 'svgs/social/facebook.svg';
-import Github from 'svgs/social/github.svg';
-import Linkedin from 'svgs/social/linkedin.svg';
-import Twitter from 'svgs/social/twitter.svg';
+import Button from 'components/button';
+import Logo from 'components/logo';
 
 const Footer = () => {
   return (
@@ -42,24 +38,7 @@ const Footer = () => {
           </div>
           <div>
             <Logo width={160} height={60} />
-            <div className="mx-1 flex justify-between">
-              <a href="https://twitter.com/Vizzuality" target="_blank" rel="noreferrer">
-                <Icon icon={Twitter} className="h-6 w-6" />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/vizzuality"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Icon icon={Linkedin} className="h-6 w-6 hover:text-400" />
-              </a>
-              <a href="https://www.facebook.com/vizzuality" target="_blank" rel="noreferrer">
-                <Icon icon={Facebook} className="h-6 w-6 hover:text-400" />
-              </a>
-              <a href="https://github.com/Vizzuality" target="_blank" rel="noreferrer">
-                <Icon icon={Github} className="h-6 w-6 hover:text-400" />
-              </a>
-            </div>
+            <SocialIcons className="mx-1 flex justify-between" />
           </div>
         </div>
       </div>
