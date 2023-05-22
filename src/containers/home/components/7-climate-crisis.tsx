@@ -13,7 +13,7 @@ const ClimateCrisis = () => {
             The climate crisis multiplies the threats of existing inequality.
           </SectionSubtitle>
         </div>
-        <div className="flex h-full w-full flex-1 flex-col-reverse items-center gap-8 lg:mt-0 lg:h-screen lg:flex-row lg:justify-end lg:gap-0">
+        <div className="flex h-full w-full flex-1 flex-col-reverse items-center gap-8 lg:mt-0 lg:flex-row lg:justify-end lg:gap-0">
           <div
             className="h-full min-h-[484px] w-full place-self-end lg:h-[50vh] lg:flex-[3] 2xl:h-[60vh]"
             style={{

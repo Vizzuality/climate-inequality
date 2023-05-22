@@ -40,7 +40,7 @@ const Multidimensional = () => {
   };
 
   return (
-    <div className="min-h-screen bg-500 text-900 lg:h-screen">
+    <div className="min-h-screen bg-500 text-900">
       <div className="container flex min-h-screen flex-col items-end justify-around gap-8 py-20 lg:gap-4">
         <SectionSubtitle className=" text-900" size="large">
           3.3 to 3.6 billion people live in areas highly vulnerable to climate impacts yet are the
