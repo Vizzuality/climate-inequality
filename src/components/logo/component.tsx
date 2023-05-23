@@ -13,7 +13,7 @@ export const Logo: FC<LogoProps> = ({ width, height }) => (
       viewBox="0 0 104 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="white flex-shrink-0 flex-grow-0 hover:text-400"
+      className="white flex-shrink-0 flex-grow-0 transition-all duration-500 ease-in-out hover:text-400"
       preserveAspectRatio="xMidYMid meet"
     >
       <path

@@ -1,22 +1,23 @@
 import { FC } from 'react';
 
-import Link from 'next/link';
-
+import { LinkAnchor } from 'components/button/component';
 import Logo from 'components/logo';
 
 export const Header: FC = () => (
   <header>
-    <div className="py-6">
+    <div className="py-4">
       <div className="flex items-center justify-between">
         <div className="relative flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2">
           <Logo />
         </div>
-        <Link
-          className="flex-shrink-0 flex-grow-0 text-center text-lg font-semibold text-500 hover:text-100"
+        <LinkAnchor
+          size="xl"
+          theme="primary-alt"
+          className="flex-shrink-0 flex-grow-0 text-center text-lg font-semibold transition-all duration-500"
           href="/quiz"
         >
           Take the quiz.
-        </Link>
+        </LinkAnchor>
       </div>
     </div>
   </header>
