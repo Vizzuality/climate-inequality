@@ -111,7 +111,7 @@ const QuizPage: React.FC = () => {
                 <p className="mb-2 text-base leading-snug text-white/80 sm:mb-14">
                   Select your answer.
                 </p>
-                <div className="flex w-full flex-col items-start justify-between gap-2 gap-x-6 sm:inline-flex sm:flex-row sm:gap-0">
+                <div className="flex w-full flex-col items-start justify-between gap-2 gap-x-6 sm:inline-flex sm:flex-row">
                   {renderAnswers(
                     answers,
                     handleAnswerClick,

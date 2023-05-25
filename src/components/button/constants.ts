@@ -5,7 +5,7 @@ export const THEME = {
     'text-white bg-transparent hover:bg-transparent active:bg-transparent border border-white hover:border-blue-400 active:border-blue-300',
 
   primary:
-    'text-white bg-500 hover:bg-gray-400 active:bg-300 border border-500 hover:border-gray-400 active:border-300 hover:text-black',
+    'text-black bg-500 hover:bg-gray-400 active:bg-300 border border-500 hover:border-gray-400 active:border-300 hover:text-black',
   'primary-alt':
     'text-500 bg-transparent hover:bg-800 hover:bg-opacity-60 hover:text-500 active:bg-transparent',
   white:
