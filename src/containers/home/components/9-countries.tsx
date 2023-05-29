@@ -1,13 +1,17 @@
+import { useRef } from 'react';
+
+import classNames from 'classnames';
+
+import { MotionValue, motion, useScroll, useTransform } from 'framer-motion';
+
 import Icon from 'components/icon/component';
 import SectionSubtitle from 'components/section-subtitle';
 import SectionTitle from 'components/section-title';
 
-import MapVulnerabilityLegend from 'svgs/ui/map-vulnerability-legend.svg';
 import MapReadnessLegend from 'svgs/ui/map-readness-legend.svg';
-import { useScrollY } from '../utils';
-import { useRef } from 'react';
-import { motion } from 'framer-motion';
-import classNames from 'classnames';
+import MapVulnerabilityLegend from 'svgs/ui/map-vulnerability-legend.svg';
+
+import { scaleRange, useScrollY } from '../utils';
 
 const contents = [
   {
@@ -60,17 +64,17 @@ const contents = [
   },
 ];
 
-const Legend = ({ text = 'Vulnerability', y = 0 }) => {
+const Legend = ({ text = 'Vulnerability' }) => {
   const isVuln = text === 'Vulnerability';
   const text1 = isVuln ? 'Worse' : 'Better';
   const text2 = isVuln ? 'Better' : 'Worse';
-  console.log(y);
+
   // translate-y-[16px]
   return (
     <div
       className={classNames('mt-3 mb-9 flex w-full items-end justify-between text-2xs', {
-        'translate-y-[200%]': isVuln,
-        'translate-y-[calc(200%-8px)]': !isVuln,
+        // 'translate-y-[200%]': isVuln,
+        // 'translate-y-[calc(200%-8px)]': !isVuln,
       })}
     >
       <div></div>
@@ -101,39 +105,39 @@ const Legend = ({ text = 'Vulnerability', y = 0 }) => {
   );
 };
 
-const Text = ({ scrollY = 0 }) => {
-  return (
-    <div className="flex-0 z-20">
-      {contents.map(({ title, subtitle, p }, index) => {
-        const opacity =
-          index === 0
-            ? scrollY < 33
-              ? (scrollY / 100) * 3
-              : (100 - scrollY) / 100 / 3
-            : scrollY > 40
-            ? (scrollY - 20) / 33
-            : 0;
+const Text = ({
+  scrollYProgress,
+  className,
+}: {
+  scrollYProgress: MotionValue<number>;
+  className: string;
+}) => {
+  const translateY1 = useTransform(scrollYProgress, [0, 0.3], [-100, 0]);
+  const opacity1 = useTransform(scrollYProgress, [0, 0.3, 0.33, 0.4], [0, 1, 1, 0]);
+  const opacity2 = useTransform(scrollYProgress, [0.35, 0.43], [0, 1]);
 
-        const position = index === 0 ? 'relative' : 'absolute';
-        const translateY =
-          index === 0 ? (scrollY < 33 ? `calc(${scrollY * 4 - 200}% + 96px)` : 0) : 0;
+  return (
+    <div className={className}>
+      {contents.map(({ title, subtitle, p }, index) => {
+        const opacity = index === 0 ? opacity1 : opacity2;
+        const translateY = index === 0 ? translateY1 : 0;
 
         return (
           <motion.div
             style={{
-              position,
               opacity,
               translateY,
-              paddingTop: index === 1 ? 96 : 0,
             }}
             key={title}
-            className="w-[50vw]"
+            className="h-[50vh] w-[50vw]"
           >
-            <SectionTitle>{title}</SectionTitle>
-            <SectionSubtitle className="mt-2 mb-6" size="small">
-              {subtitle}
-            </SectionSubtitle>
-            <p className="sm:text-base">{p}</p>
+            <div className="sticky top-0 pt-24">
+              <SectionTitle>{title}</SectionTitle>
+              <SectionSubtitle className="mt-2 mb-6" size="small">
+                {subtitle}
+              </SectionSubtitle>
+              <p className="sm:text-base">{p}</p>
+            </div>
           </motion.div>
         );
       })}
@@ -143,43 +147,97 @@ const Text = ({ scrollY = 0 }) => {
 
 const Countries = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollY } = useScrollY({ target: ref, offset: ['start end', 'end start'] });
-  console.log(scrollY);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  });
+
+  const map1opacity = useTransform(scrollYProgress, [0, 0.1, 0.4, 0.5], [0, 0, 1, 0]);
+  const map2opacity = useTransform(scrollYProgress, [0.33, 0.4], [0, 1]);
+
+  const mapPosition = useTransform(scrollYProgress, (v) => {
+    console.log(v);
+    if (v > 0.333 && v < 0.666) {
+      return 'fixed';
+    }
+    return 'absolute';
+  });
+
+  const mapBottom = useTransform(scrollYProgress, (v) => {
+    if (v > 0.333 && v < 0.666) {
+      return '0';
+    }
+    return 'auto';
+  });
+
+  const map2y = useTransform(scrollYProgress, (v) => {
+    if (v > 0.666) {
+      return '100vh';
+    }
+    return '0';
+  });
+
   return (
-    <div ref={ref} className="container flex h-[200vh] flex-col py-14 sm:py-24">
-      <Text scrollY={scrollY} />
-      <div className="w-full flex-1">
-        <motion.div
-          animate={{
-            opacity: scrollY <= 55 ? 1 : 0,
-          }}
+    <div ref={ref} className="flex h-[200vh] flex-col overflow-visible ">
+      <Text className="container z-20" scrollYProgress={scrollYProgress} />
+      <motion.div
+        style={{
+          opacity: map1opacity,
+          position: mapPosition,
+          top: mapBottom,
+        }}
+        className="map-1 z-10 mx-auto mb-20 flex h-screen w-full flex-1 flex-col items-center justify-end"
+      >
+        <div
           style={{
-            position: scrollY > 33 ? 'fixed' : scrollY > 50 ? 'relative' : 'absolute',
-            bottom: scrollY > 33 ? '12vh' : 'auto',
             backgroundImage: 'url(/images/map-1.png)',
           }}
-          transition={{ duration: 3 }}
-          className="z-10 mx-auto flex h-[34.77vw] w-[80vw] items-end bg-cover bg-center bg-no-repeat"
-        >
-          <Legend y={scrollY} text="Vulnerability" />
-        </motion.div>
-        <motion.div
-          className="z-10 mx-auto flex h-[34.77vw] w-[80vw] translate-y-[7px] items-end bg-cover bg-center bg-no-repeat"
-          animate={{
-            opacity: scrollY > 40 ? 1 : 0,
-          }}
+          className="h-[34.77vw] w-[80vw] bg-cover bg-center bg-no-repeat"
+        ></div>
+        <Legend text="Vulnerability" />
+      </motion.div>
+      <motion.div
+        className="map-2 z-10 mx-auto mb-[70px] flex h-screen w-full flex-1 flex-col items-center justify-end"
+        style={{
+          opacity: map2opacity,
+          position: mapPosition,
+          top: mapBottom,
+          y: map2y,
+        }}
+      >
+        <div
           style={{
-            position: scrollY > 33 && scrollY < 50 ? 'fixed' : 'absolute',
-            bottom: scrollY > 3 ? '12vh' : 'auto',
             backgroundImage: 'url(/images/map-2.png)',
           }}
-          transition={{ duration: 3 }}
-        >
-          <Legend y={scrollY} text="Readness" />
-        </motion.div>
-      </div>
+          className="h-[34.77vw] w-[80vw] bg-cover bg-center bg-no-repeat"
+        ></div>
+        <Legend text="Readness" />
+      </motion.div>
     </div>
   );
 };
 
 export default Countries;
+
+// const map1Y = useTransform(scrollYProgress, (v) => {
+//   if (v >= 0.66) {
+//     const p = scaleRange(v, [0.66, 1], [0, -100]);
+//     return `${p}vh`;
+//   }
+//   if (v >= 0.33 && v < 0.66) {
+//     return 0;
+//   }
+//   const p = scaleRange(v, [0, 0.33], [100, 0]);
+//   // return `${(1 - p) * 100}vh`;
+//   return `${p}vh`;
+// });
+
+// const map2Y = useTransform(scrollYProgress, (v) => {
+//   console.log(v);
+//   if (v > 0.4) {
+//     const p = scaleRange(v, [0.4, 1], [0, -100]);
+//     return `${p}vh`;
+//   }
+//   const p = Math.min(Math.max(v / 0.33, 0), 1);
+//   return `${(p - 1) * 100}%`;
+// });

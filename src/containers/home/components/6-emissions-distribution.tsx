@@ -1,30 +1,49 @@
 import { useRef } from 'react';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
 
 import RiveScrollAnimation from '../rive-components/rive-scroll';
-import { useScrollY } from '../utils';
+import { scaleRange, useScrollY } from '../utils';
 
 const EmissionsDistribution = () => {
   const target = useRef(null);
 
-  const { scrollY: y } = useScrollY({ target, offset: ['start 0.25', 'end end'] });
+  const { scrollY: y, scrollYProgress } = useScroll({
+    target,
+    offset: ['start 0.25', 'start start'],
+  });
 
-  const animationY = y <= 2 ? 2 : y;
+  const animationScrollProgress = useTransform(scrollYProgress, (v) => {
+    // console.log(v);
+    if (v < 0.1) return 0.1;
+    return v;
+  });
+
+  const textY = useTransform(scrollYProgress, (v) => {
+    // if (v >= 0.4) {
+    const variation = scaleRange(v, [0, 0.5], [0, -25]);
+    //   return `${variation}vh`;
+    // }
+    const p = Math.min(Math.max(v, 0), 1);
+    return `${(1 - p) * 100}%`;
+  });
 
   return (
     <div
       ref={target}
-      className="mt-14 flex h-[100vh] flex-col items-center  overflow-hidden pt-20 pb-10 sm:mt-[45vh]"
+      className="mt-14 flex min-h-screen flex-col items-center overflow-hidden pt-20 pb-10 sm:mt-[45vh]"
     >
       <motion.div
         className="container pb-8"
-        style={{
-          opacity: y / 50,
-        }}
+        style={
+          {
+            // opacity,
+            // y: textY,
+          }
+        }
       >
         <div className=" max-w-lg">
           <SectionTitle>Distribution of emissions.</SectionTitle>
@@ -38,28 +57,18 @@ const EmissionsDistribution = () => {
           </p>
         </div>
       </motion.div>
-      <motion.div
-        className="flex h-[50vh] w-full items-center"
-        style={{
-          height: y < 15 ? `${y * 2}vh` : y > 20 ? '40vh' : `calc(30vh + ${y - 15}vh)`,
-        }}
-      >
+      <motion.div className="w-full">
         <RiveScrollAnimation
-          scrollY={animationY}
+          scrollY={animationScrollProgress}
           fileName="chart_share_of_emissions"
           stateMachine="Default"
           stateMachineInput="scrollPos"
-          className="diagram-animation container absolute h-[50vh] w-screen"
+          className="diagram-animation h-[50vh] w-screen"
           autoplay
         />
       </motion.div>
 
-      <motion.div
-        className="container mt-auto place-items-end text-xs sm:self-end sm:text-sm"
-        style={{
-          opacity: y / 50,
-        }}
-      >
+      <motion.div className="container mt-auto place-items-end text-xs sm:self-end sm:text-sm">
         <p className="sm:text-end">
           Source:{' '}
           <a

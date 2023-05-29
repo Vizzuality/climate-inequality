@@ -1,12 +1,13 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
-import { motion, useInView, useMotionValueEvent, useScroll } from 'framer-motion';
+import { motion, useTransform, useScroll } from 'framer-motion';
+
+import FadeYScroll from 'containers/home/animations/FadeYScroll/component';
 
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
 
 import RiveScrollAnimation from '../rive-components/rive-scroll';
-import { useScrollY } from '../utils';
 
 const contents = [
   {
@@ -23,71 +24,66 @@ const contents = [
 
 const OurVision = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [y, setY] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start end', 'end end'],
+    offset: ['start end', 'end start'],
   });
 
-  useMotionValueEvent(scrollYProgress, 'change', (value) => {
-    setY(value * 100);
+  const opacity = useTransform(scrollYProgress, (v) => {
+    return Math.min(Math.max(v / 0.15, 0), 1);
   });
 
-  const isInView = useInView(sectionRef);
-  // const { scrollY: y } = useScrollY({
-  //   target: sectionRef,
-  //   offset: ['start end', 'end end'],
-  // });
+  const y = useTransform(scrollYProgress, (v) => {
+    if (v >= 0.7) {
+      return `${(v - 0.66) * 100}%`;
+    }
+    const p = Math.min(Math.max(v / 0.33, 0), 1);
+    return `${(1 - p) * 100}%`;
+  });
+
+  const animationY = useTransform(scrollYProgress, (v) => {
+    const threshold = 0.74;
+    const y = threshold + (v - threshold) * 0.5;
+    if (v > threshold) return y;
+    return v;
+  });
 
   return (
-    <div className="flex h-[300vh] flex-col items-center" ref={sectionRef}>
-      {isInView && (
-        <motion.div
-          className="h-screen w-full overflow-hidden"
-          animate={['opacity']}
-          style={{
-            top: y > 33.33 ? 0 : 'auto',
-            position: y > 33.33 ? 'fixed' : 'absolute',
-          }}
-          variants={{
-            opacity: {
-              opacity: y > 30 ? 1 : 0,
-              transition: { delay: 300 },
-            },
-          }}
-          initial={{ opacity: 0 }}
-        >
-          <RiveScrollAnimation
-            scrollY={y}
-            fileName="circle"
-            stateMachine="Circle"
-            stateMachineInput="scrollPos"
-            className="h-[110vw] w-[110vw] translate-y-[-21.5%] translate-x-[-5%]"
-            autoplay={true}
-          />
-        </motion.div>
-      )}
+    <div className="flex flex-col items-center" ref={sectionRef}>
+      <motion.div
+        className="pointer-events-none fixed top-0 left-0 flex h-screen w-full items-center justify-center overflow-hidden opacity-0"
+        style={{ y, opacity }}
+      >
+        <RiveScrollAnimation
+          scrollY={animationY}
+          fileName="circle"
+          stateMachine="Circle"
+          stateMachineInput="scrollPos"
+          className="h-[105vw] w-[105vw] "
+          autoplay
+        />
+      </motion.div>
 
-      <motion.div
-        animate={{
-          opacity: y > 30 && y < 45 ? 1 : 0,
-        }}
-        transition={{ duration: 1 }}
-        className="absolute z-10 flex h-screen max-w-[60%] flex-col justify-center text-center lg:max-w-xl"
-      >
-        <SectionTitle>{contents[0].title}</SectionTitle>
-        <SectionSubtitle className="mt-2">{contents[0].subtitle}</SectionSubtitle>
-      </motion.div>
-      <motion.div
-        animate={{
-          opacity: y > 60 && y < 75 ? 1 : 0,
-        }}
-        className="absolute z-10 mt-[100vh] flex h-screen max-w-[60%] flex-col justify-center text-center lg:max-w-xl"
-      >
-        <SectionTitle>{contents[1].title}</SectionTitle>
-        <SectionSubtitle className="mt-2">{contents[1].subtitle}</SectionSubtitle>
-      </motion.div>
+      <div className="flex h-screen items-center justify-center">
+        <FadeYScroll
+          className="flex max-w-[60%] flex-col justify-center text-center lg:max-w-xl"
+          threshold={0.5}
+        >
+          <SectionTitle>{contents[0].title}</SectionTitle>
+          <SectionSubtitle className="mt-2">{contents[0].subtitle}</SectionSubtitle>
+        </FadeYScroll>
+      </div>
+
+      <div className="flex h-screen items-center justify-center">
+        <FadeYScroll
+          threshold={0.5}
+          className="flex max-w-[60%] flex-col justify-center text-center lg:max-w-xl"
+        >
+          <SectionTitle>{contents[1].title}</SectionTitle>
+          <SectionSubtitle className="mt-2">{contents[1].subtitle}</SectionSubtitle>
+        </FadeYScroll>
+      </div>
     </div>
   );
 };
