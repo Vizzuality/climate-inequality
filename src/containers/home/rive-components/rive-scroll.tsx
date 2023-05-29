@@ -1,7 +1,6 @@
 // @refresh reset
-import { useEffect } from 'react';
-
 import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
+import { MotionValue, useMotionValueEvent } from 'framer-motion';
 
 const RiveScrollAnimation = ({
   className,
@@ -18,7 +17,7 @@ const RiveScrollAnimation = ({
   animations?: string[];
   stateMachine: string;
   stateMachineInput: string;
-  scrollY: number;
+  scrollY: MotionValue<number>;
   playTrigger?: number;
 }) => {
   const { rive, RiveComponent } = useRive({
@@ -30,11 +29,10 @@ const RiveScrollAnimation = ({
 
   const levelInput = useStateMachineInput(rive, stateMachine, stateMachineInput);
 
-  useEffect(() => {
-    if (levelInput) {
-      levelInput.value = scrollY;
-    }
-  }, [scrollY]);
+  useMotionValueEvent(scrollY, 'change', (v) => {
+    if (!levelInput) return;
+    levelInput.value = v * 100;
+  });
 
   return <RiveComponent id={`animation-${fileName}`} className={className} />;
 };

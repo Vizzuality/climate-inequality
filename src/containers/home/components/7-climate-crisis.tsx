@@ -1,16 +1,26 @@
 import { useRef } from 'react';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title';
 
-import { useScrollY } from '../utils';
-
 const ClimateCrisis = () => {
   const target = useRef(null);
 
-  const { scrollY: y } = useScrollY({ target, offset: ['start 0.75', 'end end'] });
+  const { scrollYProgress } = useScroll({ target, offset: ['start 0.75', 'end end'] });
+
+  const translateY = useTransform(scrollYProgress, (v) => {
+    return v < 0.5 ? `${v * 200 - 100}%` : 0;
+  });
+
+  const opacity1 = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
+
+  const translateX = useTransform(scrollYProgress, (v) => {
+    return v < 0.666 ? `calc(100% - ${v * 150}%)` : 0;
+  });
+
+  const opacity2 = useTransform(scrollYProgress, [0.5, 0.75], [0, 1]);
 
   return (
     <div ref={target} className="min-h-[150vh] sm:min-h-screen">
@@ -18,8 +28,8 @@ const ClimateCrisis = () => {
         <div className="container flex h-screen min-h-screen flex-col justify-between gap-6 pt-14 lg:mt-0 lg:justify-start lg:gap-0">
           <motion.div
             style={{
-              translateY: y < 50 ? `calc(${y * 2 - 100}%)` : 0,
-              opacity: (y * 2) / 100,
+              translateY,
+              opacity: opacity1,
             }}
             className="flex-0"
           >
@@ -52,9 +62,8 @@ const ClimateCrisis = () => {
             <motion.div
               className="flex-1 text-sm text-900 xl:text-base"
               style={{
-                // translateX: y < 50 ? `calc(${y * 2 - 100}%)` : 0,
-                translateX: y < 66.66 ? `calc(100% - ${y * 1.5}%)` : 0,
-                opacity: (y * 2) / 100,
+                translateX,
+                opacity: opacity2,
               }}
             >
               <p>

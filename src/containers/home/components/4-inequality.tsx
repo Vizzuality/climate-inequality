@@ -1,18 +1,15 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
-import { motion, useMotionValueEvent, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
-import Icon from 'components/icon/component';
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
 
-import FinalDiagram from 'svgs/ui/diagram.svg';
-
+import FadeYScroll from '../animations/FadeYScroll/component';
 import RiveScrollAnimation from '../rive-components/rive-scroll';
-import { useScrollY } from '../utils';
 
-const contents = {
-  intersectional: {
+const contents = [
+  {
     title: 'Inequality is intersectional.',
     subtitle:
       'Multiple dimensions of inequality interact with one another and create distinct     experiences and outcomes.',
@@ -34,7 +31,7 @@ const contents = {
     ),
     image: '/images/inequality-diagram.svg',
   },
-  wealth: {
+  {
     title: 'Wealth & income inequality.',
     subtitle: 'Income is a significant driver of other inequalities.',
     p1: (
@@ -53,99 +50,89 @@ const contents = {
     ),
     image: '/images/wealth-diagram.svg',
   },
-};
+];
 
 const Inequality = () => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const { scrollYProgress } = useScrollY({
+  const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end end'],
   });
 
-  const isInView = useInView(ref);
-
-  const [y, setY] = useState(0);
-
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    const progress = latest * 100;
-    setY(progress);
+  const animationYProgress = useTransform(scrollYProgress, (v) => {
+    const threshold = 0.33;
+    let y = 0.01;
+    if (v > threshold) {
+      // Transforms value from threshold-1 range to 0-1 range
+      const normalized = (v - threshold) * (1 / (1 - threshold));
+      if (normalized > y) {
+        y = normalized;
+      }
+    }
+    return y;
   });
 
-  const animationScroll = y;
+  const y = useTransform(scrollYProgress, (v) => {
+    const p = Math.min(Math.max((v + 0.1) / 0.33, 0), 1);
+    return v < 1 ? `${(1 - p) * 100}%` : '-100vh';
+  });
 
-  const opacity = y / 50;
+  const position = useTransform(scrollYProgress, (v) => {
+    if (v < 1) {
+      return 'fixed';
+    }
+    return 'absolute';
+  });
+
+  const top = useTransform(scrollYProgress, (v) => {
+    if (v < 1) {
+      return 0;
+    }
+    return 'auto';
+  });
 
   return (
-    <div ref={ref} className="flex h-[200vh]">
+    <div ref={ref} className="container w-screen">
+      <div className=" flex h-full">
+        <div className="flex-1">
+          {contents.map(({ p1, p2, subtitle, title }) => (
+            <FadeYScroll threshold={0.5} key={title}>
+              <div className="flex h-screen flex-col-reverse items-center justify-between gap-5 sm:mt-0 sm:flex-row sm:gap-10">
+                <div className="max-w-No, es que ">
+                  <SectionTitle>{title}</SectionTitle>
+                  <SectionSubtitle className="mt-2 mb-6" size="small">
+                    {subtitle}
+                  </SectionSubtitle>
+                  <div className="mt-4 text-sm sm:text-base">
+                    <p>{p1}</p>
+                    <p className="mt-4 text-sm sm:text-base">{p2}</p>
+                  </div>
+                </div>
+              </div>
+            </FadeYScroll>
+          ))}
+        </div>
+        <div className="flex-1"></div>
+      </div>
+
       <motion.div
-        className="absoloute flex-1"
-        animate={{
-          opacity,
+        className="container pointer-events-none fixed right-0 flex h-screen w-screen items-center justify-end overflow-hidden"
+        style={{
+          position,
+          y,
+          top,
         }}
       >
-        <motion.div className="container flex min-h-screen w-full flex-col-reverse items-center justify-between gap-5 sm:mt-0 sm:flex-row sm:gap-10">
-          <div className="max-w-lg flex-1">
-            <SectionTitle>{contents.intersectional.title}</SectionTitle>
-            <SectionSubtitle className="mt-2 mb-6" size="small">
-              {contents.intersectional.subtitle}
-            </SectionSubtitle>
-            <div className="mt-4 text-sm sm:text-base">
-              <p>{contents.intersectional.p1}</p>
-              <p className="mt-4 text-sm sm:text-base">{contents.intersectional.p2}</p>
-            </div>
-          </div>
-        </motion.div>
-        <motion.div className="container flex min-h-screen w-full flex-col-reverse items-center justify-between gap-5 sm:mt-0 sm:flex-row sm:gap-10">
-          <div className="max-w-lg flex-1">
-            <SectionTitle>{contents.wealth.title}</SectionTitle>
-            <SectionSubtitle className="mt-2 mb-6" size="small">
-              {contents.wealth.subtitle}
-            </SectionSubtitle>
-            <div className="mt-4 text-sm sm:text-base">
-              <p>{contents.wealth.p1}</p>
-              <p className="mt-4 text-sm sm:text-base">{contents.wealth.p2}</p>
-            </div>
-          </div>
-        </motion.div>
+        <RiveScrollAnimation
+          scrollY={animationYProgress}
+          fileName="diagram"
+          stateMachine="Default"
+          stateMachineInput="scrollPos"
+          className="diagram-animation h-[45vw] w-[45vw]"
+          autoplay
+        />
       </motion.div>
-      <div className="z-50 flex-1 items-center justify-center overflow-hidden">
-        {isInView && (
-          <motion.div
-            // animate={{ opacity: 1 }}
-            animate={{ opacity: y > 0 && y < 100 ? 1 : 0 }}
-            initial={{ opacity: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            style={{
-              top: y < 43 ? 'auto' : `calc(100vh/2 - 45vw/2)`,
-              position: y > 43 ? 'fixed' : 'relative',
-            }}
-          >
-            <RiveScrollAnimation
-              scrollY={animationScroll}
-              fileName="diagram"
-              stateMachine="Default"
-              stateMachineInput="scrollPos"
-              className="diagram-animation h-[45vw] w-[45vw]"
-              autoplay
-            />
-          </motion.div>
-        )}
-        <motion.div
-          className="mt-[100vh] w-full items-center justify-center"
-          animate={{ opacity: y >= 100 ? 1 : 0 }}
-          initial={{ opacity: 0 }}
-          transition={{ duration: 1 }}
-          style={{
-            display: y < 80 ? 'none' : 'flex',
-          }}
-        >
-          <div className="translate-x-[34.5%] translate-y-[26%]">
-            <Icon icon={FinalDiagram} className="h-[45vw] w-[45vw]" />
-          </div>
-        </motion.div>
-      </div>
     </div>
   );
 };
