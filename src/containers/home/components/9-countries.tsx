@@ -1,7 +1,5 @@
 import { useRef } from 'react';
 
-import classNames from 'classnames';
-
 import { MotionValue, motion, useScroll, useTransform } from 'framer-motion';
 
 import Icon from 'components/icon/component';
@@ -10,8 +8,6 @@ import SectionTitle from 'components/section-title';
 
 import MapReadnessLegend from 'svgs/ui/map-readness-legend.svg';
 import MapVulnerabilityLegend from 'svgs/ui/map-vulnerability-legend.svg';
-
-import { scaleRange, useScrollY } from '../utils';
 
 const contents = [
   {
@@ -69,14 +65,8 @@ const Legend = ({ text = 'Vulnerability' }) => {
   const text1 = isVuln ? 'Worse' : 'Better';
   const text2 = isVuln ? 'Better' : 'Worse';
 
-  // translate-y-[16px]
   return (
-    <div
-      className={classNames('mt-3 mb-9 flex w-full items-end justify-between text-2xs', {
-        // 'translate-y-[200%]': isVuln,
-        // 'translate-y-[calc(200%-8px)]': !isVuln,
-      })}
-    >
+    <div className="container mt-3 flex w-full -translate-y-full items-end justify-between bg-black text-2xs">
       <div></div>
       <div className="w-full sm:w-auto">
         <span className="text-xs">{text}</span>
@@ -113,8 +103,8 @@ const Text = ({
   className: string;
 }) => {
   const translateY1 = useTransform(scrollYProgress, [0, 0.3], [-100, 0]);
-  const opacity1 = useTransform(scrollYProgress, [0, 0.3, 0.33, 0.4], [0, 1, 1, 0]);
-  const opacity2 = useTransform(scrollYProgress, [0.35, 0.43], [0, 1]);
+  const opacity1 = useTransform(scrollYProgress, [0, 0.3, 0.4, 0.5], [0, 1, 1, 0]);
+  const opacity2 = useTransform(scrollYProgress, [0.45, 0.6], [0, 1]);
 
   return (
     <div className={className}>
@@ -129,7 +119,7 @@ const Text = ({
               translateY,
             }}
             key={title}
-            className="h-[50vh] w-[50vw]"
+            className="h-[66.66vh] w-[50vw]"
           >
             <div className="sticky top-0 pt-24">
               <SectionTitle>{title}</SectionTitle>
@@ -152,18 +142,18 @@ const Countries = () => {
     offset: ['start end', 'end start'],
   });
 
-  const map1opacity = useTransform(scrollYProgress, [0, 0.1, 0.4, 0.5], [0, 0, 1, 0]);
-  const map2opacity = useTransform(scrollYProgress, [0.33, 0.4], [0, 1]);
+  const map1opacity = useTransform(scrollYProgress, [0, 0.1, 0.45, 0.6], [0, 0, 1, 0]);
+  const map2opacity = useTransform(scrollYProgress, [0.45, 0.6], [0, 1]);
 
   const mapPosition = useTransform(scrollYProgress, (v) => {
-    console.log(v);
     if (v > 0.333 && v < 0.666) {
       return 'fixed';
     }
     return 'absolute';
   });
 
-  const mapBottom = useTransform(scrollYProgress, (v) => {
+  const mapTop = useTransform(scrollYProgress, (v) => {
+    console.log(v);
     if (v > 0.333 && v < 0.666) {
       return '0';
     }
@@ -178,36 +168,36 @@ const Countries = () => {
   });
 
   return (
-    <div ref={ref} className="flex h-[200vh] flex-col overflow-visible ">
+    <div ref={ref} className="flex h-[200vh] flex-col">
       <Text className="container z-20" scrollYProgress={scrollYProgress} />
       <motion.div
         style={{
           opacity: map1opacity,
           position: mapPosition,
-          top: mapBottom,
+          top: mapTop,
         }}
-        className="map-1 z-10 mx-auto mb-20 flex h-screen w-full flex-1 flex-col items-center justify-end"
+        className="map-1 z-10 mx-auto flex h-screen w-full flex-1 flex-col items-center justify-end"
       >
         <div
           style={{
-            backgroundImage: 'url(/images/map-1.png)',
+            backgroundImage: 'url(/images/map-vulnerability.png)',
           }}
           className="h-[34.77vw] w-[80vw] bg-cover bg-center bg-no-repeat"
         ></div>
         <Legend text="Vulnerability" />
       </motion.div>
       <motion.div
-        className="map-2 z-10 mx-auto mb-[70px] flex h-screen w-full flex-1 flex-col items-center justify-end"
+        className="map-2 z-10 mx-auto flex h-screen w-full flex-1 flex-col items-center justify-end"
         style={{
           opacity: map2opacity,
           position: mapPosition,
-          top: mapBottom,
+          top: mapTop,
           y: map2y,
         }}
       >
         <div
           style={{
-            backgroundImage: 'url(/images/map-2.png)',
+            backgroundImage: 'url(/images/map-readiness.png)',
           }}
           className="h-[34.77vw] w-[80vw] bg-cover bg-center bg-no-repeat"
         ></div>
@@ -218,26 +208,3 @@ const Countries = () => {
 };
 
 export default Countries;
-
-// const map1Y = useTransform(scrollYProgress, (v) => {
-//   if (v >= 0.66) {
-//     const p = scaleRange(v, [0.66, 1], [0, -100]);
-//     return `${p}vh`;
-//   }
-//   if (v >= 0.33 && v < 0.66) {
-//     return 0;
-//   }
-//   const p = scaleRange(v, [0, 0.33], [100, 0]);
-//   // return `${(1 - p) * 100}vh`;
-//   return `${p}vh`;
-// });
-
-// const map2Y = useTransform(scrollYProgress, (v) => {
-//   console.log(v);
-//   if (v > 0.4) {
-//     const p = scaleRange(v, [0.4, 1], [0, -100]);
-//     return `${p}vh`;
-//   }
-//   const p = Math.min(Math.max(v / 0.33, 0), 1);
-//   return `${(p - 1) * 100}%`;
-// });

@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
-import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
@@ -23,13 +23,6 @@ const DistributionDefault = () => {
   const { scrollYProgress: containerScrollProgress } = useScroll({
     target,
     offset: ['start center', 'end start'],
-  });
-
-  const [scrollY, setScrollY] = useState(0);
-
-  useMotionValueEvent(containerScrollProgress, 'change', (latest) => {
-    const progress = latest * 100;
-    setScrollY(progress);
   });
 
   const textY = useTransform(containerScrollProgress, (v) => {
@@ -74,23 +67,23 @@ const DistributionDefault = () => {
     [animationScrollProgress, containerScrollProgress],
     ([v, c]: [number, number]) => {
       if (v === 1) {
-        const variation = scaleRange(c, [0.6, 1], [-10, -105]);
+        const variation = scaleRange(c, [0.6, 1], [0, -100]);
         return `${variation}vh`;
       }
       if (v > 0.8 && v < 1) {
-        const variation = scaleRange(v, [0.8, 1], [20, -10]);
+        const variation = scaleRange(v, [0.8, 1], [30, 0]);
         return `${variation}vh`;
       }
       if (v > 0.6 && v <= 0.8) {
-        const variation = scaleRange(v, [0.6, 0.8], [10, 20]);
+        const variation = scaleRange(v, [0.6, 0.8], [20, 30]);
         return `${variation}vh`;
       }
       if (v >= 0.5 && v <= 0.6) {
-        const variation = scaleRange(v, [0.5, 0.6], [-10, 10]);
+        const variation = scaleRange(v, [0.5, 0.6], [0, 20]);
         return `${variation}vh`;
       }
       if (v >= 0) {
-        return '-10vh';
+        return 0;
       }
     }
   );
@@ -98,6 +91,8 @@ const DistributionDefault = () => {
   const animationOpacity = useTransform(animationScrollProgress, (v) => {
     return v > 0 ? 1 : 0;
   });
+
+  const legendY = useTransform(containerScrollProgress, [0.6, 1], [0, -100]);
 
   return (
     <div ref={target} className="h-[200vh]">
@@ -143,7 +138,7 @@ const DistributionDefault = () => {
       </div>
 
       <motion.div
-        className="fixed bottom-0 -z-10 flex h-[50vh] w-screen items-end"
+        className="fixed bottom-0 -z-10 mb-6 flex h-[50vh] w-screen items-end"
         style={{
           y: animationY,
           opacity: animationOpacity,
@@ -159,15 +154,7 @@ const DistributionDefault = () => {
         />
       </motion.div>
 
-      <motion.div
-        // animate={{
-        //   opacity: containerScrollY > text2Absolute ? 1 : 0,
-        //   translateY: containerScrollY > text2Absolute ? 0 : 'calc(300%)',
-        // }}
-        // transition={{ duration: 1 }}
-        // style={{ y: animationY }}
-        className="container flex w-full justify-between text-xs text-light-gray sm:text-sm"
-      >
+      <div className="container flex w-full justify-between text-xs text-light-gray sm:text-sm">
         <p className="hidden font-serif sm:block">
           Distribution of pre-tax national income by population group (2021).
         </p>
@@ -180,7 +167,7 @@ const DistributionDefault = () => {
             World Inequality Database, World Bank
           </a>
         </p>
-      </motion.div>
+      </div>
     </div>
   );
 };

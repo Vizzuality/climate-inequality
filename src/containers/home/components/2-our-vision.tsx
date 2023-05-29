@@ -31,7 +31,7 @@ const OurVision = () => {
   });
 
   const opacity = useTransform(scrollYProgress, (v) => {
-    return Math.min(Math.max(v / 0.15, 0), 1);
+    return !!v ? Math.min(Math.max(v / 0.15, 0), 1) : 0;
   });
 
   const y = useTransform(scrollYProgress, (v) => {
@@ -64,26 +64,17 @@ const OurVision = () => {
           autoplay
         />
       </motion.div>
-
-      <div className="flex h-screen items-center justify-center">
-        <FadeYScroll
-          className="flex max-w-[60%] flex-col justify-center text-center lg:max-w-xl"
-          threshold={0.5}
-        >
-          <SectionTitle>{contents[0].title}</SectionTitle>
-          <SectionSubtitle className="mt-2">{contents[0].subtitle}</SectionSubtitle>
-        </FadeYScroll>
-      </div>
-
-      <div className="flex h-screen items-center justify-center">
-        <FadeYScroll
-          threshold={0.5}
-          className="flex max-w-[60%] flex-col justify-center text-center lg:max-w-xl"
-        >
-          <SectionTitle>{contents[1].title}</SectionTitle>
-          <SectionSubtitle className="mt-2">{contents[1].subtitle}</SectionSubtitle>
-        </FadeYScroll>
-      </div>
+      {contents.map(({ subtitle, title }) => (
+        <div key={title} className="container flex h-screen items-center justify-center">
+          <FadeYScroll
+            className="flex max-w-[40%] flex-col justify-center text-center"
+            threshold={0.5}
+          >
+            <SectionTitle>{title}</SectionTitle>
+            <SectionSubtitle className="mt-2">{subtitle}</SectionSubtitle>
+          </FadeYScroll>
+        </div>
+      ))}
     </div>
   );
 };

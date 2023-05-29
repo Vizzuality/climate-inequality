@@ -2,11 +2,8 @@ import { useRef } from 'react';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-// import Icon from 'components/icon/component';
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
-
-// import FinalDiagram from 'svgs/ui/diagram.svg';
 
 import FadeYScroll from '../animations/FadeYScroll/component';
 import RiveScrollAnimation from '../rive-components/rive-scroll';
@@ -63,15 +60,6 @@ const Inequality = () => {
     offset: ['start end', 'end end'],
   });
 
-  const animationOpacity = useTransform(scrollYProgress, (v) => {
-    // if (!v || v === 1) return 0;
-    return 1;
-  });
-
-  // const finalDiagramOpacity = useTransform(scrollYProgress, (v) => {
-  //   return v > 0.99 ? 1 : 0;
-  // });
-
   const animationYProgress = useTransform(scrollYProgress, (v) => {
     const threshold = 0.33;
     let y = 0.01;
@@ -111,7 +99,7 @@ const Inequality = () => {
           {contents.map(({ p1, p2, subtitle, title }) => (
             <FadeYScroll threshold={0.5} key={title}>
               <div className="flex h-screen flex-col-reverse items-center justify-between gap-5 sm:mt-0 sm:flex-row sm:gap-10">
-                <div className="max-w-lg flex-1">
+                <div className="max-w-No, es que ">
                   <SectionTitle>{title}</SectionTitle>
                   <SectionSubtitle className="mt-2 mb-6" size="small">
                     {subtitle}
@@ -125,23 +113,12 @@ const Inequality = () => {
             </FadeYScroll>
           ))}
         </div>
-
-        {/* <motion.div
-          className="FinalDiagram max-w-[50%] flex-1"
-          style={{
-            opacity: 1,
-          }}
-        >
-        <div className="absolute  mt-[100vh] flex h-screen w-[50vw] items-center justify-end overflow-hidden bg-green pt-[6.66vw]">
-            <Icon icon={FinalDiagram} className="h-[45vw] w-[45vw] flex-shrink-0" />
-          </div>
-        </motion.div> */}
+        <div className="flex-1"></div>
       </div>
 
       <motion.div
         className="container pointer-events-none fixed right-0 flex h-screen w-screen items-center justify-end overflow-hidden"
         style={{
-          opacity: animationOpacity,
           position,
           y,
           top,
@@ -157,7 +134,6 @@ const Inequality = () => {
         />
       </motion.div>
     </div>
-    // </div>
   );
 };
 
