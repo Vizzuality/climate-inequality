@@ -1,11 +1,13 @@
 import { useRef } from 'react';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import classNames from 'classnames';
+
+import { useScroll, useTransform, motion } from 'framer-motion';
 
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
 
-import FadeYScroll from '../animations/FadeYScroll/component';
+import FadeYScroll from '../animations/fade-y-scroll/component';
 import RiveScrollAnimation from '../rive-components/rive-scroll';
 
 const contents = [
@@ -52,6 +54,23 @@ const contents = [
   },
 ];
 
+const Text = ({ title, subtitle, p1, p2 }: Omit<(typeof contents)[0], 'image'>) => {
+  return (
+    <div className="container flex flex-col-reverse items-center justify-between gap-5 pt-10 sm:mt-0 sm:h-screen sm:flex-row sm:gap-10">
+      <div className="">
+        <SectionTitle>{title}</SectionTitle>
+        <SectionSubtitle className="mt-2 mb-6" size="small">
+          {subtitle}
+        </SectionSubtitle>
+        <div className="mt-4 text-sm sm:text-base">
+          <p>{p1}</p>
+          <p className="mt-4 text-sm sm:text-base">{p2}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Inequality = () => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -73,66 +92,62 @@ const Inequality = () => {
     return y;
   });
 
-  const y = useTransform(scrollYProgress, (v) => {
-    const p = Math.min(Math.max((v + 0.1) / 0.33, 0), 1);
-    return v < 1 ? `${(1 - p) * 100}%` : '-100vh';
-  });
-
-  const position = useTransform(scrollYProgress, (v) => {
-    if (v < 1) {
-      return 'fixed';
-    }
-    return 'absolute';
-  });
-
-  const top = useTransform(scrollYProgress, (v) => {
-    if (v < 1) {
-      return 0;
-    }
-    return 'auto';
-  });
+  const text1Opacity = useTransform(scrollYProgress, [0, 0.5, 0.7], [0, 1, 0]);
+  const text2Opacity = useTransform(scrollYProgress, [0.7, 0.9], [0, 1]);
 
   return (
-    <div ref={ref} className="container w-screen">
-      <div className=" flex h-full">
+    <div ref={ref} className="flex h-[200vh] w-full flex-col">
+      <div className="flex flex-col sm:flex-row">
         <div className="flex-1">
-          {contents.map(({ p1, p2, subtitle, title }) => (
-            <FadeYScroll threshold={0.5} key={title}>
-              <div className="flex h-screen flex-col-reverse items-center justify-between gap-5 sm:mt-0 sm:flex-row sm:gap-10">
-                <div className="max-w-No, es que ">
-                  <SectionTitle>{title}</SectionTitle>
-                  <SectionSubtitle className="mt-2 mb-6" size="small">
-                    {subtitle}
-                  </SectionSubtitle>
-                  <div className="mt-4 text-sm sm:text-base">
-                    <p>{p1}</p>
-                    <p className="mt-4 text-sm sm:text-base">{p2}</p>
+          {contents.map(({ p1, p2, subtitle, title }, index) => {
+            return (
+              <>
+                <motion.div
+                  style={{
+                    opacity: index === 0 ? text1Opacity : text2Opacity,
+                  }}
+                  className={classNames('absolute h-screen  sm:hidden', {
+                    // 'mt-[50vh]': index === 0,
+                    'mt-[50vh]': index === 1,
+                    // 'bg-900 bg-opacity-50': index === 1,
+                  })}
+                  key={title}
+                >
+                  <div
+                    className={classNames('sticky top-0 h-[50vh]', {
+                      // 'mt-[50vh]': index === 1,
+                    })}
+                  >
+                    <Text p1={p1} p2={p2} subtitle={subtitle} title={title} />
                   </div>
+                </motion.div>
+                <div className="hidden sm:block">
+                  <FadeYScroll threshold={0.5} key={title}>
+                    <Text key={title} p1={p1} p2={p2} subtitle={subtitle} title={title} />
+                  </FadeYScroll>
                 </div>
-              </div>
-            </FadeYScroll>
-          ))}
+              </>
+            );
+          })}
         </div>
         <div className="flex-1"></div>
       </div>
 
-      <motion.div
-        className="container pointer-events-none fixed right-0 flex h-screen w-screen items-center justify-end overflow-hidden"
-        style={{
-          position,
-          y,
-          top,
-        }}
-      >
-        <RiveScrollAnimation
-          scrollY={animationYProgress}
-          fileName="diagram"
-          stateMachine="Default"
-          stateMachineInput="scrollPos"
-          className="diagram-animation h-[45vw] w-[45vw]"
-          autoplay
-        />
-      </motion.div>
+      <div className="absolute h-[200vh] w-screen sm:mt-[-25vh] sm:h-[225vh]">
+        <div className="sticky top-0 h-[100vh] w-full pt-[50vh] sm:flex sm:pt-0">
+          <div className="flex-1"></div>
+          <div className="container flex flex-1 items-center justify-center sm:justify-end">
+            <RiveScrollAnimation
+              scrollY={animationYProgress}
+              fileName="diagram"
+              stateMachine="Default"
+              stateMachineInput="scrollPos"
+              className="diagram-animation pointer-events-none h-[100vw] w-[100vw] sm:h-[40vh] sm:w-[40vh] xl:h-[45vw] xl:w-[45vw]"
+              autoplay
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

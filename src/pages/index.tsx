@@ -1,4 +1,4 @@
-import { RecoilRoot } from 'recoil';
+import Head from 'next/head';
 
 import { Home } from 'containers/home';
 
@@ -6,7 +6,7 @@ import MetaTags from 'components/meta-tags/meta-tags-component';
 
 const SEODescription = `Discover Vizzuality's insights on climate action and equality, emphasizing social and climate justice. Explore quizzes, data, and analyses on climate and social inequalities. Empower vulnerable groups, prioritize sustainable development.`;
 
-const Home: React.FC = () => {
+const HomePage: React.FC = () => {
   return (
     <div>
       <Head>
@@ -14,31 +14,7 @@ const Home: React.FC = () => {
       </Head>
       <MetaTags title="Climate Inequality" description={SEODescription} />
       <main>
-        <div className="container">
-          <Header />
-        </div>
-        <div className="py-20">
-          <Title />
-          <OurVision />
-          <OurVision section={1} />
-          <Inequality />
-          <Inequality type="wealth" />
-          <Distribution />
-          <Distribution isOnePercent={false} />
-          <EmissionsDistribution />
-          <ClimateCrisis />
-          <Multidimensional />
-          <Countries />
-          <Countries isReadness />
-          <ClimateInjustice />
-          <ZoomingIn />
-          <Understanding />
-          <Investment />
-          <Prioritising />
-        </div>
-        <div className="container">
-          <Footer />
-        </div>
+        <Home />
       </main>
     </div>
   );

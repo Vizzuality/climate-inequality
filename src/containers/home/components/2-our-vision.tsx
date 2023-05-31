@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 
-import { motion, useTransform, useScroll } from 'framer-motion';
+import classNames from 'classnames';
 
-import FadeYScroll from 'containers/home/animations/FadeYScroll/component';
+import { motion, useTransform, useScroll } from 'framer-motion';
 
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
@@ -30,49 +30,54 @@ const OurVision = () => {
     offset: ['start end', 'end start'],
   });
 
-  const opacity = useTransform(scrollYProgress, (v) => {
-    return !!v ? Math.min(Math.max(v / 0.15, 0), 1) : 0;
-  });
+  const y = useTransform(scrollYProgress, [0.74, 1], ['0vh', '150vh']);
 
-  const y = useTransform(scrollYProgress, (v) => {
-    if (v >= 0.7) {
-      return `${(v - 0.66) * 100}%`;
-    }
-    const p = Math.min(Math.max(v / 0.33, 0), 1);
-    return `${(1 - p) * 100}%`;
-  });
+  const textOpacity = useTransform(
+    scrollYProgress,
+    [0.23, 0.25, 0.38, 0.45, 0.6, 0.65],
+    [0, 1, 1, 0, 0, 1]
+  );
 
-  const animationY = useTransform(scrollYProgress, (v) => {
-    const threshold = 0.74;
-    const y = threshold + (v - threshold) * 0.5;
-    if (v > threshold) return y;
-    return v;
-  });
+  const scrollYProgress2 = useTransform(scrollYProgress, [0, 0.7, 0.85], [0, 0.7, 0.8]);
 
   return (
-    <div className="flex flex-col items-center" ref={sectionRef}>
-      <motion.div
-        className="pointer-events-none fixed top-0 left-0 flex h-screen w-full items-center justify-center overflow-hidden opacity-0"
-        style={{ y, opacity }}
-      >
-        <RiveScrollAnimation
-          scrollY={animationY}
-          fileName="circle"
-          stateMachine="Circle"
-          stateMachineInput="scrollPos"
-          className="h-[105vw] w-[105vw] "
-          autoplay
-        />
-      </motion.div>
-      {contents.map(({ subtitle, title }) => (
-        <div key={title} className="container flex h-screen items-center justify-center">
-          <FadeYScroll
-            className="flex max-w-[40%] flex-col justify-center text-center"
-            threshold={0.5}
-          >
-            <SectionTitle>{title}</SectionTitle>
-            <SectionSubtitle className="mt-2">{subtitle}</SectionSubtitle>
-          </FadeYScroll>
+    <div
+      className="flex min-h-[300vh] w-full flex-col items-center overflow-x-hidden"
+      ref={sectionRef}
+    >
+      <div className="absolute h-[300vh]">
+        <motion.div
+          className="pointer-events-none sticky top-0 flex h-screen w-screen items-center justify-center overflow-hidden"
+          style={{ y }}
+        >
+          <RiveScrollAnimation
+            scrollY={scrollYProgress2}
+            fileName="circle"
+            stateMachine="Circle"
+            stateMachineInput="scrollPos"
+            className="h-[105vw] w-[105vw] scale-[175%] sm:scale-100"
+            autoplay
+          />
+        </motion.div>
+      </div>
+      {contents.map(({ subtitle, title }, index) => (
+        <div
+          key={title}
+          className={classNames('absolute h-[150vh]', {
+            'mt-[150vh]': index === 1,
+          })}
+        >
+          <div className="sticky top-0 h-screen">
+            <div className="container flex h-full items-center justify-center">
+              <motion.div
+                className="flex max-w-[50%] flex-col justify-center text-center sm:max-w-[40%]"
+                style={{ opacity: textOpacity }}
+              >
+                <SectionTitle>{title}</SectionTitle>
+                <SectionSubtitle className="mt-2">{subtitle}</SectionSubtitle>
+              </motion.div>
+            </div>
+          </div>
         </div>
       ))}
     </div>
