@@ -152,7 +152,7 @@ const QuizPage: React.FC = () => {
                   )}
                 </div>
                 {!isSolutionMode && (
-                  <div className="fixed bottom-0 right-[16px] flex w-full justify-end sm:mt-12 lg:relative">
+                  <div className="fixed bottom-1 right-[16px] flex w-full justify-end sm:mt-12 lg:relative">
                     {renderButton(handleAnswerClick, 'Validate.')}
                   </div>
                 )}

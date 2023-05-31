@@ -17,7 +17,7 @@ const QuizPage: React.FC = () => {
         <title>Quiz</title>
       </Head>
       <main>
-        <div className="fixed lg:relative">
+        <div className="fixed w-full lg:relative">
           <div className="container flex items-start justify-between">
             <div className="flex items-center justify-start gap-x-2 bg-black pt-9">
               <Logo />
