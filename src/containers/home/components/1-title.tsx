@@ -1,21 +1,24 @@
-import Header from 'containers/header';
-
 import { Button } from 'components/button/component';
 
-import FadeYScroll from '../animations/FadeYScroll/component';
+import FadeYScroll from '../animations/fade-y-scroll/component';
 import RiveAnimation from '../rive-components/rive';
 
 const Title = () => {
+  const handleScroll = () => {
+    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+  };
+
   return (
-    <div className="container h-screen">
+    <div className="h-[calc(100vh-78px)] w-full pt-24">
       <FadeYScroll threshold={0.25}>
-        <Header />
-        <RiveAnimation
-          className="absolute -top-[87%] -left-[40%] -z-10 h-[122vw] w-[122vw] opacity-20"
-          src="/animations/init_animation.riv"
-          autoplay
-        />
-        <>
+        <div className="absolute top-[-25%] left-[-75%] -z-10 h-screen w-full sm:-top-[85%] sm:-left-[33.33%]">
+          <RiveAnimation
+            className="h-[100vh] w-[100vh] opacity-30 sm:h-[122vw] sm:w-[122vw]"
+            src="/animations/init_animation.riv"
+            autoplay
+          />
+        </div>
+        <div className="container">
           <div className="items-center justify-start pb-2 text-left text-sm font-semibold text-500">
             Vizzuality&lsquo;s look at climate action and equality.
           </div>
@@ -27,7 +30,7 @@ const Title = () => {
             need to understand these dynamics.
           </div>
           <div>
-            <Button theme="transparent" size="xs" className="w-24">
+            <Button onClick={handleScroll} theme="transparent" size="xs" className="px-0">
               <RiveAnimation
                 className="h-10 w-10"
                 src="/animations/scroll_down_arrow.riv"
@@ -35,7 +38,7 @@ const Title = () => {
               />
             </Button>
           </div>
-        </>
+        </div>
       </FadeYScroll>
     </div>
   );

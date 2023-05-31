@@ -1,5 +1,7 @@
 import { useRef } from 'react';
 
+import classNames from 'classnames';
+
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 import SectionSubtitle from 'components/section-subtitle/component';
@@ -25,137 +27,88 @@ const DistributionDefault = () => {
     offset: ['start center', 'end start'],
   });
 
-  const textY = useTransform(containerScrollProgress, (v) => {
-    if (v >= 0.4) {
-      const variation = scaleRange(v, [0.4, 0.5], [0, -25]);
+  const opacityText1 = useTransform(containerScrollProgress, [0, 0.2, 0.33, 0.5], [0, 1, 1, 0]);
+  const opacityText2 = useTransform(containerScrollProgress, [0.4, 0.5, 0.7, 1], [0, 1, 1, 0]);
+
+  const animationY = useTransform(animationScrollProgress, (v) => {
+    if (v > 0.8 && v < 1) {
+      const variation = scaleRange(v, [0.8, 1], [30, 0]);
       return `${variation}vh`;
     }
-    const p = Math.min(Math.max(v / 0.2, 0), 1);
-    return `${(1 - p) * 100}%`;
-  });
-
-  const text2Y = useTransform(containerScrollProgress, (v) => {
-    if (v >= 0 && v <= 0.5) {
-      const variation = scaleRange(v, [0, 0.5], [100, 0]);
+    if (v > 0.6 && v <= 0.8) {
+      const variation = scaleRange(v, [0.6, 0.8], [20, 30]);
       return `${variation}vh`;
     }
-    if (v > 0.6) {
-      const variation = scaleRange(v, [0.6, 1], [0, -100]);
+    if (v >= 0.5 && v <= 0.6) {
+      const variation = scaleRange(v, [0.5, 0.6], [0, 20]);
       return `${variation}vh`;
     }
-
-    const p = Math.min(Math.max(v / 0.2, 0), 1);
-    return `${(1 - p) * 100}%`;
-  });
-
-  const opacityText1 = useTransform(containerScrollProgress, (v) => {
-    if (v > 0.4) {
-      return scaleRange(v, [0.4, 0.5], [1, 0]);
+    if (v > 0 && v < 0.5) {
+      const variation = scaleRange(v, [0, 0.5], [-10, 0]);
+      return `${variation}vh`;
     }
-    if (v >= 0 && v <= 0.2) {
-      return scaleRange(v, [0, 0.2], [0, 1]);
+    if (v === 0) {
+      return '-10vh';
     }
-    if (v === 0 || v === 1) return 0;
-    return 1;
+    return 0;
   });
-
-  const opacityText2 = useTransform(containerScrollProgress, (v) => {
-    return v > 0.4 && v < 1 ? scaleRange(v, [0.4, 0.5], [0, 1]) : 0;
-  });
-
-  const animationY = useTransform(
-    [animationScrollProgress, containerScrollProgress],
-    ([v, c]: [number, number]) => {
-      if (v === 1) {
-        const variation = scaleRange(c, [0.6, 1], [0, -100]);
-        return `${variation}vh`;
-      }
-      if (v > 0.8 && v < 1) {
-        const variation = scaleRange(v, [0.8, 1], [30, 0]);
-        return `${variation}vh`;
-      }
-      if (v > 0.6 && v <= 0.8) {
-        const variation = scaleRange(v, [0.6, 0.8], [20, 30]);
-        return `${variation}vh`;
-      }
-      if (v >= 0.5 && v <= 0.6) {
-        const variation = scaleRange(v, [0.5, 0.6], [0, 20]);
-        return `${variation}vh`;
-      }
-      if (v >= 0) {
-        return 0;
-      }
-    }
-  );
 
   const animationOpacity = useTransform(animationScrollProgress, (v) => {
     return v > 0 ? 1 : 0;
   });
 
-  const legendY = useTransform(containerScrollProgress, [0.6, 1], [0, -100]);
-
   return (
-    <div ref={target} className="h-[200vh]">
-      <div className="flex h-[200vh] flex-col items-center justify-between">
-        <motion.div
-          className="text1 fixed top-0 z-10 pt-28 text-center"
-          style={{
-            y: textY,
-            opacity: opacityText1,
-          }}
-        >
-          <div className="max-w-3xl">
-            <SectionTitle>Distribution of global wealth.</SectionTitle>
-            <SectionSubtitle className="mt-2 mb-6" size="small">
-              {texts[0]}
-            </SectionSubtitle>
-          </div>
-          <div>
-            <p className="font-serif text-xs text-light-gray sm:hidden">
-              Distribution of pre-tax national income by population group (2021).
-            </p>
-          </div>
-        </motion.div>
-        <motion.div
-          className="fixed top-0 z-20 pt-28 text-center"
-          style={{
-            y: text2Y,
-            opacity: opacityText2,
-          }}
-        >
-          <div className="max-w-3xl">
-            <SectionTitle>Distribution of global wealth.</SectionTitle>
-            <SectionSubtitle className="mt-2 mb-6" size="small">
-              {texts[1]}
-            </SectionSubtitle>
-          </div>
-          <div>
-            <p className="font-serif text-xs text-light-gray sm:hidden">
-              Distribution of pre-tax national income by population group (2021).
-            </p>
-          </div>
-        </motion.div>
+    <div ref={target} className="flex h-[200vh] flex-col items-center">
+      {/* TEXTS */}
+      <div className="flex-0 absolute z-10 flex flex-col items-center justify-center">
+        {texts.map((text, index) => {
+          return (
+            <div key={text} className="h-[75vh]">
+              <motion.div
+                className={classNames('sticky top-0 z-10 pt-12 text-center sm:pt-28', {
+                  'pb-28': index === 1,
+                })}
+                style={{
+                  opacity: index === 0 ? opacityText1 : opacityText2,
+                }}
+              >
+                <div className="container sm:max-w-3xl">
+                  <SectionTitle>Distribution of global wealth.</SectionTitle>
+                  <SectionSubtitle className="mt-2 mb-6" size="small">
+                    {text}
+                  </SectionSubtitle>
+                </div>
+              </motion.div>
+            </div>
+          );
+        })}
       </div>
-
+      {/* DESKTOP ANIMATION */}
       <motion.div
-        className="fixed bottom-0 -z-10 mb-6 flex h-[50vh] w-screen items-end"
+        className="absolute -z-10 mb-6 hidden h-[200vh] w-screen sm:flex"
         style={{
           y: animationY,
           opacity: animationOpacity,
         }}
       >
-        <RiveScrollAnimation
-          scrollY={animationScrollProgress}
-          fileName="chart"
-          stateMachine="Default"
-          stateMachineInput="scrollPos"
-          className="diagram-animation h-[150vh] w-screen"
-          autoplay
-        />
+        <div className="h-[200vh]">
+          <div className="sticky top-0 h-screen">
+            <div className="flex h-full items-end pb-10">
+              <RiveScrollAnimation
+                scrollY={animationScrollProgress}
+                fileName="chart"
+                stateMachine="Default"
+                stateMachineInput="scrollPos"
+                className="diagram-animation h-[150vh] w-screen"
+                autoplay
+              />
+            </div>
+          </div>
+        </div>
       </motion.div>
-
-      <div className="container flex w-full justify-between text-xs text-light-gray sm:text-sm">
-        <p className="hidden font-serif sm:block">
+      {/* DESKTOP LEGEND */}
+      <div className="container hidden h-full w-full items-end justify-between text-sm text-light-gray sm:flex">
+        <p className="font-serif">
           Distribution of pre-tax national income by population group (2021).
         </p>
         <p>
@@ -167,6 +120,36 @@ const DistributionDefault = () => {
             World Inequality Database, World Bank
           </a>
         </p>
+      </div>
+
+      {/* MOBILE ANIMATION AND LEGEND */}
+      <div className="absolute flex h-[200vh] w-screen sm:hidden">
+        <div className="sticky top-[25vh] h-[75vh]">
+          <div className="flex h-full flex-col justify-end">
+            <RiveScrollAnimation
+              scrollY={animationScrollProgress}
+              fileName="chart"
+              stateMachine="Default"
+              stateMachineInput="scrollPos"
+              className="mobile-animation mb-4 h-[75vh] w-screen"
+              autoplay
+            />
+          </div>
+          <div className="container -mt-8 font-serif text-2xs  text-light-gray">
+            <p className="mb-2">
+              Distribution of pre-tax national income by population group (2021).
+            </p>
+            <p>
+              Source:{' '}
+              <a
+                className="underline"
+                href="https://www.figma.com/file/tfBBt7rL4Rt0NJs7swlZdE/V2---Vizz-branding?node-id=347-55549&t=jWrtaEw0X7czunMf-4"
+              >
+                World Inequality Database, World Bank
+              </a>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

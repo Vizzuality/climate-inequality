@@ -1,5 +1,7 @@
 import { useRef } from 'react';
 
+import classNames from 'classnames';
+
 import { MotionValue, motion, useScroll, useTransform } from 'framer-motion';
 
 import Icon from 'components/icon/component';
@@ -13,7 +15,8 @@ const contents = [
   {
     title: 'Vulnerability to climate impacts.',
     subtitle: 'Which countries are most at risk?',
-    image: '/images/map-1.png',
+    image: '/images/map-vulnerability.png',
+    legend: 'Vulnerability',
     p: (
       <>
         Vulnerability measures a country&apos;s exposure, sensitivity and ability to adapt to
@@ -37,7 +40,8 @@ const contents = [
   {
     title: 'Readiness to adapt to climate impacts.',
     subtitle: 'Readiness to adapt to climate impacts.',
-    image: '/images/map-2.png',
+    image: '/images/map-readiness.png',
+    legend: 'Readiness',
     p: (
       <>
         Readiness measures a country&apos;s ability to leverage investments and convert them to
@@ -66,9 +70,9 @@ const Legend = ({ text = 'Vulnerability' }) => {
   const text2 = isVuln ? 'Better' : 'Worse';
 
   return (
-    <div className="container mt-3 flex w-full -translate-y-full items-end justify-between bg-black text-2xs">
+    <div className="container mt-3 w-full -translate-y-1/2 items-end justify-between bg-black text-2xs sm:flex sm:-translate-y-full">
       <div></div>
-      <div className="w-full sm:w-auto">
+      <div className="mb-5 w-full sm:mb-0 sm:w-auto">
         <span className="text-xs">{text}</span>
         <Icon
           className="mt-1 mb-0.5 w-full sm:w-[228px]"
@@ -104,7 +108,7 @@ const Text = ({
 }) => {
   const translateY1 = useTransform(scrollYProgress, [0, 0.3], [-100, 0]);
   const opacity1 = useTransform(scrollYProgress, [0, 0.3, 0.4, 0.5], [0, 1, 1, 0]);
-  const opacity2 = useTransform(scrollYProgress, [0.45, 0.6], [0, 1]);
+  const opacity2 = useTransform(scrollYProgress, [0.4, 0.6], [0, 1]);
 
   return (
     <div className={className}>
@@ -119,7 +123,9 @@ const Text = ({
               translateY,
             }}
             key={title}
-            className="h-[66.66vh] w-[50vw]"
+            className={classNames('countries-text absolute h-[50vh] sm:w-[50vw]', {
+              'mt-[75vh]': index === 1,
+            })}
           >
             <div className="sticky top-0 pt-24">
               <SectionTitle>{title}</SectionTitle>
@@ -142,67 +148,40 @@ const Countries = () => {
     offset: ['start end', 'end start'],
   });
 
-  const map1opacity = useTransform(scrollYProgress, [0, 0.1, 0.45, 0.6], [0, 0, 1, 0]);
-  const map2opacity = useTransform(scrollYProgress, [0.45, 0.6], [0, 1]);
-
-  const mapPosition = useTransform(scrollYProgress, (v) => {
-    if (v > 0.333 && v < 0.666) {
-      return 'fixed';
-    }
-    return 'absolute';
-  });
-
-  const mapTop = useTransform(scrollYProgress, (v) => {
-    console.log(v);
-    if (v > 0.333 && v < 0.666) {
-      return '0';
-    }
-    return 'auto';
-  });
-
-  const map2y = useTransform(scrollYProgress, (v) => {
-    if (v > 0.666) {
-      return '100vh';
-    }
-    return '0';
-  });
+  const map1opacity = useTransform(scrollYProgress, [0, 0.33, 0.45, 0.6], [0, 1, 1, 0]);
+  const map2opacity = useTransform(scrollYProgress, [0.45, 0.6, 0.8, 0.9], [0, 1, 1, 0]);
 
   return (
     <div ref={ref} className="flex h-[200vh] flex-col">
-      <Text className="container z-20" scrollYProgress={scrollYProgress} />
-      <motion.div
-        style={{
-          opacity: map1opacity,
-          position: mapPosition,
-          top: mapTop,
-        }}
-        className="map-1 z-10 mx-auto flex h-screen w-full flex-1 flex-col items-center justify-end"
-      >
-        <div
-          style={{
-            backgroundImage: 'url(/images/map-vulnerability.png)',
-          }}
-          className="h-[34.77vw] w-[80vw] bg-cover bg-center bg-no-repeat"
-        ></div>
-        <Legend text="Vulnerability" />
-      </motion.div>
-      <motion.div
-        className="map-2 z-10 mx-auto flex h-screen w-full flex-1 flex-col items-center justify-end"
-        style={{
-          opacity: map2opacity,
-          position: mapPosition,
-          top: mapTop,
-          y: map2y,
-        }}
-      >
-        <div
-          style={{
-            backgroundImage: 'url(/images/map-readiness.png)',
-          }}
-          className="h-[34.77vw] w-[80vw] bg-cover bg-center bg-no-repeat"
-        ></div>
-        <Legend text="Readness" />
-      </motion.div>
+      <Text className="flex-0 container z-20" scrollYProgress={scrollYProgress} />
+      <div className="absolute h-[200vh] w-full flex-1">
+        <div className="sticky top-0 h-screen">
+          <div>
+            {contents.map(({ image, legend }, index) => (
+              <motion.div
+                key={legend}
+                style={{
+                  opacity: index === 0 ? map1opacity : map2opacity,
+                }}
+                className={classNames(
+                  'z-10 mx-auto flex h-screen w-full flex-1 flex-col items-center justify-end',
+                  {
+                    'mt-[-100vh]': index === 1,
+                  }
+                )}
+              >
+                <div
+                  style={{
+                    backgroundImage: `url('${image}')`,
+                  }}
+                  className="h-[50vh] w-screen bg-cover bg-center bg-no-repeat sm:h-[34.77vw] sm:w-[80vw]"
+                ></div>
+                <Legend text={legend} />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

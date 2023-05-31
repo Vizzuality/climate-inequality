@@ -1,3 +1,6 @@
+import Footer from 'containers/footer/component';
+import Header from 'containers/header/component';
+
 import Title from './components/1-title';
 import ClimateInjustice from './components/10-climate-injustice';
 import ZoomingIn from './components/11-zooming-in';
@@ -15,6 +18,7 @@ import Countries from './components/9-countries';
 const Home = () => {
   return (
     <div>
+      <Header />
       <Title />
       <OurVision />
       <Inequality />
@@ -28,6 +32,7 @@ const Home = () => {
       <Understanding />
       <Investment />
       <Prioritising />
+      <Footer />
     </div>
   );
 };

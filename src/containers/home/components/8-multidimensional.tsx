@@ -2,14 +2,12 @@ import { useRef } from 'react';
 
 import classNames from 'classnames';
 
-import { motion } from 'framer-motion';
+import { MotionValue, motion, useScroll, useTransform } from 'framer-motion';
 
 import Icon from 'components/icon';
 import SectionSubtitle from 'components/section-subtitle';
 
 import ArrowRigth from 'svgs/ui/arrow-right-3.svg';
-
-import { useScrollY } from '../utils';
 
 const content = [
   {
@@ -28,7 +26,7 @@ const content = [
   {
     classname: 'z-20 lg:-translate-x-[10%] -translate-y-6 lg:translate-y-0',
     text: 'Greater susceptibility to damages caused by climate hazards',
-    arrowClassname: 'rotate-90 lg:rotate-0 translate-y-3 lg:translate-y-0 justify-end',
+    arrowClassname: 'rotate-90 lg:rotate-0 -translate-y-3 lg:translate-y-0',
   },
   {
     classname: 'bg-black text-500',
@@ -36,18 +34,70 @@ const content = [
   },
 ];
 
+type Bubble = {
+  text: string;
+  classname: string;
+  arrowClassname?: string;
+  index: number;
+  scrollYProgress: MotionValue<number>;
+};
+
+const Bubble = ({ text, classname, arrowClassname, index, scrollYProgress }: Bubble) => {
+  const opacity = useTransform(scrollYProgress, (v) => {
+    const a = ((v * 100 - index * 10) / 100) * ((v * 100) / (content.length - index));
+    return a;
+  });
+
+  const opacity2 = useTransform(scrollYProgress, (v) => {
+    return (v * 2) / (100 + index * 10);
+  });
+
+  return (
+    <>
+      <motion.div
+        style={{
+          opacity,
+        }}
+        className={classNames(
+          'flex aspect-square h-44 w-44 flex-[2.5] flex-shrink-0 items-center justify-center rounded-full border-4 border-500 bg-white p-4 lg:h-full lg:w-full lg:p-5',
+          { [classname]: true }
+        )}
+      >
+        <p className="text-center text-sm font-semibold leading-tight xl:text-base">{text}</p>
+      </motion.div>
+      {arrowClassname && (
+        <motion.div
+          style={{
+            opacity: opacity2,
+          }}
+          className={classNames('flex w-8 flex-1 flex-shrink-0 fill-white', {
+            [arrowClassname]: true,
+          })}
+        >
+          <Icon className="h-[38px] w-[38px]" icon={ArrowRigth} />
+        </motion.div>
+      )}
+    </>
+  );
+};
+
 const Multidimensional = () => {
   const target = useRef(null);
 
-  const { scrollY: y } = useScrollY({ target, offset: ['start end', 'end start'] });
+  const { scrollYProgress } = useScroll({ target, offset: ['start end', 'end start'] });
+
+  const x = useTransform(scrollYProgress, [0, 0.25], ['-100%', '0%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
+
+  const bubblesX = useTransform(scrollYProgress, [0, 0.5], ['-100%', '0%']);
 
   return (
     <div ref={target} className="min-h-screen bg-500 text-900">
       <div className="container flex min-h-screen flex-col items-end justify-around gap-8 py-20 lg:gap-4">
         <motion.div
           style={{
-            translateX: y < 25 ? `calc(${y * 4 - 100}%)` : 0,
-            opacity: (y * 3) / 100,
+            x,
+            opacity,
           }}
         >
           {' '}
@@ -60,42 +110,19 @@ const Multidimensional = () => {
         <motion.div
           className="flex h-full w-full flex-col items-center justify-between lg:flex-row"
           style={{
-            translateX: y < 50 ? `calc(${y * 2 - 100}px)` : 0,
+            translateX: bubblesX,
           }}
         >
           {content.map(({ text, classname, arrowClassname }, index) => {
-            const opacity = ((y - index * 10) / 100) * (y / (content.length - index));
             return (
-              <>
-                <motion.div
-                  style={{
-                    // translateX: y < 50 ? `calc(${y * 2 - 100}%)` : 0,
-                    opacity,
-                    // : ((y - index * 10) * 7) / 100
-                  }}
-                  className={classNames(
-                    'flex aspect-square h-44 w-44 flex-[2.5] flex-shrink-0 items-center justify-center rounded-full border-4 border-500 bg-white p-4 lg:h-full lg:w-full lg:p-5',
-                    { [classname]: true }
-                  )}
-                >
-                  <p className="text-center text-sm font-semibold leading-tight xl:text-base">
-                    {text}
-                  </p>
-                </motion.div>
-                {arrowClassname && (
-                  <motion.div
-                    style={{
-                      // translateX: y < 50 ? `calc(${y * 2 - 100}%)` : 0,
-                      opacity: (y * 2) / (100 + index * 10),
-                    }}
-                    className={classNames('flex w-8 flex-1  flex-shrink-0 fill-white', {
-                      [arrowClassname]: true,
-                    })}
-                  >
-                    <Icon className="h-[38px] w-[38px]" icon={ArrowRigth} />
-                  </motion.div>
-                )}
-              </>
+              <Bubble
+                key={index}
+                text={text}
+                classname={classname}
+                arrowClassname={arrowClassname}
+                index={index}
+                scrollYProgress={scrollYProgress}
+              />
             );
           })}
         </motion.div>
