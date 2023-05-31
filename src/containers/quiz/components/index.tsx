@@ -12,7 +12,7 @@ export const renderButton = (onClick: () => void, text: string) => (
   <button
     type="button"
     onClick={onClick}
-    className="flex h-14 w-full items-center justify-center gap-x-2 bg-white px-5 text-center text-lg font-bold text-black transition-all duration-500 hover:bg-opacity-60 sm:h-16 sm:w-64 sm:text-xl"
+    className="flex h-14 w-[92%] items-center justify-center gap-x-2 bg-white px-5 text-center text-lg font-bold text-black transition-all duration-500 hover:bg-opacity-60 sm:h-16 sm:text-xl lg:w-64"
   >
     {text}
   </button>

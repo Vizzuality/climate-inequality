@@ -98,7 +98,7 @@ const QuizPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col pt-20 lg:pt-0">
       <div className="pb-6 xl:pt-10 xl:pb-10">
         <div className="pb-4 lg:mb-5">
           {renderStep(currentStep, 4)}
@@ -152,7 +152,7 @@ const QuizPage: React.FC = () => {
                   )}
                 </div>
                 {!isSolutionMode && (
-                  <div className="flex justify-end sm:mt-12">
+                  <div className="fixed bottom-0 right-[16px] flex w-full justify-end sm:mt-12 lg:relative">
                     {renderButton(handleAnswerClick, 'Validate.')}
                   </div>
                 )}
@@ -162,10 +162,10 @@ const QuizPage: React.FC = () => {
         </div>
         {isSolutionMode && (
           <div>
-            <div className="pb-4 text-sm font-light leading-tight sm:font-normal xl:pb-16">
+            <div className="pb-8 text-sm font-light leading-tight sm:font-normal lg:pb-4 xl:pb-16">
               {text}
             </div>
-            <div className="align-center flex w-full flex-col justify-between gap-4 sm:flex-row sm:gap-0">
+            <div className="align-center flex w-full flex-col justify-between gap-4 pb-16 sm:flex-row sm:gap-0 lg:pb-0">
               <a
                 href={sourceLink}
                 target="_blank"
@@ -174,7 +174,9 @@ const QuizPage: React.FC = () => {
               >
                 Source
               </a>
-              {renderButton(handleNextClick, 'Next.')}
+              <div className="fixed bottom-1 flex w-full justify-start sm:w-5/6 lg:relative lg:justify-end">
+                {renderButton(handleNextClick, 'Next.')}
+              </div>
             </div>
           </div>
         )}
