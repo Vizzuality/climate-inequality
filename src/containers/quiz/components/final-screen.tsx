@@ -37,70 +37,74 @@ const Answers = ({ userAnswers }: Pick<FinalScreenProps, 'userAnswers'>) => (
   </motion.div>
 );
 
+const PositionAnimation = ({
+  children,
+  position,
+}: {
+  children: JSX.Element;
+  position: 'top' | 'bottom';
+}) => {
+  return (
+    <motion.div
+      initial={{ translateY: position === 'top' ? '-300%' : '300%' }}
+      animate={{ translateY: 0 }}
+      transition={contentTransition}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
 const FinalScreen = ({ userAnswers, handleTryAnother, isLast }: FinalScreenProps) => {
   const correctAnswers = userAnswers.reduce((acc, answer) => (answer ? acc + 1 : acc), 0);
 
-  const PositionAnimation = ({
-    children,
-    position,
-  }: {
-    children: JSX.Element;
-    position: 'top' | 'bottom';
-  }) => {
-    return (
-      <motion.div
-        initial={{ translateY: position === 'top' ? '-300%' : '300%' }}
-        animate={{ translateY: 0 }}
-        transition={contentTransition}
-      >
-        {children}
-      </motion.div>
-    );
-  };
-
   return (
-    <div className="container flex h-full w-full flex-1 items-center justify-center overflow-hidden pt-10 pb-9 font-sans">
+    <>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={contentTransition}
+        className="container flex h-full w-full flex-1 flex-col items-center justify-between pt-6 pb-6 font-sans xl:pt-10 xl:pb-9"
       >
-        <div className="z-10">
+        <div className="z-10 flex flex-1 flex-col justify-center">
           <div className="text-center">
             <PositionAnimation position="top">
-              <h1 className="mb-4 font-serif text-[40px] font-normal leading-tight">
+              <h1 className="mb-4 font-serif text-2xl font-normal leading-tight sm:text-[40px]">
                 Thank you for taking the inequality quiz.
               </h1>
             </PositionAnimation>
-            <p className="font-sans text-md font-light">
+            <p className="hidden font-sans text-md font-light sm:block">
               Inequality is a complex issue that affects individuals and communities in various
-              ways. By sharing knowledge on the causes and consequences of inequality, we can
-              identify solutions and work towards creating a more just and equitable society.
+              ways.
+            </p>
+            <p className="hidden font-sans text-md font-light sm:block">
+              By sharing knowledge on the causes and consequences of inequality, we can identify
+              solutions and work towards creating a more just and equitable society.
             </p>
           </div>
-          <div className="flex flex-col items-center justify-center pt-14">
+          <div className="flex flex-col items-center justify-center pt-6 sm:pt-14">
             <Answers userAnswers={userAnswers} />
-            <p className="mt-4 text-md font-semibold">
+            <p className="mt-4 text-sm font-semibold sm:text-md">
               You scored {correctAnswers} out of 4 questions.
             </p>
           </div>
-          <div className="mt-10 flex flex-col items-center justify-center">
+          <div className="mt-8 flex flex-col items-center justify-center sm:mt-10">
             {!isLast && (
-              <div className="flex flex-col items-center justify-center">
-                <p>
+              <div className="flex w-full flex-col items-center justify-center text-center">
+                <p className="hidden sm:block">
                   Try another quiz or learn more about climate inequality and how we can tackle it.
                 </p>
                 <motion.div
                   initial={{ width: 200 }}
                   animate={{ width: 390 }}
-                  className="button-animation mt-8 flex items-center justify-center overflow-hidden"
+                  className="flex items-center justify-center overflow-hidden sm:mt-8"
                   transition={contentTransition}
                 >
                   <Button
                     theme="white"
                     size="s"
-                    className="py-5 text-md font-semibold text-black sm:w-[390px]"
+                    className="w-[267px] py-5 text-md font-semibold text-black sm:w-[390px]"
                     onClick={handleTryAnother}
                   >
                     Try another quiz
@@ -120,14 +124,16 @@ const FinalScreen = ({ userAnswers, handleTryAnother, isLast }: FinalScreenProps
             )}
           </div>
         </div>
-        <PositionAnimation position="bottom">
-          <div className="mt-auto flex flex-col items-center justify-center">
-            <p className="mb-3 text-center text-sm font-semibold">Share</p>
-            <SocialIcons isShare className="flex gap-4" />
-          </div>
-        </PositionAnimation>
+        <div className="mt-auto flex flex-col items-center justify-center">
+          <PositionAnimation position="bottom">
+            <>
+              <p className="mb-3 text-center text-sm font-semibold">Share</p>
+              <SocialIcons isShare className="flex gap-4" />
+            </>
+          </PositionAnimation>
+        </div>
       </motion.div>
-      <div className="absolute top-0 left-0 -z-10 flex h-screen w-screen items-center justify-center">
+      <div className="fixed top-0 left-0 -z-10 flex min-h-screen w-full items-center justify-center">
         <motion.div
           initial={{ opacity: 0, height: '50vh', width: '50vw' }}
           animate={{ opacity: 0.3, height: '100vh', width: '100vw' }}
@@ -137,7 +143,7 @@ const FinalScreen = ({ userAnswers, handleTryAnother, isLast }: FinalScreenProps
           style={{ backgroundImage: "url('/images/quizz-final-bg.png')" }}
         ></motion.div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -39,7 +39,10 @@ const SocialIcons = ({ className, isShare }: SocialIconsProps) => {
     <div className={className}>
       {socialData.map(({ href, icon: IconSvg, shareLink }) => (
         <a key={href} href={isShare ? shareLink : href} target="_blank" rel="noreferrer">
-          <Icon icon={IconSvg} className="h-6 w-6" />
+          <Icon
+            icon={IconSvg}
+            className="h-6 w-6 transition-all duration-500 ease-in-out hover:fill-400"
+          />
         </a>
       ))}
     </div>

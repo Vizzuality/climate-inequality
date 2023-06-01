@@ -98,16 +98,20 @@ const QuizPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-1 flex-col">
-      <div className="container pt-10">
-        <div className="mb-5 pb-4">
+    <div className="flex flex-1 flex-col pt-20 lg:pt-0">
+      <div className="pb-6 xl:pt-10 xl:pb-10">
+        <div className="pb-4 lg:mb-5">
           {renderStep(currentStep, 4)}
           <div className="mt-3">
             {!currentQuestion ? null : currentQuestion?.type === 'multiple' ? (
               <>
-                <div className="mb-5 text-2xl leading-tight text-white">{question}</div>
-                <p className="mb-14 text-base leading-snug text-white/80">Select your answer.</p>
-                <div className="inline-flex w-full items-start justify-between gap-x-6">
+                <div className="mb-5 text-xl font-light leading-tight text-white sm:text-2xl sm:font-normal">
+                  {question}
+                </div>
+                <p className="mb-2 text-base leading-snug text-white/80 sm:mb-14">
+                  Select your answer.
+                </p>
+                <div className="flex w-full flex-col items-start justify-between gap-2 gap-x-6 sm:inline-flex sm:flex-row">
                   {renderAnswers(
                     answers,
                     handleAnswerClick,
@@ -118,7 +122,7 @@ const QuizPage: React.FC = () => {
               </>
             ) : (
               <>
-                <div className="mb-5 text-2xl leading-tight text-white">
+                <div className="mb-5 text-xl leading-tight text-white sm:text-2xl">
                   <div>
                     {question[0]}
                     <div className="mx-2 inline-flex w-20 -translate-y-1.5 justify-center border-b-2 border-white text-lg text-500">
@@ -133,7 +137,7 @@ const QuizPage: React.FC = () => {
                     {question[2]}
                   </div>
                 </div>
-                <p className="mb-5 text-base leading-snug text-white/80">
+                <p className="mb-5 text-sm leading-snug text-white/80 sm:text-base">
                   Drag the circles to change value and validate when you are happy with your answer
                 </p>
                 <div className="flex h-56 w-full">
@@ -148,7 +152,7 @@ const QuizPage: React.FC = () => {
                   )}
                 </div>
                 {!isSolutionMode && (
-                  <div className="mt-12 flex justify-end">
+                  <div className="fixed bottom-1 right-[16px] flex w-full justify-end sm:mt-12 lg:relative">
                     {renderButton(handleAnswerClick, 'Validate.')}
                   </div>
                 )}
@@ -158,8 +162,10 @@ const QuizPage: React.FC = () => {
         </div>
         {isSolutionMode && (
           <div>
-            <div className="pb-16 text-sm leading-tight">{text}</div>
-            <div className="align-center flex w-full justify-between">
+            <div className="pb-8 text-sm font-light leading-tight sm:font-normal lg:pb-4 xl:pb-16">
+              {text}
+            </div>
+            <div className="align-center flex w-full flex-col justify-between gap-4 pb-16 sm:flex-row sm:gap-0 lg:pb-0">
               <a
                 href={sourceLink}
                 target="_blank"
@@ -168,7 +174,9 @@ const QuizPage: React.FC = () => {
               >
                 Source
               </a>
-              {renderButton(handleNextClick, 'Next.')}
+              <div className="fixed bottom-1 flex w-full justify-start sm:w-5/6 lg:relative lg:justify-end">
+                {renderButton(handleNextClick, 'Next.')}
+              </div>
             </div>
           </div>
         )}

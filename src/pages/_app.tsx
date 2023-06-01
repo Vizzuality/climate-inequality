@@ -7,6 +7,7 @@ import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 
 import { OverlayProvider } from '@react-aria/overlays';
+import { SSRProvider } from '@react-aria/ssr';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
 
 import ThirdParty from 'containers/third-party';
@@ -45,7 +46,9 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
             <MediaContextProvider>
               <MapProvider>
                 <ThirdParty />
-                <Component {...pageProps} />
+                <SSRProvider>
+                  <Component {...pageProps} />
+                </SSRProvider>
               </MapProvider>
             </MediaContextProvider>
           </OverlayProvider>
