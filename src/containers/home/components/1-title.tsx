@@ -19,9 +19,9 @@ const Title = () => {
           />
         </div>
         <div className="container">
-          <div className="items-center justify-start pb-2 text-left text-sm font-semibold text-500">
+          <h1 className="items-center justify-start pb-2 text-left text-sm font-semibold text-500">
             Vizzuality&lsquo;s look at climate action and equality.
-          </div>
+          </h1>
           <div className="flex items-center justify-start pb-6 text-left font-serif text-[40px] font-normal leading-tight text-white sm:text-4xl lg:w-5/6 lg:text-5xl lg:leading-[90px]">
             We believe in a sustainable and just future for all, where equality is core.
           </div>

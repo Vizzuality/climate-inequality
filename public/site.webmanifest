@@ -1,0 +1,19 @@
+{
+    "name": "Climate Inequality",
+    "short_name": "Climate Inequality",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#ffe229",
+    "background_color": "#000",
+    "display": "standalone"
+}
