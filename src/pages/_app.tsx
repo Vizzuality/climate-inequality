@@ -1,11 +1,10 @@
 import { useCallback, useEffect } from 'react';
 
-import { MapProvider } from 'react-map-gl';
-
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 
 import { OverlayProvider } from '@react-aria/overlays';
+import { SSRProvider } from '@react-aria/ssr';
 
 import ThirdParty from 'containers/third-party';
 
@@ -36,10 +35,10 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
     <OverlayProvider>
       {/* @ts-ignore: https://github.com/artsy/fresnel/issues/281 */}
       <MediaContextProvider>
-        <MapProvider>
-          <ThirdParty />
+        <ThirdParty />
+        <SSRProvider>
           <Component {...pageProps} />
-        </MapProvider>
+        </SSRProvider>
       </MediaContextProvider>
     </OverlayProvider>
   );
