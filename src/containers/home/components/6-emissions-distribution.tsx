@@ -2,13 +2,13 @@ import { useRef } from 'react';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 
+import Icon from 'components/icon/component';
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
 
-import RiveScrollAnimation from '../rive-components/rive-scroll';
-import Icon from 'components/icon/component';
-
 import DistributionIcon from 'svgs/ui/distribution-mobile.svg';
+
+import RiveScrollAnimation from '../rive-components/rive-scroll';
 
 const EmissionsDistribution = () => {
   const target = useRef(null);
@@ -18,9 +18,9 @@ const EmissionsDistribution = () => {
     offset: ['start end', 'end start'],
   });
 
-  const animationProgress = useTransform(scrollYProgress, [0, 0.33, 0.6], [0.02, 0.02, 0.7]);
+  const animationProgress = useTransform(scrollYProgress, [0, 0.33, 0.55], [0, 0, 0.7]);
 
-  const height = useTransform(animationProgress, [0, 0.25], [`${10}vh`, `${33.33}vh`]);
+  const height = useTransform(animationProgress, [0, 0.25], [`${12}vh`, `${35}vh`]);
 
   const y = useTransform(scrollYProgress, [0, 0.33], ['-50vh', '0vh']);
   const opacity = useTransform(scrollYProgress, [0.2, 0.33], [0, 1]);
@@ -45,6 +45,7 @@ const EmissionsDistribution = () => {
               </div>
             </motion.div>
 
+            {/* DESKTOP ANIMATION */}
             <div className="hidden sm:block">
               <motion.div style={{ height }} className="container flex w-screen items-center">
                 <RiveScrollAnimation
@@ -52,15 +53,16 @@ const EmissionsDistribution = () => {
                   fileName="chart_share_of_emissions"
                   stateMachine="Default"
                   stateMachineInput="scrollPos"
-                  className="sm:h-[50vh] sm:w-full"
+                  className="sm:h-[50vh] sm:w-screen"
                   autoplay
                 />
               </motion.div>
             </div>
 
-            <div className="sm:hidden">
+            {/* MOBILE IMAGE */}
+            <div className="flex flex-1 items-center sm:hidden">
               <motion.div style={{ opacity: distributionMobileOpacity }}>
-                <Icon icon={DistributionIcon} className="container " />
+                <Icon icon={DistributionIcon} className="container w-screen" />
               </motion.div>
             </div>
 

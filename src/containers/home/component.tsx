@@ -18,8 +18,10 @@ import Countries from './components/9-countries';
 const Home = () => {
   return (
     <div>
-      <Header />
-      <Title />
+      <div className="min-h-screen">
+        <Header />
+        <Title />
+      </div>
       <OurVision />
       <Inequality />
       <Distribution />

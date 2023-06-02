@@ -9,11 +9,12 @@ const Title = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-78px)] w-full pt-24">
+    <div className="pt-18 w-full xl:pt-24">
       <FadeYScroll threshold={0.25}>
-        <div className="absolute top-[-25%] left-[-75%] -z-10 h-screen w-full sm:-top-[85%] sm:-left-[33.33%]">
+        <div className="absolute top-0 -z-10 h-screen w-screen overflow-hidden ">
           <RiveAnimation
-            className="h-[100vh] w-[100vh] opacity-30 sm:h-[122vw] sm:w-[122vw]"
+            className="h-[122vh] w-[122vh]
+            translate-x-[-75vw] translate-y-[-40vh] opacity-40 sm:h-[122vw] sm:w-[122vw] sm:-translate-x-[45vw] sm:-translate-y-[95vh]"
             src="/animations/init_animation.riv"
             autoplay
           />
@@ -30,9 +31,14 @@ const Title = () => {
             need to understand these dynamics.
           </div>
           <div>
-            <Button onClick={handleScroll} theme="transparent" size="xs" className="px-0">
+            <Button
+              onClick={handleScroll}
+              theme="transparent"
+              size="xs"
+              className="px-0 lg:-translate-x-4"
+            >
               <RiveAnimation
-                className="h-10 w-10"
+                className="h-10 w-10 lg:h-14 lg:w-14"
                 src="/animations/scroll_down_arrow.riv"
                 autoplay
               />

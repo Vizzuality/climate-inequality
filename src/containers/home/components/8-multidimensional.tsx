@@ -48,10 +48,6 @@ const Bubble = ({ text, classname, arrowClassname, index, scrollYProgress }: Bub
     return a;
   });
 
-  const opacity2 = useTransform(scrollYProgress, (v) => {
-    return (v * 2) / (100 + index * 10);
-  });
-
   return (
     <>
       <motion.div
@@ -68,7 +64,7 @@ const Bubble = ({ text, classname, arrowClassname, index, scrollYProgress }: Bub
       {arrowClassname && (
         <motion.div
           style={{
-            opacity: opacity2,
+            opacity,
           }}
           className={classNames('flex w-8 flex-1 flex-shrink-0 fill-white', {
             [arrowClassname]: true,
@@ -106,9 +102,9 @@ const Multidimensional = () => {
             least responsible for the crisis.
           </SectionSubtitle>
         </motion.div>
-
+        {/* DESKTOP ANIMATION */}
         <motion.div
-          className="flex h-full w-full flex-col items-center justify-between lg:flex-row"
+          className="hidden h-full w-full flex-col items-center justify-between sm:flex lg:flex-row"
           style={{
             translateX: bubblesX,
           }}
@@ -126,6 +122,21 @@ const Multidimensional = () => {
             );
           })}
         </motion.div>
+        {/* MOBILE WITHOUT ANIMATION */}
+        <div className="flex h-full w-full flex-col items-center justify-between sm:hidden">
+          {content.map(({ text, classname, arrowClassname }, index) => {
+            return (
+              <Bubble
+                key={index}
+                text={text}
+                classname={classname}
+                arrowClassname={arrowClassname}
+                index={index}
+                scrollYProgress={scrollYProgress}
+              />
+            );
+          })}
+        </div>
 
         <div className="lg:w-1/2">
           <p>

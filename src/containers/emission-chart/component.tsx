@@ -3,6 +3,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 import classNames from 'classnames';
 
+import FadeYScroll from 'containers/home/animations/fade-y-scroll/component';
+
 import Button from 'components/button';
 import Beeswarm, { BeeswarmDataset } from 'components/charts/beeswarm';
 import RadioButton from 'components/forms/radio-button';
@@ -17,7 +19,6 @@ import playIcon from 'svgs/ui/play-circle.svg';
 import YearSlider from './components/year-slider';
 import { EmissionChartData } from './types';
 import { useEmissionChartData, initialEmissionData, useMinMax } from './utils';
-import FadeYScroll from 'containers/home/animations/fade-y-scroll/component';
 
 const EmissionChart = () => {
   const yearSliderLabelRef = useRef<HTMLLabelElement>(null);
@@ -199,7 +200,7 @@ const EmissionChart = () => {
           </div>
         </fieldset>
       </div>
-      <FadeYScroll threshold={0.5}>
+      <FadeYScroll threshold={0.3}>
         <div className="grid grid-flow-col grid-cols-[calc(100%-40px),40px] items-center justify-between gap-y-4 sm:grid-cols-2">
           {/* Chart */}
           <div

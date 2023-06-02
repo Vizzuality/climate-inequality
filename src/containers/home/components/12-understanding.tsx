@@ -5,11 +5,16 @@ import { useScroll, useTransform, motion, easeIn } from 'framer-motion';
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
 
+const UnderstandingImageMobile = () => (
+  <div className="h-[65vw] w-screen">
+    <img className="h-full w-full" src="/images/understanding-mobile.png" alt="Understanding" />
+  </div>
+);
+
 const UnderstandingImage = () => (
-  <div
-    className="h-[40vh] w-full bg-cover bg-center bg-no-repeat"
-    style={{ backgroundImage: `url("/images/understanding.png")` }}
-  ></div>
+  <div className=" aspect-[1/0.41] w-full">
+    <img className="h-full w-full" src="/images/understanding.png" alt="Understanding" />
+  </div>
 );
 
 const Understanding = () => {
@@ -82,7 +87,7 @@ const Understanding = () => {
         </div>
       </div>
       <div className="sm:hidden">
-        <UnderstandingImage />
+        <UnderstandingImageMobile />
       </div>
     </div>
   );

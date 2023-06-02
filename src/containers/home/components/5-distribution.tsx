@@ -131,11 +131,11 @@ const DistributionDefault = () => {
               fileName="chart"
               stateMachine="Default"
               stateMachineInput="scrollPos"
-              className="mobile-animation mb-4 h-[75vh] w-screen"
+              className="mobile-animation mb-[5vh] h-[75vh] w-screen"
               autoplay
             />
           </div>
-          <div className="container -mt-8 font-serif text-2xs  text-light-gray">
+          <div className="container mt-[-8vh] font-serif text-2xs  text-light-gray">
             <p className="mb-2">
               Distribution of pre-tax national income by population group (2021).
             </p>

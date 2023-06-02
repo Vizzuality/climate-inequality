@@ -1,7 +1,5 @@
 import { useCallback, useEffect } from 'react';
 
-import { MapProvider } from 'react-map-gl';
-
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 
@@ -36,10 +34,8 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
     <OverlayProvider>
       {/* @ts-ignore: https://github.com/artsy/fresnel/issues/281 */}
       <MediaContextProvider>
-        <MapProvider>
-          <ThirdParty />
-          <Component {...pageProps} />
-        </MapProvider>
+        <ThirdParty />
+        <Component {...pageProps} />
       </MediaContextProvider>
     </OverlayProvider>
   );

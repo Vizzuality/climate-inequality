@@ -2,6 +2,8 @@ import { useRef } from 'react';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 
+import { useBreakpoint } from 'hooks/breakpoint';
+
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title';
 
@@ -22,14 +24,16 @@ const ClimateCrisis = () => {
 
   const opacity2 = useTransform(scrollYProgress, [0.5, 0.75], [0, 1]);
 
+  const isDesktop = useBreakpoint()('sm');
+
   return (
     <div ref={target} className="min-h-[150vh] sm:min-h-screen">
       <div className="absolute left-0 h-full min-h-[150vh] w-full overflow-hidden bg-white sm:min-h-screen">
-        <div className="container flex h-screen min-h-screen flex-col justify-between gap-6 pt-14 lg:mt-0 lg:justify-start lg:gap-0">
+        <div className="container flex h-full min-h-screen flex-col justify-between gap-6 pt-14 lg:mt-0 lg:justify-start lg:gap-0">
           <motion.div
             style={{
-              translateY,
-              opacity: opacity1,
+              translateY: isDesktop ? translateY : 0,
+              opacity: isDesktop ? opacity1 : 1,
             }}
             className="flex-0"
           >
@@ -62,8 +66,8 @@ const ClimateCrisis = () => {
             <motion.div
               className="flex-1 text-sm text-900 xl:text-base"
               style={{
-                translateX,
-                opacity: opacity2,
+                translateX: isDesktop ? translateX : 0,
+                opacity: isDesktop ? opacity2 : 1,
               }}
             >
               <p>

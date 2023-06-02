@@ -15,8 +15,6 @@ import Tooltip from 'components/tooltip/component';
 import CircleLegend from 'svgs/ui/circle-legend.svg';
 import ColorLegend from 'svgs/ui/income-population-legend.svg';
 
-import FadeYScroll from '../animations/fade-y-scroll/component';
-
 const groups = ['top', 'middle', 'bottom'];
 const groupLabels = ['top 10', 'middle 40', 'bottom 50'];
 
@@ -111,134 +109,132 @@ const ZoomingIn = () => {
   const target = useRef(null);
   const { scrollYProgress } = useScroll({ target, offset: ['start end', 'end start'] });
 
-  const textY = useTransform(scrollYProgress, [0, 0.4], ['-100vh', '0vh']);
-  const textYMobile = useTransform(scrollYProgress, [0, 0.2], ['-100vh', '0vh']);
+  const textY = useTransform(scrollYProgress, [0, 0.4], ['-75vh', '0vh']);
 
   const chartY = useTransform(scrollYProgress, [0, 0.5], ['50vh', '0vh']);
 
-  const textOpacity = useTransform(scrollYProgress, [0.333, 0.5], [0, 1]);
-  const textOpacityMobile = useTransform(scrollYProgress, [0.1, 0.33], [0, 1]);
+  const textOpacity = useTransform(scrollYProgress, [0.33, 0.4, 0.6, 1], [0, 1, 1, 0]);
 
   return (
     <div ref={target} className="flex min-h-screen flex-col py-12 lg:py-16">
       <div className="container">
-        <div className="hidden sm:block">
+        <div className="pointer-events-none hidden sm:block">
           <motion.div style={{ y: textY, opacity: textOpacity }} className="lg:w-1/2">
             <Text />
           </motion.div>
         </div>
-        <motion.div style={{ y: textYMobile, opacity: textOpacityMobile }} className="sm:hidden">
+        <div className="sm:hidden">
           <Text />
-        </motion.div>
-        <FadeYScroll threshold={0.5} className="w-full flex-1">
-          <motion.div style={{ y: chartY }}>
-            <div
-              className="mt-4 flex flex-wrap items-end justify-center gap-x-4 gap-y-2 lg:-mt-20 lg:justify-between lg:gap-y-0 lg:gap-x-0"
-              ref={containerRef}
-            >
-              {countries.map((country) => {
-                const groupNodes = dataset.filter((node) => node.country === country);
-                const groupSize = groupNodes[0].groupSize;
-                return (
-                  <div key={groupSize}>
-                    <svg width={groupSize + 1} height={groupSize + 1}>
-                      <circle r={groupSize / 2} cx="50%" cy="50%" stroke="white" />
-                      {groupNodes.map(
-                        ({ color, r, x, y, emissionValue, incomeValue, group }, index) => {
-                          const key = `${country}-${group}`;
-                          return (
-                            <Tooltip
-                              key={key}
-                              arrowProps={{ enabled: true, size: 7.5, className: 'mb-1' }}
-                              placement="top"
-                              content={
-                                <div className="mb-1 bg-white p-2 text-xs text-900">
-                                  <p className="mb-1 font-semibold">
-                                    {country} {groupLabels[index]}% population
-                                  </p>
-                                  <span className="block">
-                                    Emissions: {emissionValue.toFixed(2)} tCO2e/cap
-                                  </span>
-                                  <span className="block">
-                                    Income: {incomeValue.toFixed(2)} euros/year
-                                  </span>
-                                </div>
-                              }
-                            >
-                              <g width={groupSize} height={groupSize}>
-                                <circle
-                                  r={r - 2}
-                                  color={color}
-                                  cx={x}
-                                  cy={y}
-                                  fill={color}
-                                  strokeWidth={0}
-                                />
-                                {r > 30 && (
-                                  <text
-                                    x={x}
-                                    y={y}
-                                    className="fill-black text-sm font-semibold"
-                                    textAnchor="middle"
-                                    alignmentBaseline="middle"
-                                  >
-                                    {r > 35
-                                      ? Groups[index]
-                                      : Groups[index].split(' ').map((t, i) => (
-                                          <tspan x={x} y={y + 15 * i} key={t}>
-                                            {t}
-                                          </tspan>
-                                        ))}
-                                  </text>
-                                )}
-                              </g>
-                            </Tooltip>
-                          );
-                        }
-                      )}
-                    </svg>
-                    <p className="mt-2 text-center lg:mt-6">{groupNodes[0].country}</p>
-                  </div>
-                );
-              })}
-            </div>
-            <div className="mt-7 flex w-full flex-1 items-end sm:mt-20">
-              <div className="flex h-fit w-full flex-col justify-between gap-8 text-light-gray sm:flex-row sm:gap-0">
-                <div className="flex justify-between gap-6 text-2xs">
-                  <div className="w-1/2 max-w-[170px] flex-1">
-                    <p>Average pre-tax national income by population group (€/year)</p>
-                    <Icon className="h-4 w-full" icon={ColorLegend} />
-                    <div className="flex justify-between">
-                      <p>{Math.round(cDomain[0]).toLocaleString()}</p>
-                      <p>{Math.round(cDomain[1]).toLocaleString()}</p>
-                    </div>
-                  </div>
-                  <div className="flex h-min w-1/2 max-w-[200px] flex-1 gap-1">
-                    <p className="w-32">Average per capita group emissions in tCO2e/ca</p>
-                    <Icon className="h-12 w-12" icon={CircleLegend} />
-                    <div className="flex flex-col justify-between">
-                      <p>{parseInt(rDomain[1].toLocaleString(), 10)}</p>
-                      <p>{rDomain[0].toLocaleString()}</p>
-                    </div>
+        </div>
+        <motion.div style={{ y: chartY, opacity: textOpacity }}>
+          <div
+            className="mt-4 flex flex-wrap items-end justify-center gap-x-4 gap-y-2 lg:-mt-20 lg:justify-between lg:gap-y-0 lg:gap-x-0"
+            ref={containerRef}
+          >
+            {countries.map((country) => {
+              const groupNodes = dataset.filter((node) => node.country === country);
+              const groupSize = groupNodes[0].groupSize;
+              return (
+                <div key={groupSize}>
+                  <svg width={groupSize + 1} height={groupSize + 1}>
+                    <circle r={groupSize / 2} cx="50%" cy="50%" stroke="white" />
+                    {groupNodes.map(
+                      ({ color, r, x, y, emissionValue, incomeValue, group }, index) => {
+                        const key = `${country}-${group}`;
+                        return (
+                          <Tooltip
+                            key={key}
+                            arrowProps={{ enabled: true, size: 7.5, className: 'mb-1' }}
+                            placement="top"
+                            content={
+                              <div className="mb-1 bg-white p-2 text-xs text-900">
+                                <p className="mb-1 font-semibold">
+                                  {country} {groupLabels[index]}% population
+                                </p>
+                                <span className="block">
+                                  Emissions: {Number(emissionValue.toFixed(2)).toLocaleString()}{' '}
+                                  tCO2e/cap
+                                </span>
+                                <span className="block">
+                                  Income: {Number(incomeValue.toFixed(2)).toLocaleString()}{' '}
+                                  euros/year
+                                </span>
+                              </div>
+                            }
+                          >
+                            <g width={groupSize} height={groupSize}>
+                              <circle
+                                r={r - 2}
+                                color={color}
+                                cx={x}
+                                cy={y}
+                                fill={color}
+                                strokeWidth={0}
+                              />
+                              {r > 30 && (
+                                <text
+                                  x={x}
+                                  y={y}
+                                  className="fill-black text-sm font-semibold"
+                                  textAnchor="middle"
+                                  alignmentBaseline="middle"
+                                >
+                                  {r > 35
+                                    ? Groups[index]
+                                    : Groups[index].split(' ').map((t, i) => (
+                                        <tspan x={x} y={y + 15 * i} key={t}>
+                                          {t}
+                                        </tspan>
+                                      ))}
+                                </text>
+                              )}
+                            </g>
+                          </Tooltip>
+                        );
+                      }
+                    )}
+                  </svg>
+                  <p className="mt-2 text-center lg:mt-6">{groupNodes[0].country}</p>
+                </div>
+              );
+            })}
+          </div>
+          <div className="mt-7 flex w-full flex-1 items-end sm:mt-20">
+            <div className="flex h-fit w-full flex-col justify-between gap-8 text-light-gray sm:flex-row sm:gap-0">
+              <div className="flex justify-between gap-6 text-2xs">
+                <div className="w-1/2 max-w-[170px] flex-1">
+                  <p>Average pre-tax national income by population group (€/year)</p>
+                  <Icon className="h-4 w-full" icon={ColorLegend} />
+                  <div className="flex justify-between">
+                    <p>{Math.round(cDomain[0]).toLocaleString()}</p>
+                    <p>{Math.round(cDomain[1]).toLocaleString()}</p>
                   </div>
                 </div>
-                <div className="text-xs sm:text-end">
-                  <p>
-                    Source:{' '}
-                    <a
-                      href="https://wid.world/data/"
-                      className="underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      World Inequality Database
-                    </a>
-                  </p>
+                <div className="flex h-min w-1/2 max-w-[200px] flex-1 gap-1">
+                  <p className="w-32">Average per capita group emissions in tCO2e/ca</p>
+                  <Icon className="h-12 w-12" icon={CircleLegend} />
+                  <div className="flex flex-col justify-between">
+                    <p>{parseInt(rDomain[1].toLocaleString(), 10)}</p>
+                    <p>{rDomain[0].toLocaleString()}</p>
+                  </div>
                 </div>
               </div>
+              <div className="text-xs sm:text-end">
+                <p>
+                  Source:{' '}
+                  <a
+                    href="https://wid.world/data/"
+                    className="underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    World Inequality Database
+                  </a>
+                </p>
+              </div>
             </div>
-          </motion.div>
-        </FadeYScroll>
+          </div>
+        </motion.div>
       </div>
     </div>
   );

@@ -65,10 +65,6 @@ const contents = [
 ];
 
 const Legend = ({ text = 'Vulnerability' }) => {
-  const isVuln = text === 'Vulnerability';
-  const text1 = isVuln ? 'Worse' : 'Better';
-  const text2 = isVuln ? 'Better' : 'Worse';
-
   return (
     <div className="container mt-3 w-full -translate-y-1/2 items-end justify-between bg-black text-2xs sm:flex sm:-translate-y-full">
       <div></div>
@@ -80,8 +76,8 @@ const Legend = ({ text = 'Vulnerability' }) => {
           icon={text === 'Vulnerability' ? MapVulnerabilityLegend : MapReadnessLegend}
         />
         <div className="flex justify-between">
-          <span>{text1}</span>
-          <span>{text2}</span>
+          <span>Worse</span>
+          <span>Better</span>
         </div>
       </div>
       <p>
@@ -106,7 +102,7 @@ const Text = ({
   scrollYProgress: MotionValue<number>;
   className: string;
 }) => {
-  const translateY1 = useTransform(scrollYProgress, [0, 0.3], [-100, 0]);
+  // const translateY1 = useTransform(scrollYProgress, [0, 0.3], [-100, 0]);
   const opacity1 = useTransform(scrollYProgress, [0, 0.3, 0.4, 0.5], [0, 1, 1, 0]);
   const opacity2 = useTransform(scrollYProgress, [0.4, 0.6], [0, 1]);
 
@@ -114,20 +110,20 @@ const Text = ({
     <div className={className}>
       {contents.map(({ title, subtitle, p }, index) => {
         const opacity = index === 0 ? opacity1 : opacity2;
-        const translateY = index === 0 ? translateY1 : 0;
+        // const translateY = index === 0 ? translateY1 : 0;
 
         return (
           <motion.div
             style={{
               opacity,
-              translateY,
+              // translateY,
             }}
             key={title}
             className={classNames('countries-text absolute h-[50vh] sm:w-[50vw]', {
               'mt-[75vh]': index === 1,
             })}
           >
-            <div className="sticky top-0 pt-24">
+            <div className="sticky top-0 pt-16 2xl:pt-24">
               <SectionTitle>{title}</SectionTitle>
               <SectionSubtitle className="mt-2 mb-6" size="small">
                 {subtitle}
@@ -174,7 +170,7 @@ const Countries = () => {
                   style={{
                     backgroundImage: `url('${image}')`,
                   }}
-                  className="h-[50vh] w-screen bg-cover bg-center bg-no-repeat sm:h-[34.77vw] sm:w-[80vw]"
+                  className="h-[50vh] w-screen bg-contain bg-center bg-no-repeat sm:h-[34.77vw] sm:w-[80vw] sm:bg-cover"
                 ></div>
                 <Legend text={legend} />
               </motion.div>
