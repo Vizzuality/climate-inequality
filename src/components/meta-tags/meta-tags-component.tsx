@@ -21,12 +21,7 @@ const getBaseUrl = () => {
   return 'http://localhost:3000';
 };
 
-const MetaTags: FC<MetaTagsProps> = ({
-  title,
-  description,
-  type = 'website',
-  imageURL,
-}: MetaTagsProps) => {
+const MetaTags: FC<MetaTagsProps> = ({ title, description, type = 'website' }: MetaTagsProps) => {
   const BASE_URL = getBaseUrl();
 
   return (
@@ -39,25 +34,17 @@ const MetaTags: FC<MetaTagsProps> = ({
       <meta name="robots" content="index, follow" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-      <link
-        rel="apple-touch-icon"
-        type="image/png"
-        sizes="72x72"
-        href="/images/apple-touch-icon.png"
-      />
-      <link rel="icon" type="image/png" sizes="192x192" href="/images/android-chrome-192x192.png" />
-      <link rel="icon" type="image/png" sizes="256x256" href="/images/android-chrome-256x256.png" />
-      <link rel="manifest" href={`/${BASE_URL}/manifest.json`} />
+      <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="/apple-touch-icon.png" />
+      <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+      <link rel="icon" type="image/png" sizes="256x256" href="/android-chrome-256x256.png" />
+      <link rel="manifest" href={`${BASE_URL}/manifest.json`} />
       <meta name="msapplication-TileColor" content="#ffffff" />
-      <meta
-        name="msapplication-TileImage"
-        content={`${process.env.NEXT_PUBLIC_BASE_PATH}/images/ms-tile-150x150.png`}
-      />
+      <meta name="msapplication-TileImage" content={`${BASE_URL}/ms-tile-150x150.png`} />
       <meta name="theme-color" content="#ffffff" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={`${BASE_URL}/${imageURL}`} />
+      <meta name="twitter:image" content={`${BASE_URL}/meta_image.jpg`} />
       <meta name="twitter:domain" content={`${BASE_URL}`} />
       <meta name="twitter:site" content="@vizzuality" />
       <meta name="twitter:creator" content="@vizzuality" />
@@ -66,10 +53,10 @@ const MetaTags: FC<MetaTagsProps> = ({
       <meta name="og:type" content={type} />
       <meta name="og:url" content={`${BASE_URL}`} />
       <meta property="og:locale" content="en_US" />
-      <meta name="og:image" content={`${BASE_URL}/${imageURL}`} />
+      <meta name="og:image" content={`${BASE_URL}/meta_image.jpg`} />
       <meta property="og:site_name" content="Climate Inequality" />
-      <meta name="msapplication-config" content="/images/browserconfig.xml" />
-      <link rel="manifest" href="/images/site.webmanifest" />
+      <meta name="msapplication-config" content={`${BASE_URL}/browserconfig.xml`} />
+      <link rel="manifest" href="/site.webmanifest" />
     </Head>
   );
 };
