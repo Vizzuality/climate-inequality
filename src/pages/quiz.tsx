@@ -28,7 +28,7 @@ const QuizPage: React.FC = () => {
             <div className="flex items-center justify-start gap-x-2 bg-black pt-9">
               <Logo />
               <button className="flex h-8 flex-shrink-0 items-center justify-center bg-500 p-2.5">
-                <span className="text-center text-base font-bold text-black">Inequality quiz</span>
+                <h1 className="text-center text-base font-bold text-black">Inequality quiz</h1>
               </button>
             </div>
             <LinkAnchor
