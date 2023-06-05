@@ -2,7 +2,10 @@ import { useRef } from 'react';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 
+import { useBreakpoint } from 'hooks/breakpoint';
+
 import Icon from 'components/icon/component';
+import { IconProps } from 'components/icon/types';
 import SectionSubtitle from 'components/section-subtitle/component';
 
 import InvestmentsIconMobile from 'svgs/ui/investments-mobile.svg';
@@ -16,11 +19,18 @@ const Investment = () => {
   const x = useTransform(scrollYProgress, [0.3, 0.55], ['0vw', '100vw']);
   const chartOpacity = useTransform(scrollYProgress, [0.5, 0.8], [1, 0]);
 
+  const isDesktop = useBreakpoint()('sm');
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const ChartIcon: IconProps['icon'] = isDesktop ? InvestmentsIcon : InvestmentsIconMobile;
+
   return (
-    <div ref={target} className="sm:min-h-[150vh]">
-      <div className="top-0 flex min-h-[100vh] w-full flex-col overflow-x-hidden bg-500 sm:sticky sm:h-screen">
-        <div className="flex h-full w-full flex-col justify-between py-14 text-black 2xl:py-20">
-          <motion.div style={{ y, opacity }} className="flex-0 container mb-6 sm:mb-16">
+    <div ref={target} className="min-h-screen bg-500">
+      <div className="flex h-[150vh] flex-col justify-between py-14 text-black 2xl:py-20">
+        <div className="sticky top-0 flex min-h-screen flex-col justify-between">
+          <motion.div
+            style={{ y, opacity }}
+            className="flex-0 container mb-6 sm:mt-10 sm:mb-16 lg:mt-14"
+          >
             <div className="sm:w-1/2">
               <SectionSubtitle className="mb-6">
                 When needs and investment do not align.
@@ -41,25 +51,22 @@ const Investment = () => {
               </p>
             </div>
           </motion.div>
-          <motion.div
-            style={{ opacity: chartOpacity }}
-            className="container hidden w-screen flex-1 flex-col sm:flex xl:pl-4 xl:pr-4"
-          >
-            <div className="flex w-full flex-col items-center justify-center">
-              <div className="z-10 w-full">
-                <Icon className="hidden w-full sm:block" icon={InvestmentsIcon} />
+          <div className="w-full overflow-hidden">
+            <motion.div
+              style={{ opacity: chartOpacity }}
+              className="flex-1 flex-col xl:pl-4 xl:pr-4"
+            >
+              <div className="flex w-full flex-col items-center justify-center">
+                <div className="container absolute z-10 w-full">
+                  <Icon className="w-full" icon={ChartIcon} />
+                </div>
+                <motion.div style={{ x }} className="container z-20 w-full bg-500">
+                  <Icon className="w-full opacity-0" icon={ChartIcon} />
+                </motion.div>
               </div>
-              <motion.div style={{ x, y: '-120%' }} className="z-20 w-full bg-500">
-                <Icon className="hidden w-[80%] opacity-0 sm:block" icon={InvestmentsIcon} />
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-        <div className="px-4 sm:hidden">
-          <Icon className="w-full" icon={InvestmentsIconMobile} />
-        </div>
-        <div className="container flex w-screen items-end justify-between text-black sm:h-screen">
-          <div className="mt-6 flex flex-col gap-8 pb-10 sm:absolute sm:mt-0.5 sm:flex-row sm:gap-0 sm:pb-12">
+            </motion.div>
+          </div>
+          <div className="container mt-6 flex flex-col gap-8 pb-10 sm:mt-0.5 sm:flex-row sm:gap-0 sm:pb-12">
             <p className="flex-1 font-serif text-sm">
               The trend over time in total commitments and disbursements of finance for Nature Based
               solutions approaches to address climate change from 2016-2020

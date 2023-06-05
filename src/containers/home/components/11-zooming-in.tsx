@@ -113,20 +113,20 @@ const ZoomingIn = () => {
 
   const chartY = useTransform(scrollYProgress, [0, 0.5], ['50vh', '0vh']);
 
-  const textOpacity = useTransform(scrollYProgress, [0.33, 0.4, 0.6, 1], [0, 1, 1, 0]);
+  const opacity = useTransform(scrollYProgress, [0.2, 0.4, 0.6, 1], [0, 1, 1, 0]);
 
   return (
     <div ref={target} className="flex min-h-screen flex-col py-12 lg:py-16">
       <div className="container">
         <div className="pointer-events-none hidden sm:block">
-          <motion.div style={{ y: textY, opacity: textOpacity }} className="lg:w-1/2">
+          <motion.div style={{ y: textY, opacity }} className="lg:w-1/2">
             <Text />
           </motion.div>
         </div>
         <div className="sm:hidden">
           <Text />
         </div>
-        <motion.div style={{ y: chartY, opacity: textOpacity }}>
+        <motion.div style={{ y: chartY, opacity }}>
           <div
             className="mt-4 flex flex-wrap items-end justify-center gap-x-4 gap-y-2 lg:-mt-20 lg:justify-between lg:gap-y-0 lg:gap-x-0"
             ref={containerRef}
