@@ -11,6 +11,27 @@ import SectionSubtitle from 'components/section-subtitle/component';
 import InvestmentsIconMobile from 'svgs/ui/investments-mobile.svg';
 import InvestmentsIcon from 'svgs/ui/investments.svg';
 
+import FadeYScroll from '../animations/fade-y-scroll/component';
+
+const Text = () => (
+  <div className="container">
+    <SectionSubtitle className="mb-6">When needs and investment do not align.</SectionSubtitle>
+    <p className="text-sm sm:text-base">
+      According to estimates by the{' '}
+      <a
+        href="https://www.worldbank.org/en/news/feature/2022/05/19/what-you-need-to-know-about-nature-based-solutions-to-climate-change"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline"
+      >
+        World Bank
+      </a>
+      , nature-based solutions can provide 37% of the mitigation needed to reach the Paris Agreement
+      targets. Yet what we see today tells a story that priorities are going elsewhere.
+    </p>
+  </div>
+);
+
 const Investment = () => {
   const target = useRef(null);
   const { scrollYProgress } = useScroll({ target, offset: ['start end', 'end start'] });
@@ -25,32 +46,18 @@ const Investment = () => {
 
   return (
     <div ref={target} className="min-h-screen bg-500">
-      <div className="flex h-[150vh] flex-col justify-between py-14 text-black 2xl:py-20">
+      <div className="flex h-[150vh] flex-col justify-between text-black sm:py-14 2xl:py-20">
         <div className="sticky top-0 flex min-h-screen flex-col justify-between">
-          <motion.div
-            style={{ y, opacity }}
-            className="flex-0 container mb-6 sm:mt-10 sm:mb-16 lg:mt-14"
-          >
+          {/* DESKTOP TEXT */}
+          <motion.div style={{ y, opacity }} className="flex-0 mb-16 mt-14 hidden sm:block">
             <div className="sm:w-1/2">
-              <SectionSubtitle className="mb-6">
-                When needs and investment do not align.
-              </SectionSubtitle>
-              <p className="text-sm sm:text-base">
-                According to estimates by the{' '}
-                <a
-                  href="https://www.worldbank.org/en/news/feature/2022/05/19/what-you-need-to-know-about-nature-based-solutions-to-climate-change"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline"
-                >
-                  World Bank
-                </a>
-                , nature-based solutions can provide 37% of the mitigation needed to reach the Paris
-                Agreement targets. Yet what we see today tells a story that priorities are going
-                elsewhere.
-              </p>
+              <Text />
             </div>
           </motion.div>
+          {/* MOBILE TEXT */}
+          <FadeYScroll className="mb-6 mt-10 sm:hidden">
+            <Text />
+          </FadeYScroll>
           <div className="w-full overflow-hidden">
             <motion.div
               style={{ opacity: chartOpacity }}
