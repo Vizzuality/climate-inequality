@@ -6,6 +6,7 @@ import CountriesChart from 'containers/countries-chart';
 
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
+
 import FadeYScroll from '../animations/fade-y-scroll/component';
 
 const Text = () => (

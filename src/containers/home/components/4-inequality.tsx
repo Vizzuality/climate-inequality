@@ -61,18 +61,7 @@ const Inequality = () => {
     offset: ['start end', 'end end'],
   });
 
-  const animationYProgress = useTransform(scrollYProgress, (v) => {
-    const threshold = 0.33;
-    let y = 0.01;
-    if (v > threshold) {
-      // Transforms value from threshold-1 range to 0-1 range
-      const normalized = (v - threshold) * (1 / (1 - threshold));
-      if (normalized > y) {
-        y = normalized;
-      }
-    }
-    return y;
-  });
+  const animationYProgress = useTransform(scrollYProgress, [0, 0.1, 1], [0, 0, 1]);
 
   const text1Opacity = useTransform(scrollYProgress, [0, 0.3, 0.5, 0.65], [0, 1, 1, 0]);
   const text2Opacity = useTransform(scrollYProgress, [0.6, 0.8], [0, 1]);

@@ -43,10 +43,7 @@ type Bubble = {
 };
 
 const Bubble = ({ text, classname, arrowClassname, index, scrollYProgress }: Bubble) => {
-  const opacity = useTransform(scrollYProgress, (v) => {
-    const a = ((v * 100 - index * 10) / 100) * ((v * 100) / (content.length - index));
-    return a;
-  });
+  const opacity = useTransform(scrollYProgress, [0, (index + 1) / 10], [0, 1]);
 
   return (
     <>

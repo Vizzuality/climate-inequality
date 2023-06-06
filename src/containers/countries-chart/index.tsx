@@ -11,6 +11,8 @@ import Tooltip from 'components/tooltip/component';
 
 import CircleLegend from 'svgs/ui/circle-legend.svg';
 import ColorLegend from 'svgs/ui/income-population-legend.svg';
+import { COLORS } from 'containers/emission-chart/utils';
+import { useBreakpoint } from 'hooks/breakpoint';
 
 const groups = ['top', 'middle', 'bottom'];
 const groupLabels = ['top 10', 'middle 40', 'bottom 50'];
@@ -44,16 +46,20 @@ const CountriesChart = () => {
   const cDomain = d3.extent(
     income.map(({ bottom, middle, top }) => Object.values({ bottom, middle, top })).flat()
   );
+  const breakpoint = useBreakpoint();
 
   const dataset = useMemo(() => {
     const maxRadius = 284;
-    const isMobile = width < 768;
+    const isMobile = !breakpoint('sm');
     const radiusRangeMax = width / (isMobile ? 1.6 : 3.5);
     const rScale = d3
       .scaleRadial()
       .domain(rDomain)
       .range([isMobile ? 20 : 30, radiusRangeMax > maxRadius ? maxRadius : radiusRangeMax]);
-    const colorScale = d3.scaleLinear<string>().domain(cDomain).range(['#FFFFFF', '#FEE124']);
+    const colorScale = d3
+      .scaleLinear<string>()
+      .domain(cDomain)
+      .range([COLORS.white, COLORS.yellow]);
 
     return emissions
       .map(({ bottom, middle, top, name }, i) => {
@@ -79,7 +85,7 @@ const CountriesChart = () => {
         });
       })
       .flat();
-  }, [cDomain, rDomain, width]);
+  }, [breakpoint, cDomain, rDomain, width]);
 
   const countries: string[] = useMemo(() => uniq(dataset.map((d) => d.country)), [dataset]);
 
