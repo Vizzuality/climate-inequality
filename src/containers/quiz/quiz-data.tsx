@@ -389,8 +389,7 @@ const QUESTIONS: Question[] = [
   },
   {
     id: 15,
-    question:
-      'How much less economic losses due to extreme climate-related events did very high Human Development Index countries suffer compared to others?',
+    question: `What fraction of 2021's climate-related economic losses did top-ranked HDI countries bear?`,
     answers: [
       { value: '⅕ <div class="font-normal"> (a fifth)</div>' },
       { value: '¼ <div class="font-normal"> (a fourth)</div>' },
@@ -399,14 +398,12 @@ const QUESTIONS: Question[] = [
     ],
     text: (
       <div key="14">
-        In 2021, very high Human Development Index (HDI) countries suffered{' '}
-        <span className="text-500">around half</span> of the global economic losses due to
-        climate-related extreme events, double the rate of the global average as a proportion of
-        GDP. According to the Lancet Countdown, while around half of their losses were insured, the
-        vast majority of losses in other countries were uninsured. Countries ranked 1 to 66 in the
-        HDI index are designated as "very high", while those ranked 67 to 115 are designated "high",
-        those ranked 116 to 159 are designated "medium", and those ranked 160 to 191 are designated
-        "low".
+        In 2021, countries at the top of the Human Development Index (HDI), those ranked 1 to 66,
+        faced <span className="text-500">about half</span> of the total global financial losses due
+        to extreme weather events related to climate change. Crucially, insurance mitigated about
+        half of these losses. On the other hand, less developed countries, those ranked 67 and below
+        on the HDI, the majority of financial losses were uninsured. This places a substantial
+        financial burden on these nations, particularly those in the medium and low HDI categories.
       </div>
     ),
     sourceLink: `https://www.lancetcountdown.org/data-platform/`,
