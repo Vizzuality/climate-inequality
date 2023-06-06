@@ -50,6 +50,7 @@
     "@react-stately/slider": "3.2.0",
     "@react-types/searchfield": "3.3.2",
     "@reduxjs/toolkit": "1.5.1",
+    "@rive-app/react-canvas": "^3.0.38",
     "@storybook/react": "6.5.15",
     "@tailwindcss/forms": "0.5.1",
     "@tailwindcss/line-clamp": "0.4.0",
@@ -84,6 +85,8 @@
     "react-popper": "2.2.5",
     "react-redux": "7.2.4",
     "react-use-cookie": "1.4.0",
+    "recoil": "^0.7.7",
+    "resize-observer-polyfill": "^1.5.1",
     "tailwindcss": "3.1.7",
     "use-debounce": "6.0.1",
     "validate.js": "0.13.1"

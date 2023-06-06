@@ -1,78 +1,86 @@
+import { useRef } from 'react';
+
+import { motion, useScroll, useTransform } from 'framer-motion';
+
+import Icon from 'components/icon/component';
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
 
+import DistributionIcon from 'svgs/ui/distribution-mobile.svg';
+
+import RiveScrollAnimation from '../rive-components/rive-scroll';
+
 const EmissionsDistribution = () => {
+  const target = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target,
+    offset: ['start end', 'end start'],
+  });
+
+  const animationProgress = useTransform(scrollYProgress, [0, 0.33, 0.55], [0, 0, 0.7]);
+
+  const height = useTransform(animationProgress, [0, 0.25], [`${12}vh`, `${35}vh`]);
+
+  const y = useTransform(scrollYProgress, [0, 0.33], ['-50vh', '0vh']);
+  const opacity = useTransform(scrollYProgress, [0.2, 0.33], [0, 1]);
+  const distributionMobileOpacity = useTransform(scrollYProgress, [0.33, 0.5], [0, 1]);
+
   return (
-    <div
-      className="container my-14 flex
-    min-h-screen flex-col justify-evenly sm:my-0"
-    >
-      <div className="max-w-lg">
-        <SectionTitle>Distribution of emissions.</SectionTitle>
-        <SectionSubtitle className="mt-2 mb-6" size="small">
-          The top 10% are responsible for nearly 50% of emissions.
-        </SectionSubtitle>
-        <p className="text-base">
-          The wealthiest people are better positioned to deal with the impacts and adaptations to
-          the climate crisis. Meanwhile, the people who contribute least to the crisis also have the
-          least financial resources to react to its impacts.
-        </p>
-      </div>
-      <div>
-        <div className="w-full text-xs sm:text-sm">
-          <div className="flex items-end justify-end">
-            <div className="w-full">
-              <div className="mb-5 text-end">Top 0.1%</div>
-              <div className="mb-4 mr-[1%] text-end">Top 1%</div>
-              <div className="mb-3 flex sm:text-center">
-                <p className="flex-[5]">Bottom 50%</p>
-                <p className="flex-[4]">Middle 40%</p>
-                <p className="flex-1 whitespace-nowrap text-white text-opacity-50 sm:text-500 sm:text-opacity-100">
-                  Top 10%
+    <div ref={target} className="flex h-[150vh] w-full flex-col items-center justify-center ">
+      <div className="absolute h-[150vh]">
+        <div className="sticky top-0 h-screen">
+          <div className="flex h-full flex-col pt-20 pb-10 lg:pt-36">
+            <motion.div className="container" style={{ y, opacity }}>
+              <div className="sm:w-1/2">
+                <SectionTitle>Distribution of emissions.</SectionTitle>
+                <SectionSubtitle className="mt-2 mb-6" size="small">
+                  The top 10% are responsible for nearly 50% of emissions.
+                </SectionSubtitle>
+                <p className="text-base">
+                  The wealthiest people are better positioned to deal with the impacts and
+                  adaptations to the climate crisis. Meanwhile, the people who contribute least to
+                  the crisis also have the least financial resources to react to its impacts.
                 </p>
               </div>
+            </motion.div>
+
+            {/* DESKTOP ANIMATION */}
+            <div className="hidden sm:block">
+              <motion.div style={{ height }} className="container flex w-screen items-center">
+                <RiveScrollAnimation
+                  scrollY={animationProgress}
+                  fileName="chart_share_of_emissions"
+                  stateMachine="Default"
+                  stateMachineInput="scrollPos"
+                  className="sm:h-[50vh] sm:w-screen"
+                  autoplay
+                />
+              </motion.div>
             </div>
-            <div className="flex items-end">
-              <div className="absolute h-[50px] w-[1%] -translate-x-[calc(100%-1px)] border-l border-dashed border-white"></div>
-              <div className="h-[90px] w-0 -translate-x-[1px] border-r border-dashed border-white"></div>
+
+            {/* MOBILE IMAGE */}
+            <div className="flex flex-1 items-center sm:hidden">
+              <motion.div style={{ opacity: distributionMobileOpacity }}>
+                <Icon icon={DistributionIcon} className="container w-screen" />
+              </motion.div>
             </div>
-          </div>
-          <div>
-            <img
-              className="hidden w-full sm:block"
-              alt=""
-              src="/images/emission-distribution.svg"
-              height={240}
-              width={1230}
-            />
-            <img
-              className="w-full sm:hidden"
-              alt=""
-              src="/images/emission-distribution-sm.svg"
-              width={322}
-              height={141}
-            />
-          </div>
-          <div className="mt-1 flex w-full text-center text-xs sm:text-sm">
-            <p className="w-[12%]">12%</p>
-            <p className="w-[40%]">40.4%</p>
-            <p className="w-[48%] text-500">47.6%</p>
+
+            <motion.div className="flex-0 container mt-auto place-items-end text-xs sm:self-end sm:text-sm">
+              <p className="sm:text-end">
+                Source:{' '}
+                <a
+                  className="underline"
+                  href="https://wid.world/data/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  World Inequality Database
+                </a>
+              </p>
+            </motion.div>
           </div>
         </div>
-        <p className="mt-4 text-center font-serif text-xs sm:text-sm">Share of emissions</p>
-      </div>
-      <div className="place-items-end text-xs sm:self-end sm:text-sm">
-        <p className="sm:text-end">
-          Source:{' '}
-          <a
-            className="underline"
-            href="https://wid.world/data/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            World Inequality Database
-          </a>
-        </p>
       </div>
     </div>
   );

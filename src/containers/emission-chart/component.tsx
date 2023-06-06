@@ -3,6 +3,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 import classNames from 'classnames';
 
+import FadeYScroll from 'containers/home/animations/fade-y-scroll/component';
+
 import Button from 'components/button';
 import Beeswarm, { BeeswarmDataset } from 'components/charts/beeswarm';
 import RadioButton from 'components/forms/radio-button';
@@ -141,7 +143,7 @@ const EmissionChart = () => {
   };
 
   return (
-    <div>
+    <div className='container'>
       <div className="mb-8 flex flex-wrap items-center gap-1 sm:mb-4 sm:gap-2">
         <fieldset className="flex flex-shrink-0 items-center gap-x-2">
           <RadioButton
@@ -198,76 +200,81 @@ const EmissionChart = () => {
           </div>
         </fieldset>
       </div>
-      <div className="grid grid-flow-col grid-cols-[calc(100%-40px),40px] items-center justify-between gap-y-4 sm:grid-cols-2">
-        {/* Chart */}
-        <div ref={chartContainerRef} className="col-span-1 sm:col-span-2 sm:-ml-[10%] sm:w-[120%]">
-          <Beeswarm
-            radiusSize={
-              emissionData.emission === 'absolute' && emissionData.population !== 'region'
-                ? 'md'
-                : emissionData.population === 'region'
-                ? 'lg'
-                : 'sm'
-            }
-            xValueUnit="€/year"
-            radioUnit={emissionData.emission === 'absolute' ? 'MtCO₂e' : 'tCO₂e'}
-            dataset={dataset}
-            xLabel={[`Low ${emissionData.comparation}`, `High ${emissionData.comparation}`]}
-            yearChanged={yearChanged}
-            {...chartSize}
-            emissionVariation={emissionVariation}
-          />
-        </div>
-        {/* Legends */}
-        <div className="col-span-2 col-start-1 row-start-2 flex items-center justify-between text-2xs leading-3 sm:col-span-1 sm:items-start sm:gap-6">
-          <div className="w-36 sm:w-44">
-            <p>Average national income per capita (€/year)</p>
-            <div className="my-1 h-2.5 w-full rounded-full bg-gradient-to-r from-100 to-500" />
-            <div className="flex justify-between">
-              <span>{Math.round(colorVariation[0]).toLocaleString()}</span>
-              <span>{Math.round(colorVariation[1]).toLocaleString()}</span>
-            </div>
-          </div>
-          <div className="flex gap-1 text-2xs leading-3 sm:gap-2">
-            <p className="w-16 sm:w-24">{legendText}</p>
-            <Icon icon={emissionRadioLegendIcon} className="h-[45px] w-[47px]" />
-            <div className="flex flex-col justify-between">
-              <span>{Math.round(Number(emissionVariation[1])).toLocaleString()}</span>
-              <span>{emissionVariation[0].toLocaleString()}</span>
-            </div>
-          </div>
-        </div>
-        {/* Year selector */}
-        <div className="col-start-2 row-start-1 flex flex-col-reverse items-end justify-end gap-2 sm:row-start-2 sm:flex-row">
-          <div className="mt-4 -rotate-90 sm:mr-2 sm:mt-0 sm:rotate-0">
-            <Button
-              theme="secondary"
-              className={classNames('rounded-full border-0 px-0 py-0', {
-                'rotate-90': chartSize.height > chartSize.width,
-              })}
-              size="xs"
-              onClick={handlePlayYears}
-            >
-              <Icon icon={playing ? pauseIcon : playIcon} className="h-8 w-8" />
-            </Button>
-          </div>
-          <div>
-            <label ref={yearSliderLabelRef} id="select-year-label" className="sr-only">
-              Select year
-            </label>
-            <YearSlider
-              isMobile={chartSize.height > chartSize.width}
-              labelRef={yearSliderLabelRef}
-              years={years}
-              maxValue={maxYear}
-              minValue={minYear}
-              value={year}
-              step={1}
-              onChange={handleChangeYear}
+      <FadeYScroll threshold={0.3}>
+        <div className="grid grid-flow-col grid-cols-[calc(100%-40px),40px] items-center justify-between gap-y-4 sm:grid-cols-2">
+          {/* Chart */}
+          <div
+            ref={chartContainerRef}
+            className="col-span-1 sm:col-span-2 sm:-ml-[5%] sm:w-[110%]"
+          >
+            <Beeswarm
+              radiusSize={
+                emissionData.emission === 'absolute' && emissionData.population !== 'region'
+                  ? 'md'
+                  : emissionData.population === 'region'
+                  ? 'lg'
+                  : 'sm'
+              }
+              xValueUnit="€/year"
+              radioUnit={emissionData.emission === 'absolute' ? 'MtCO₂e' : 'tCO₂e'}
+              dataset={dataset}
+              xLabel={[`Low ${emissionData.comparation}`, `High ${emissionData.comparation}`]}
+              yearChanged={yearChanged}
+              {...chartSize}
+              emissionVariation={emissionVariation}
             />
           </div>
+          {/* Legends */}
+          <div className="col-span-2 col-start-1 row-start-2 flex items-center justify-between text-2xs leading-3 sm:col-span-1 sm:items-start sm:gap-6">
+            <div className="w-36 sm:w-44">
+              <p>Average national income per capita (€/year)</p>
+              <div className="my-1 h-2.5 w-full rounded-full bg-gradient-to-r from-100 to-500" />
+              <div className="flex justify-between">
+                <span>{Math.round(colorVariation[0]).toLocaleString()}</span>
+                <span>{Math.round(colorVariation[1]).toLocaleString()}</span>
+              </div>
+            </div>
+            <div className="flex gap-1 text-2xs leading-3 sm:gap-2">
+              <p className="w-16 sm:w-24">{legendText}</p>
+              <Icon icon={emissionRadioLegendIcon} className="h-[45px] w-[47px]" />
+              <div className="flex flex-col justify-between">
+                <span>{Math.round(Number(emissionVariation[1])).toLocaleString()}</span>
+                <span>{emissionVariation[0].toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+          {/* Year selector */}
+          <div className="col-start-2 row-start-1 flex flex-col-reverse items-end justify-end gap-2 sm:row-start-2 sm:flex-row">
+            <div className="mt-4 -rotate-90 sm:mr-2 sm:mt-0 sm:rotate-0">
+              <Button
+                theme="secondary"
+                className={classNames('rounded-full border-0 px-0 py-0', {
+                  'rotate-90': chartSize.height > chartSize.width,
+                })}
+                size="xs"
+                onClick={handlePlayYears}
+              >
+                <Icon icon={playing ? pauseIcon : playIcon} className="h-8 w-8" />
+              </Button>
+            </div>
+            <div>
+              <label ref={yearSliderLabelRef} id="select-year-label" className="sr-only">
+                Select year
+              </label>
+              <YearSlider
+                isMobile={chartSize.height > chartSize.width}
+                labelRef={yearSliderLabelRef}
+                years={years}
+                maxValue={maxYear}
+                minValue={minYear}
+                value={year}
+                step={1}
+                onChange={handleChangeYear}
+              />
+            </div>
+          </div>
         </div>
-      </div>
+      </FadeYScroll>
     </div>
   );
 };

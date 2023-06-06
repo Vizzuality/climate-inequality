@@ -12,7 +12,9 @@ export const THEME = {
     'text-gray-700 bg-white hover:bg-opacity-80 active:bg-transparent border border-gray-400 hover:border-300 active:border-gray-200',
 
   danger:
-    'text-red-700 bg-transparent hover:bg-red-700 active:bg-red-600 border border-red-700 hover:border-red-600 active:border-red-500',
+    'text-red-700 bg-transparent hover:text-white hover:bg-red-700 active:bg-red-600 border border-red-700 hover:border-red-600 active:border-red-500',
+  transparent:
+    'text-black bg-transparent hover:bg-transparent active:bg-transparent border-transparent hover:border-transparent active:border-transparent',
 };
 
 export const SIZE = {

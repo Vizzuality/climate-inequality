@@ -1,5 +1,13 @@
+import { useRef } from 'react';
+
+import classNames from 'classnames';
+
+import { motion, useTransform, useScroll } from 'framer-motion';
+
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
+
+import RiveScrollAnimation from '../rive-components/rive-scroll';
 
 const contents = [
   {
@@ -14,14 +22,64 @@ const contents = [
   },
 ];
 
-const OurVision = ({ section = 0 }: { section?: 0 | 1 }) => {
-  const { title, subtitle } = contents[section];
+const OurVision = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const y = useTransform(scrollYProgress, [0.74, 1], ['0vh', '150vh']);
+
+  const textOpacity = useTransform(
+    scrollYProgress,
+    [0.23, 0.25, 0.38, 0.45, 0.6, 0.65],
+    [0, 1, 1, 0, 0, 1]
+  );
+
+  const scrollYProgress2 = useTransform(scrollYProgress, [0, 0.7, 0.85], [0, 0.7, 0.8]);
+
   return (
-    <div className="container flex min-h-screen flex-col items-center justify-center py-14">
-      <div className="absolute z-10 max-w-[60%] text-center lg:max-w-xl">
-        <SectionTitle>{title}</SectionTitle>
-        <SectionSubtitle className="mt-2">{subtitle}</SectionSubtitle>
+    <div
+      className="flex min-h-[300vh] w-full flex-col items-center overflow-x-hidden"
+      ref={sectionRef}
+    >
+      <div className="absolute h-[300vh]">
+        <motion.div
+          className="pointer-events-none sticky top-0 flex h-screen w-screen items-center justify-center overflow-hidden"
+          style={{ y }}
+        >
+          <RiveScrollAnimation
+            scrollY={scrollYProgress2}
+            fileName="circle"
+            stateMachine="Circle"
+            stateMachineInput="scrollPos"
+            className="h-[105vw] w-[105vw] scale-[175%] sm:scale-100"
+            autoplay
+          />
+        </motion.div>
       </div>
+      {contents.map(({ subtitle, title }, index) => (
+        <div
+          key={title}
+          className={classNames('absolute h-[150vh]', {
+            'mt-[150vh]': index === 1,
+          })}
+        >
+          <div className="sticky top-0 h-screen">
+            <div className="container flex h-full items-center justify-center">
+              <motion.div
+                className="flex max-w-[50%] flex-col justify-center text-center sm:max-w-[40%]"
+                style={{ opacity: textOpacity }}
+              >
+                <SectionTitle>{title}</SectionTitle>
+                <SectionSubtitle className="mt-2">{subtitle}</SectionSubtitle>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

@@ -3993,6 +3993,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rive-app/canvas@npm:1.0.102":
+  version: 1.0.102
+  resolution: "@rive-app/canvas@npm:1.0.102"
+  checksum: e85a6c4f07e7a94776a4fdf818fb833691ec6f8c248f50b1b2009deb7fc4a56f8879e72dccfab21c2518b0d2a8c2d8b844ef2ee86ed4d53a4b359cc920f7ff52
+  languageName: node
+  linkType: hard
+
+"@rive-app/react-canvas@npm:^3.0.38":
+  version: 3.0.38
+  resolution: "@rive-app/react-canvas@npm:3.0.38"
+  dependencies:
+    "@rive-app/canvas": 1.0.102
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: e4701e7cda572550fea9b5c9de9fa59b14ea7557e866ebaae1434a993ff14020b14086956ac6fda1f61dacedfda7eda65fb45ffa2afe4bade42f4bd8c41aa014
+  languageName: node
+  linkType: hard
+
 "@rushstack/eslint-patch@npm:^1.1.3":
   version: 1.2.0
   resolution: "@rushstack/eslint-patch@npm:1.2.0"
@@ -11512,6 +11530,7 @@ __metadata:
     "@react-stately/slider": 3.2.0
     "@react-types/searchfield": 3.3.2
     "@reduxjs/toolkit": 1.5.1
+    "@rive-app/react-canvas": ^3.0.38
     "@storybook/addon-actions": 6.5.10
     "@storybook/addon-essentials": 6.5.10
     "@storybook/addon-links": 6.5.10
@@ -11566,6 +11585,8 @@ __metadata:
     react-popper: 2.2.5
     react-redux: 7.2.4
     react-use-cookie: 1.4.0
+    recoil: ^0.7.7
+    resize-observer-polyfill: ^1.5.1
     start-server-and-test: 1.12.1
     storybook-addon-swc: 1.1.8
     svg-sprite-loader: 6.0.11
@@ -12076,6 +12097,13 @@ __metadata:
   version: 2.0.8
   resolution: "hammerjs@npm:2.0.8"
   checksum: b092da7d1565a165d7edb53ef0ce212837a8b11f897aa3cf81a7818b66686b0ab3f4747fbce8fc8a41d1376594639ce3a054b0fd4889ca8b5b136a29ca500e27
+  languageName: node
+  linkType: hard
+
+"hamt_plus@npm:1.0.2":
+  version: 1.0.2
+  resolution: "hamt_plus@npm:1.0.2"
+  checksum: af26ea32db03009019cc83dfa9411521a2fa16079443de1a502c9be46d8b3c975acda8ed93fc5750ef08d3186d35901e2d8cfe717dd54bea67b358601fa74e4c
   languageName: node
   linkType: hard
 
@@ -16832,6 +16860,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"recoil@npm:^0.7.7":
+  version: 0.7.7
+  resolution: "recoil@npm:0.7.7"
+  dependencies:
+    hamt_plus: 1.0.2
+  peerDependencies:
+    react: ">=16.13.1"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 65edecbcb8d2cde89bfd61ec679c200483472a6cd343c33e4e9142b6ce524fb17d1fecc2bfd8c392926aaa8178c81457f165b32abce2a9662f51f98822c0a9cc
+  languageName: node
+  linkType: hard
+
 "redent@npm:^1.0.0":
   version: 1.0.0
   resolution: "redent@npm:1.0.0"
@@ -17129,6 +17173,13 @@ __metadata:
   version: 4.1.6
   resolution: "reselect@npm:4.1.6"
   checksum: 3ea1058422904063ec93c8f4693fe33dcb2178bbf417ace8db5b2c797a5875cf357d9308d11ed3942ee22507dd34ecfbf1f3a21340a4f31c206cab1d36ceef31
+  languageName: node
+  linkType: hard
+
+"resize-observer-polyfill@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "resize-observer-polyfill@npm:1.5.1"
+  checksum: 57e7f79489867b00ba43c9c051524a5c8f162a61d5547e99333549afc23e15c44fd43f2f318ea0261ea98c0eb3158cca261e6f48d66e1ed1cd1f340a43977094
   languageName: node
   linkType: hard
 
