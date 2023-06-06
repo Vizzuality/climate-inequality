@@ -4,6 +4,8 @@ import classNames from 'classnames';
 
 import { useScroll, motion, useTransform } from 'framer-motion';
 
+import FadeYScroll from '../animations/fade-y-scroll/component';
+
 const projects = [
   [
     { name: 'Half Earth', url: 'https://www.half-earthproject.org/' },
@@ -19,6 +21,23 @@ const projects = [
   ],
 ];
 
+const Text = () => (
+  <>
+    <p>
+      At Vizzuality, our purpose is to help{' '}
+      <span className="font-semibold">ensure a better future for our planet and society.</span> We
+      create engaging data-based knowledge platforms to inform{' '}
+      <span className="font-semibold">solutions towards sustainability and equality</span>.
+      Platforms that support the global shifts towards a society that puts people and the planet at
+      the centre.
+    </p>
+    <p className="mt-4 font-semibold">
+      We work with partner organisations that share this mission. Here are some of the projects we
+      have designed and developed:
+    </p>
+  </>
+);
+
 const Prioritising = () => {
   const target = useRef(null);
   const { scrollYProgress } = useScroll({ target, offset: ['start end', 'end start'] });
@@ -31,28 +50,28 @@ const Prioritising = () => {
     <div ref={target} className="flex min-h-screen w-full flex-col justify-between bg-white">
       <div className="flex h-full w-full flex-col justify-between overflow-x-hidden pt-14 pb-6 text-black md:pt-24 md:pb-14 xl:pt-28">
         <div className="container flex flex-col md:flex-row md:gap-8">
+          {/* DESKTOP */}
           <motion.h2
             style={{ x: translateX1 }}
-            className="mb-6 flex-1 font-serif text-2xl leading-tight md:mb-0 md:text-[56px]"
+            className="mb-6 hidden flex-1 font-serif text-2xl leading-tight sm:block md:mb-0 md:text-[56px]"
           >
             Prioritising people and planet
           </motion.h2>
-          <motion.div style={{ x: translateX2 }} className="flex-1 text-sm md:text-base">
-            <p>
-              At Vizzuality, our purpose is to help{' '}
-              <span className="font-semibold">
-                ensure a better future for our planet and society.
-              </span>{' '}
-              We create engaging data-based knowledge platforms to inform{' '}
-              <span className="font-semibold">solutions towards sustainability and equality</span>.
-              Platforms that support the global shifts towards a society that puts people and the
-              planet at the centre.
-            </p>
-            <p className="mt-4 font-semibold">
-              We work with partner organisations that share this mission. Here are some of the
-              projects we have designed and developed:
-            </p>
+          <motion.div
+            style={{ x: translateX2 }}
+            className="hidden flex-1 text-sm sm:block md:text-base"
+          >
+            <Text />
           </motion.div>
+          {/* MOBILE */}
+          <FadeYScroll threshold={0.2}>
+            <h2 className="mb-6 flex-1 font-serif text-2xl leading-tight sm:hidden md:mb-0 md:text-[56px]">
+              Prioritising people and planet
+            </h2>
+            <div className="flex-1 text-sm sm:hidden md:text-base">
+              <Text />
+            </div>
+          </FadeYScroll>
         </div>
       </div>
       <div className="grid w-full grid-cols-2  overflow-x-hidden md:hidden">

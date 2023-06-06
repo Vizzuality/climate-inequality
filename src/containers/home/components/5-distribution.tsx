@@ -131,23 +131,23 @@ const DistributionDefault = () => {
               fileName="chart"
               stateMachine="Default"
               stateMachineInput="scrollPos"
-              className="mobile-animation mb-[5vh] h-[75vh] w-screen"
+              className="h-[125vw] w-screen"
               autoplay
             />
-          </div>
-          <div className="container mt-[-8vh] font-serif text-2xs  text-light-gray">
-            <p className="mb-2">
-              Distribution of pre-tax national income by population group (2021).
-            </p>
-            <p>
-              Source:{' '}
-              <a
-                className="underline"
-                href="https://www.figma.com/file/tfBBt7rL4Rt0NJs7swlZdE/V2---Vizz-branding?node-id=347-55549&t=jWrtaEw0X7czunMf-4"
-              >
-                World Inequality Database, World Bank
-              </a>
-            </p>
+            <div className="container mb-4 font-serif text-2xs  text-light-gray">
+              <p className="mb-2">
+                Distribution of pre-tax national income by population group (2021).
+              </p>
+              <p>
+                Source:{' '}
+                <a
+                  className="underline"
+                  href="https://www.figma.com/file/tfBBt7rL4Rt0NJs7swlZdE/V2---Vizz-branding?node-id=347-55549&t=jWrtaEw0X7czunMf-4"
+                >
+                  World Inequality Database, World Bank
+                </a>
+              </p>
+            </div>
           </div>
         </div>
       </div>

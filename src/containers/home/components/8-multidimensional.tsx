@@ -8,6 +8,7 @@ import Icon from 'components/icon';
 import SectionSubtitle from 'components/section-subtitle';
 
 import ArrowRigth from 'svgs/ui/arrow-right-3.svg';
+import { useBreakpoint } from 'hooks/breakpoint';
 
 const content = [
   {
@@ -87,18 +88,20 @@ const Multidimensional = () => {
   return (
     <div ref={target} className="min-h-screen bg-500 text-900">
       <div className="container flex min-h-screen flex-col items-end justify-around gap-8 py-20 lg:gap-4">
-        <motion.div
-          style={{
-            x,
-            opacity,
-          }}
-        >
-          {' '}
-          <SectionSubtitle className=" text-900" size="large">
-            3.3 to 3.6 billion people live in areas highly vulnerable to climate impacts yet are the
-            least responsible for the crisis.
-          </SectionSubtitle>
-        </motion.div>
+        <div className="hidden sm:block">
+          <motion.div
+            style={{
+              x,
+              opacity,
+            }}
+          >
+            {' '}
+            <SectionSubtitle className=" text-900" size="large">
+              3.3 to 3.6 billion people live in areas highly vulnerable to climate impacts yet are
+              the least responsible for the crisis.
+            </SectionSubtitle>
+          </motion.div>
+        </div>
         {/* DESKTOP ANIMATION */}
         <motion.div
           className="hidden h-full w-full flex-col items-center justify-between sm:flex lg:flex-row"
@@ -121,6 +124,16 @@ const Multidimensional = () => {
         </motion.div>
         {/* MOBILE WITHOUT ANIMATION */}
         <div className="flex h-full w-full flex-col items-center justify-between sm:hidden">
+          <motion.div
+            style={{
+              opacity,
+            }}
+          >
+            <SectionSubtitle className=" mb-8 text-900" size="large">
+              3.3 to 3.6 billion people live in areas highly vulnerable to climate impacts yet are
+              the least responsible for the crisis.
+            </SectionSubtitle>
+          </motion.div>
           {content.map(({ text, classname, arrowClassname }, index) => {
             return (
               <Bubble

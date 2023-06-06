@@ -4,6 +4,7 @@ import { useScroll, useTransform, motion, easeIn } from 'framer-motion';
 
 import SectionSubtitle from 'components/section-subtitle/component';
 import SectionTitle from 'components/section-title/component';
+import FadeYScroll from '../animations/fade-y-scroll/component';
 
 const UnderstandingImageMobile = () => (
   <div className="h-[65vw] w-screen">
@@ -36,7 +37,7 @@ const Understanding = () => {
   return (
     <div ref={target} className="z-0 bg-white">
       <div className="container flex flex-col justify-between pt-14 text-900  sm:min-h-screen lg:mt-0">
-        <motion.div style={{ y, opacity: opacity1 }}>
+        <motion.div className="hidden sm:block" style={{ y, opacity: opacity1 }}>
           <SectionTitle className="mb-4" color="green">
             From understanding the problem to embracing solutions.
           </SectionTitle>
@@ -45,8 +46,20 @@ const Understanding = () => {
             simultaneously.
           </SectionSubtitle>
         </motion.div>
+        <div className="sm:hidden">
+          <FadeYScroll threshold={0.15}>
+            <SectionTitle className="mb-4" color="green">
+              From understanding the problem to embracing solutions.
+            </SectionTitle>
+            <SectionSubtitle className="text-900" size="large">
+              We need to come together as humanity to tackle the climate crisis and social
+              inequality simultaneously.
+            </SectionSubtitle>
+          </FadeYScroll>
+        </div>
         <div className="my-6 flex flex-col gap-6 sm:my-10 sm:flex-row">
-          <motion.div style={{ x: translateX1, opacity: opacity2 }}>
+          {/* DESKTOP TEXT */}
+          <motion.div className="hidden sm:block" style={{ x: translateX1, opacity: opacity2 }}>
             <p>
               We need diverse solutions across all elements of society, including{' '}
               <span className="font-semibold">
@@ -67,20 +80,39 @@ const Understanding = () => {
               remains a major obstacle.
             </p>
           </motion.div>
-          <motion.div style={{ x: translateX2, opacity: opacity2 }}>
-            <p className="hidden sm:block">
+          <motion.div className="hidden sm:block" style={{ x: translateX2, opacity: opacity2 }}>
+            <p>
               <span className="font-semibold">Predictive modelling harnessing geospatial data</span>{' '}
               is urgently needed to provide a more complete picture of the intersections between
               socioeconomic factors and environmental impacts. While progress is being made, we also
               need to communicate what is available, complementing each other’s efforts and driving
               positive change.
             </p>
-            <p className="hidden sm:block">
+            <p>
               As we strive for sustainable and balanced development,{' '}
               <span className="font-semibold">nature-based solutions</span> (NBS) gain traction as a
               response to both people and the planet.
             </p>
           </motion.div>
+          {/* MOBILE TEXT */}
+          <div className="sm:hidden">
+            <FadeYScroll threshold={0.15}>
+              <p>
+                We need diverse solutions across all elements of society, including{' '}
+                <span className="font-semibold">
+                  better governance, fairer wealth distribution, company-led solutions on ESG, and
+                  adaptation of cultural norms.{' '}
+                </span>
+                Answers to tackle the interdependent and complex climate and ecological crises must
+                be comprehensive, bringing vulnerable and marginalised groups into the conversation.
+              </p>
+              <p className="mt-4">
+                Many are looking towards initiatives that put people and the planet at the centre
+                while driving sustainable and balanced development, such as nature-based solutions
+                (NBS).
+              </p>
+            </FadeYScroll>
+          </div>
         </div>
         <div className="hidden sm:block">
           <UnderstandingImage />
