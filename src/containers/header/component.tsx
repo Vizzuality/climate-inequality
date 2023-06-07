@@ -13,7 +13,7 @@ export const Header: FC = () => (
         <LinkAnchor
           size="xl"
           theme="primary-alt"
-          className="flex-shrink-0 flex-grow-0 text-center text-lg font-semibold transition-all duration-500"
+          className="flex-shrink-0 flex-grow-0 pr-0 text-center text-lg font-semibold transition-all duration-500"
           anchorLinkProps={{ shallow: true, href: '/quiz' }}
         >
           Take the quiz.
