@@ -42,23 +42,27 @@ const ZoomingIn = () => {
   return (
     <div ref={target} className="flex min-h-screen flex-col py-12 lg:py-16">
       <div className="container">
-        <div className="pointer-events-none hidden sm:block">
-          <motion.div style={{ y: textY, opacity }} className="lg:w-1/2">
-            <Text />
-          </motion.div>
-        </div>
-        <div className="sm:hidden">
-          <FadeYScroll>
-            <Text />
-          </FadeYScroll>
-        </div>
-        <motion.div className="hidden sm:block" style={{ y: chartY, opacity }}>
-          <CountriesChart />
-        </motion.div>
-        <div className="sm:hidden">
-          <FadeYScroll>
+        <div className="small-container">
+          {/* DESKTOP */}
+          <div className="pointer-events-none hidden sm:block">
+            <motion.div style={{ y: textY, opacity }} className="lg:w-1/2">
+              <Text />
+            </motion.div>
+          </div>
+          <motion.div className="hidden sm:block" style={{ y: chartY, opacity }}>
             <CountriesChart />
-          </FadeYScroll>
+          </motion.div>
+          {/* MOBILE */}
+          <div className="sm:hidden">
+            <FadeYScroll>
+              <Text />
+            </FadeYScroll>
+          </div>
+          <div className="sm:hidden">
+            <FadeYScroll>
+              <CountriesChart />
+            </FadeYScroll>
+          </div>
         </div>
       </div>
     </div>

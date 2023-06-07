@@ -36,7 +36,7 @@ const Understanding = () => {
 
   return (
     <div ref={target} className="z-0 bg-white">
-      <div className="container flex flex-col justify-between pt-14 text-900  sm:min-h-screen lg:mt-0">
+      <div className="small-container container flex flex-col justify-between pt-14 text-900  sm:min-h-screen lg:mt-0">
         <motion.div className="hidden sm:block" style={{ y, opacity: opacity1 }}>
           <SectionTitle className="mb-4" color="green">
             From understanding the problem to embracing solutions.

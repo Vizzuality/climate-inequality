@@ -41,34 +41,35 @@
 }
 
 .flicking-viewport:not(.vertical) {
-  @apply w-full h-full;
+  @apply h-full w-full;
 }
 
 .flicking-camera {
-  @apply relative z-10 w-full h-full whitespace-nowrap will-change-transform;
+  @apply relative z-10 h-full w-full whitespace-nowrap will-change-transform;
 }
 
-.flicking-camera>* {
+.flicking-camera > * {
   @apply inline-block whitespace-normal align-top;
 }
 
-.flicking-viewport.vertical,.flicking-viewport.vertical>.flicking-camera {
+.flicking-viewport.vertical,
+.flicking-viewport.vertical > .flicking-camera {
   @apply inline-block;
 }
 
-.flicking-viewport.vertical.middle>.flicking-camera>* {
+.flicking-viewport.vertical.middle > .flicking-camera > * {
   @apply align-middle;
 }
 
-.flicking-viewport.vertical.bottom>.flicking-camera>* {
+.flicking-viewport.vertical.bottom > .flicking-camera > * {
   @apply align-bottom;
 }
 
-.flicking-viewport.vertical>.flicking-camera>* {
+.flicking-viewport.vertical > .flicking-camera > * {
   @apply block;
 }
 
-.flicking-viewport.flicking-hidden>.flicking-camera>* {
+.flicking-viewport.flicking-hidden > .flicking-camera > * {
   @apply invisible;
 }
 
@@ -95,7 +96,6 @@
   font-style: normal;
 }
 
-
 @font-face {
   font-family: 'Inter';
   src: url('/fonts/Inter-Regular.woff2');
@@ -115,4 +115,16 @@
   src: url('/fonts/Inter-SemiBold.woff2');
   font-weight: 700;
   font-style: normal;
+}
+
+.small-container {
+  @apply sm:px-4;
+
+  @apply md:px-8;
+
+  @apply lg:px-12;
+
+  @apply xl:px-16;
+
+  @apply 2xl:px-20;
 }

@@ -119,7 +119,7 @@ const Text = ({
               // translateY,
             }}
             key={title}
-            className={classNames('countries-text absolute h-[50vh] sm:w-[50vw]', {
+            className={classNames('small-container countries-text absolute h-[50vh] sm:w-[50vw]', {
               'mt-[75vh]': index === 1,
             })}
           >

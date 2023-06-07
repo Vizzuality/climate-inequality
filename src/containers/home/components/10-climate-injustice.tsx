@@ -55,9 +55,9 @@ const ClimateInjustice = () => {
       ref={target}
       className="flex min-h-screen w-full max-w-full flex-col justify-around space-y-20 overflow-x-hidden py-24"
     >
-      <div>
+      <div className="container">
         {/* DESKTOP */}
-        <div className="container hidden items-end gap-14 sm:flex">
+        <div className="small-container hidden items-end gap-14 sm:flex">
           <motion.div
             style={{
               x: titleX,
@@ -78,7 +78,7 @@ const ClimateInjustice = () => {
           </motion.div>
         </div>
         {/* MOBILE */}
-        <div className="container flex flex-col items-end gap-6 sm:hidden">
+        <div className="flex flex-col items-end gap-6 sm:hidden">
           <motion.div
             style={{
               opacity: titleOpacity,

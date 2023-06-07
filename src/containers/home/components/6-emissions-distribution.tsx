@@ -59,28 +59,26 @@ const EmissionsDistribution = () => {
   return (
     <div ref={target} className="flex w-full flex-col items-center justify-center sm:h-[150vh]">
       {/* DESKTOP */}
-      <div className="absolute hidden h-[150vh] sm:block">
-        <div className="sticky top-0 min-h-screen">
-          <div className="flex min-h-screen flex-col justify-between pb-10 sm:pt-20 lg:pt-36">
-            <motion.div className="container" style={{ y, opacity }}>
+      <div className="absolute hidden h-[150vh] w-full sm:block">
+        <div className="sticky top-0 min-h-screen w-full">
+          <div className="container flex min-h-screen flex-col items-center justify-between pb-10 sm:pt-20 lg:pt-36">
+            <motion.div className="" style={{ y, opacity }}>
               <Text />
             </motion.div>
-            <div>
-              <motion.div
-                style={{ height }}
-                className="container flex w-screen items-center justify-center"
-              >
-                <RiveScrollAnimation
-                  scrollY={animationProgress}
-                  fileName="chart_share_of_emissions"
-                  stateMachine="Default"
-                  stateMachineInput="scrollPos"
-                  className="h-[50vh] w-screen"
-                  autoplay
-                />
-              </motion.div>
-            </div>
-            <div className="flex-0 container mt-auto place-items-end self-end text-sm">
+            <motion.div
+              style={{ height }}
+              className="flex w-full flex-1 items-center justify-center"
+            >
+              <RiveScrollAnimation
+                scrollY={animationProgress}
+                fileName="chart_share_of_emissions"
+                stateMachine="Default"
+                stateMachineInput="scrollPos"
+                className="h-[33.75vw] w-screen"
+                autoplay
+              />
+            </motion.div>
+            <div className="flex-0 mt-auto place-items-end self-end text-sm">
               <Source />
             </div>
           </div>
