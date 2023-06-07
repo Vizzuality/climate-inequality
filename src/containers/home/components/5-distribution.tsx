@@ -27,28 +27,17 @@ const DistributionDefault = () => {
     offset: ['start center', 'end start'],
   });
 
-  const opacityText1 = useTransform(containerScrollProgress, [0, 0.2, 0.33, 0.5], [0, 1, 1, 0]);
+  const opacityText1 = useTransform(containerScrollProgress, [0, 0.2, 0.35, 0.5], [0, 1, 1, 0]);
   const opacityText2 = useTransform(containerScrollProgress, [0.4, 0.5, 0.7, 1], [0, 1, 1, 0]);
 
   const animationY = useTransform(animationScrollProgress, (v) => {
-    if (v > 0.8 && v < 1) {
-      const variation = scaleRange(v, [0.8, 1], [30, 0]);
+    if (v > 0.7 && v <= 1) {
+      const variation = scaleRange(v, [0.7, 0.9], [50, 0]);
       return `${variation}vh`;
     }
-    if (v > 0.6 && v <= 0.8) {
-      const variation = scaleRange(v, [0.6, 0.8], [20, 30]);
+    if (v >= 0.5 && v <= 0.7) {
+      const variation = scaleRange(v, [0.5, 0.7], [0, 50]);
       return `${variation}vh`;
-    }
-    if (v >= 0.5 && v <= 0.6) {
-      const variation = scaleRange(v, [0.5, 0.6], [0, 20]);
-      return `${variation}vh`;
-    }
-    if (v > 0 && v < 0.5) {
-      const variation = scaleRange(v, [0, 0.5], [-10, 0]);
-      return `${variation}vh`;
-    }
-    if (v === 0) {
-      return '-10vh';
     }
     return 0;
   });
@@ -58,12 +47,12 @@ const DistributionDefault = () => {
   });
 
   return (
-    <div ref={target} className="flex h-[200vh] flex-col items-center">
+    <div ref={target} className="flex h-[300vh] flex-col items-center">
       {/* TEXTS */}
       <div className="flex-0 absolute z-10 flex flex-col items-center justify-center">
         {texts.map((text, index) => {
           return (
-            <div key={text} className="h-[75vh]">
+            <div key={text} className="h-[125vh] last:h-[100vh]">
               <motion.div
                 className={classNames('sticky top-0 z-10 pt-12 text-center sm:pt-28', {
                   'pb-28': index === 1,
@@ -74,71 +63,66 @@ const DistributionDefault = () => {
               >
                 <div className="container sm:max-w-3xl">
                   <SectionTitle>Distribution of global wealth.</SectionTitle>
-                  <SectionSubtitle className="mt-2 mb-6" size="small">
-                    {text}
-                  </SectionSubtitle>
+                  <SectionSubtitle className="mt-2 mb-6">{text}</SectionSubtitle>
                 </div>
               </motion.div>
             </div>
           );
         })}
       </div>
-      {/* DESKTOP ANIMATION */}
+      {/* DESKTOP */}
       <motion.div
-        className="absolute -z-10 mb-6 hidden h-[200vh] w-screen sm:flex"
+        className="absolute -z-10 mb-6 hidden h-[300vh] w-screen lg:flex"
         style={{
           y: animationY,
           opacity: animationOpacity,
         }}
       >
-        <div className="h-[200vh]">
-          <div className="sticky top-0 h-screen">
-            <div className="flex h-full items-end pb-10">
-              <RiveScrollAnimation
-                scrollY={animationScrollProgress}
-                fileName="chart"
-                stateMachine="Default"
-                stateMachineInput="scrollPos"
-                className="diagram-animation h-[150vh] w-screen"
-                autoplay
-              />
-            </div>
+        <div className="sticky top-0 h-screen">
+          <div className="flex h-[calc(100vh-96px)] items-end">
+            <RiveScrollAnimation
+              scrollY={animationScrollProgress}
+              fileName="chart"
+              stateMachine="Default"
+              stateMachineInput="scrollPos"
+              className="h-[150vh] w-screen"
+              autoplay
+            />
+          </div>
+          <div className="container mt-6 w-full items-end justify-between text-sm text-middle-gray sm:flex">
+            <p className="font-serif">
+              Distribution of pre-tax national income by population group (2021).
+            </p>
+            <p>
+              Source:{' '}
+              <a
+                className="underline"
+                href="https://www.figma.com/file/tfBBt7rL4Rt0NJs7swlZdE/V2---Vizz-branding?node-id=347-55549&t=jWrtaEw0X7czunMf-4"
+              >
+                World Inequality Database, World Bank
+              </a>
+            </p>
           </div>
         </div>
       </motion.div>
-      {/* DESKTOP LEGEND */}
-      <div className="container hidden h-full w-full items-end justify-between text-sm text-light-gray sm:flex">
-        <p className="font-serif">
-          Distribution of pre-tax national income by population group (2021).
-        </p>
-        <p>
-          Source:{' '}
-          <a
-            className="underline"
-            href="https://www.figma.com/file/tfBBt7rL4Rt0NJs7swlZdE/V2---Vizz-branding?node-id=347-55549&t=jWrtaEw0X7czunMf-4"
-          >
-            World Inequality Database, World Bank
-          </a>
-        </p>
-      </div>
 
-      {/* MOBILE ANIMATION AND LEGEND */}
-      <div className="absolute flex h-[200vh] w-screen sm:hidden">
-        <div className="sticky top-[25vh] h-[75vh]">
+      {/* MOBILE */}
+      <div className="absolute flex h-[300vh] w-screen lg:hidden">
+        <div className="sticky top-0 h-screen">
           <div className="flex h-full flex-col justify-end">
             <RiveScrollAnimation
               scrollY={animationScrollProgress}
               fileName="chart"
               stateMachine="Default"
               stateMachineInput="scrollPos"
-              className="h-[125vw] w-screen"
+              className="h-[120vw] w-screen"
               autoplay
             />
-            <div className="container mb-4 font-serif text-2xs  text-light-gray">
-              <p className="mb-2">
+            <div className="container mb-4 text-center text-xs  text-light-gray">
+              <p className="mb-2 font-serif">
                 Distribution of pre-tax national income by population group (2021).
               </p>
-              <p>
+              <p className="text-2xs">
                 Source:{' '}
                 <a
                   className="underline"

@@ -86,9 +86,7 @@ const Inequality = () => {
                     style={{ opacity: index === 0 ? text1Opacity : text2Opacity }}
                   >
                     <SectionTitle>{title}</SectionTitle>
-                    <SectionSubtitle className="mt-2 mb-6" size="small">
-                      {subtitle}
-                    </SectionSubtitle>
+                    <SectionSubtitle className="mt-2 mb-6">{subtitle}</SectionSubtitle>
                     <div className="mt-4 text-base">
                       <p>{p1}</p>
                       <p className="mt-4 text-base">{p2}</p>
@@ -100,9 +98,7 @@ const Inequality = () => {
                     style={{ opacity: index === 0 ? text1Opacity : text2OpacityMobile }}
                   >
                     <SectionTitle>{title}</SectionTitle>
-                    <SectionSubtitle className="mt-2 mb-6" size="small">
-                      {subtitle}
-                    </SectionSubtitle>
+                    <SectionSubtitle className="mt-2 mb-6">{subtitle}</SectionSubtitle>
                     <div className="mt-4 text-sm">
                       <p>{p1}</p>
                       <p className="mt-4 text-sm">{p2}</p>

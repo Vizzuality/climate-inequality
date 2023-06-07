@@ -12,7 +12,7 @@ import FadeYScroll from '../animations/fade-y-scroll/component';
 const Text = () => (
   <>
     <SectionTitle className="mb-2">Zooming in on internal inequality.</SectionTitle>
-    <SectionSubtitle className="mb-6" size="small">
+    <SectionSubtitle className="mb-6">
       Income inequality is integral to carbon inequality.
     </SectionSubtitle>
     <p className="text-sm lg:text-base">

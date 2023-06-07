@@ -14,18 +14,19 @@ const Title = () => {
   };
 
   return (
-    <div className="pt-18 w-full xl:pt-24">
-      <FadeYScroll threshold={0.25}>
-        <div className="absolute top-0 -z-10 h-screen w-screen overflow-hidden ">
+    <div className="pt-18 flex w-full flex-1 xl:pt-24">
+      <FadeYScroll threshold={0.25} className="flex flex-col">
+        <div className="absolute top-0 -z-10 h-screen w-screen overflow-hidden">
+          {/* In mobile the size and positioning are calculated based on the HEIGHT, and in desktop are based on WIDTH */}
           <RiveAnimation
             className="h-[122vh] w-[122vh]
-            translate-x-[-75vw] translate-y-[-40vh] opacity-40 sm:h-[122vw] sm:w-[122vw] sm:-translate-x-[45vw] sm:-translate-y-[95vh]"
+            translate-x-[-50vh] translate-y-[-40vh] opacity-40 sm:h-[122vw] sm:w-[122vw] sm:-translate-x-[35vw] sm:-translate-y-[25vh] lg:-translate-y-[95vh] lg:-translate-x-[45vw]"
             src="/animations/init_animation.riv"
             autoplay
           />
         </div>
-        <div className="container flex h-full flex-col">
-          <div>
+        <div className="container flex flex-1 flex-col items-center justify-between sm:block sm:justify-start">
+          <div className="flex flex-1 flex-col justify-center">
             <div className="items-center justify-start pb-2 text-left text-sm font-semibold text-500">
               Vizzuality&lsquo;s look at climate action and equality.
             </div>
@@ -33,11 +34,11 @@ const Title = () => {
               We believe in a sustainable and just future for all, where equality is core.
             </div>
             <div className="pb-16 text-left text-base font-light leading-tight text-white sm:text-xl sm:leading-8 lg:w-9/12">
-              The climate crisis threatens that reality. To create the world <br /> we believe in,
-              we need to understand these dynamics.
+              The climate crisis threatens that reality. To create the world we believe in, we need
+              to understand these dynamics.
             </div>
           </div>
-          <div className="flex justify-center sm:block">
+          <div className="mb-14 flex justify-center sm:mb-0 sm:block">
             <Button
               onClick={handleScroll}
               theme="transparent"

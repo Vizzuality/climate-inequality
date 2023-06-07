@@ -18,7 +18,7 @@ import Countries from './components/9-countries';
 const Home = () => {
   return (
     <div>
-      <div className="min-h-screen">
+      <div className="flex min-h-screen flex-col">
         <Header />
         <Title />
       </div>

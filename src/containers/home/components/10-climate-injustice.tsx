@@ -10,7 +10,7 @@ import SectionTitle from 'components/section-title';
 const Title = () => (
   <>
     <SectionTitle className="mb-2">Climate injustice.</SectionTitle>
-    <SectionSubtitle size="small">
+    <SectionSubtitle>
       The wealthiest regions are fortunate to face fewer and less intense climate impacts
     </SectionSubtitle>
   </>
@@ -53,7 +53,7 @@ const ClimateInjustice = () => {
   return (
     <div
       ref={target}
-      className="flex min-h-screen w-full flex-col justify-around space-y-20 overflow-x-hidden py-24"
+      className="flex min-h-screen w-full max-w-full flex-col justify-around space-y-20 overflow-x-hidden py-24"
     >
       <div>
         {/* DESKTOP */}
