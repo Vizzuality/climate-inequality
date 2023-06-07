@@ -1,8 +1,9 @@
+import { useBreakpoint } from 'hooks/breakpoint';
+
 import { Button } from 'components/button/component';
 
 import FadeYScroll from '../animations/fade-y-scroll/component';
 import RiveAnimation from '../rive-components/rive';
-import { useBreakpoint } from 'hooks/breakpoint';
 
 const Title = () => {
   const breakpoint = useBreakpoint();
