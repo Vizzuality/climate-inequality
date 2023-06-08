@@ -8,7 +8,38 @@ import SectionTitle from 'components/section-title/component';
 
 import DistributionIcon from 'svgs/ui/distribution-mobile.svg';
 
+import FadeYScroll from '../animations/fade-y-scroll/component';
 import RiveScrollAnimation from '../rive-components/rive-scroll';
+
+const Text = () => (
+  <div className="sm:w-1/2">
+    <SectionTitle>Distribution of emissions.</SectionTitle>
+    <SectionSubtitle className="mt-2 mb-6">
+      The top 10% are responsible for nearly 50% of emissions.
+    </SectionSubtitle>
+    <p className="text-base">
+      The wealthiest people are better positioned to deal with the impacts and adaptations to the
+      climate crisis. Meanwhile, the people who contribute least to the crisis also have the least
+      financial resources to react to its impacts.
+    </p>
+  </div>
+);
+
+const Source = () => (
+  <>
+    <p className="sm:text-end">
+      Source:{' '}
+      <a
+        className="underline"
+        href="https://wid.world/data/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        World Inequality Database
+      </a>
+    </p>
+  </>
+);
 
 const EmissionsDistribution = () => {
   const target = useRef(null);
@@ -24,64 +55,49 @@ const EmissionsDistribution = () => {
 
   const y = useTransform(scrollYProgress, [0, 0.33], ['-50vh', '0vh']);
   const opacity = useTransform(scrollYProgress, [0.2, 0.33], [0, 1]);
-  const distributionMobileOpacity = useTransform(scrollYProgress, [0.33, 0.5], [0, 1]);
 
   return (
-    <div ref={target} className="flex h-[150vh] w-full flex-col items-center justify-center ">
-      <div className="absolute h-[150vh]">
-        <div className="sticky top-0 h-screen">
-          <div className="flex h-full flex-col pt-20 pb-10 lg:pt-36">
-            <motion.div className="container" style={{ y, opacity }}>
-              <div className="sm:w-1/2">
-                <SectionTitle>Distribution of emissions.</SectionTitle>
-                <SectionSubtitle className="mt-2 mb-6" size="small">
-                  The top 10% are responsible for nearly 50% of emissions.
-                </SectionSubtitle>
-                <p className="text-base">
-                  The wealthiest people are better positioned to deal with the impacts and
-                  adaptations to the climate crisis. Meanwhile, the people who contribute least to
-                  the crisis also have the least financial resources to react to its impacts.
-                </p>
-              </div>
+    <div ref={target} className="flex w-full flex-col items-center justify-center sm:h-[150vh]">
+      {/* DESKTOP */}
+      <div className="absolute hidden h-[150vh] w-full sm:block">
+        <div className="sticky top-0 min-h-screen w-full">
+          <div className="container flex min-h-screen flex-col items-center justify-between pb-10 sm:pt-20 lg:pt-36">
+            <motion.div className="" style={{ y, opacity }}>
+              <Text />
             </motion.div>
-
-            {/* DESKTOP ANIMATION */}
-            <div className="hidden sm:block">
-              <motion.div style={{ height }} className="container flex w-screen items-center">
-                <RiveScrollAnimation
-                  scrollY={animationProgress}
-                  fileName="chart_share_of_emissions"
-                  stateMachine="Default"
-                  stateMachineInput="scrollPos"
-                  className="sm:h-[50vh] sm:w-screen"
-                  autoplay
-                />
-              </motion.div>
-            </div>
-
-            {/* MOBILE IMAGE */}
-            <div className="flex flex-1 items-center sm:hidden">
-              <motion.div style={{ opacity: distributionMobileOpacity }}>
-                <Icon icon={DistributionIcon} className="container w-screen" />
-              </motion.div>
-            </div>
-
-            <motion.div className="flex-0 container mt-auto place-items-end text-xs sm:self-end sm:text-sm">
-              <p className="sm:text-end">
-                Source:{' '}
-                <a
-                  className="underline"
-                  href="https://wid.world/data/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  World Inequality Database
-                </a>
-              </p>
+            <motion.div
+              style={{ height }}
+              className="flex w-full flex-1 items-center justify-center"
+            >
+              <RiveScrollAnimation
+                scrollY={animationProgress}
+                fileName="chart_share_of_emissions"
+                stateMachine="Default"
+                stateMachineInput="scrollPos"
+                className="h-[33.75vw] w-screen"
+                autoplay
+              />
             </motion.div>
+            <div className="flex-0 mt-auto place-items-end self-end text-sm">
+              <Source />
+            </div>
           </div>
         </div>
       </div>
+      {/* MOBILE */}
+      <FadeYScroll className="w-full">
+        <div className="container flex min-h-screen flex-col justify-between pt-14 pb-6 sm:hidden">
+          <div>
+            <Text />
+          </div>
+          <div className="mt-5 mb-7">
+            <Icon icon={DistributionIcon} className="w-full" />
+          </div>
+          <div className="text-xs">
+            <Source />
+          </div>
+        </div>
+      </FadeYScroll>
     </div>
   );
 };

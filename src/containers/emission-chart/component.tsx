@@ -144,7 +144,7 @@ const EmissionChart = () => {
 
   return (
     <div className='container'>
-      <div className="mb-8 flex flex-wrap items-center gap-1 sm:mb-4 sm:gap-2">
+      <div className="small-container mb-8 flex flex-wrap items-center gap-1 sm:mb-4 sm:gap-2">
         <fieldset className="flex flex-shrink-0 items-center gap-x-2">
           <RadioButton
             name="emission-type"
@@ -205,7 +205,7 @@ const EmissionChart = () => {
           {/* Chart */}
           <div
             ref={chartContainerRef}
-            className="col-span-1 sm:col-span-2 sm:-ml-[5%] sm:w-[110%]"
+            className="col-span-1 sm:col-span-2 sm:w-full"
           >
             <Beeswarm
               radiusSize={
@@ -225,7 +225,7 @@ const EmissionChart = () => {
             />
           </div>
           {/* Legends */}
-          <div className="col-span-2 col-start-1 row-start-2 flex items-center justify-between text-2xs leading-3 sm:col-span-1 sm:items-start sm:gap-6">
+          <div className="small-container  col-span-2 col-start-1 row-start-2 flex items-center justify-between text-2xs leading-3 sm:col-span-1 sm:items-start sm:gap-6">
             <div className="w-36 sm:w-44">
               <p>Average national income per capita (€/year)</p>
               <div className="my-1 h-2.5 w-full rounded-full bg-gradient-to-r from-100 to-500" />

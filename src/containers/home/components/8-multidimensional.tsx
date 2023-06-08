@@ -8,7 +8,6 @@ import Icon from 'components/icon';
 import SectionSubtitle from 'components/section-subtitle';
 
 import ArrowRigth from 'svgs/ui/arrow-right-3.svg';
-import { useBreakpoint } from 'hooks/breakpoint';
 
 const content = [
   {
@@ -96,7 +95,7 @@ const Multidimensional = () => {
             }}
           >
             {' '}
-            <SectionSubtitle className=" text-900" size="large">
+            <SectionSubtitle className="small-container text-900" size="large">
               3.3 to 3.6 billion people live in areas highly vulnerable to climate impacts yet are
               the least responsible for the crisis.
             </SectionSubtitle>

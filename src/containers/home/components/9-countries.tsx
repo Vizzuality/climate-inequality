@@ -119,15 +119,13 @@ const Text = ({
               // translateY,
             }}
             key={title}
-            className={classNames('countries-text absolute h-[50vh] sm:w-[50vw]', {
+            className={classNames('small-container countries-text absolute h-[50vh] sm:w-[50vw]', {
               'mt-[75vh]': index === 1,
             })}
           >
             <div className="sticky top-0 pt-16 2xl:pt-24">
               <SectionTitle>{title}</SectionTitle>
-              <SectionSubtitle className="mt-2 mb-6" size="small">
-                {subtitle}
-              </SectionSubtitle>
+              <SectionSubtitle className="mt-2 mb-6">{subtitle}</SectionSubtitle>
               <p className="sm:text-base">{p}</p>
             </div>
           </motion.div>
@@ -170,7 +168,7 @@ const Countries = () => {
                   style={{
                     backgroundImage: `url('${image}')`,
                   }}
-                  className="h-[50vh] w-screen bg-contain bg-center bg-no-repeat sm:h-[34.77vw] sm:w-[80vw] sm:bg-cover"
+                  className="h-[50vh] w-screen bg-contain bg-center bg-no-repeat  sm:bg-cover lg:h-[34.77vw] lg:w-[80vw]"
                 ></div>
                 <Legend text={legend} />
               </motion.div>

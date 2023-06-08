@@ -35,7 +35,7 @@ const ClimateCrisis = () => {
               translateY: isDesktop ? translateY : 0,
               opacity: isDesktop ? opacity1 : 1,
             }}
-            className="flex-0"
+            className="flex-0 small-container"
           >
             <SectionTitle className="mb-4" color="green">
               Climate crisis and inequality.

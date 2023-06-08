@@ -52,10 +52,13 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="container my-16 text-center sm:hidden ">
-          <div className="text-white ">
-            <p>We are committed to turning knowledge into actions that tackle global challenges.</p>
-            <p>Do you share this goal?</p>
+        <div className="container my-16 text-center sm:hidden">
+          <div className="font-semibold text-white">
+            <p>
+              At Vizzuality, we help organizations tackle global challenges by turning knowledge
+              into action.
+            </p>
+            <p className="text-green">Interested in what we could achieve together?</p>
           </div>
           <Button
             className="mt-10 py-6 px-5 text-base font-semibold"
@@ -63,7 +66,7 @@ const Footer = () => {
             theme="secondary"
             href={'mailto:hello@vizzuality.com'}
           >
-            Let&apos;s collaborate.
+            Contact us.
           </Button>
           <div className="mt-8 flex flex-col items-center space-y-4 border-t border-white pt-12 ">
             <Logo width={140} height={32} />

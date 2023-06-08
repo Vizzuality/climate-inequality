@@ -14,7 +14,7 @@ import InvestmentsIcon from 'svgs/ui/investments.svg';
 import FadeYScroll from '../animations/fade-y-scroll/component';
 
 const Text = () => (
-  <div className="container">
+  <div className="small-container">
     <SectionSubtitle className="mb-6">When needs and investment do not align.</SectionSubtitle>
     <p className="text-sm sm:text-base">
       According to estimates by the{' '}
@@ -49,13 +49,16 @@ const Investment = () => {
       <div className="flex h-[150vh] flex-col justify-between text-black sm:py-14 2xl:py-20">
         <div className="sticky top-0 flex min-h-screen flex-col justify-between">
           {/* DESKTOP TEXT */}
-          <motion.div style={{ y, opacity }} className="flex-0 mb-16 mt-14 hidden sm:block">
+          <motion.div
+            style={{ y, opacity }}
+            className="flex-0 container mb-16 mt-14 hidden sm:block"
+          >
             <div className="sm:w-1/2">
               <Text />
             </div>
           </motion.div>
           {/* MOBILE TEXT */}
-          <FadeYScroll className="mb-6 mt-10 sm:hidden">
+          <FadeYScroll threshold={0.1} className="container mb-6 mt-10 sm:hidden">
             <Text />
           </FadeYScroll>
           <div className="w-full overflow-hidden">

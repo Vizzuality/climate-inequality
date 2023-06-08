@@ -69,7 +69,7 @@ const Inequality = () => {
 
   return (
     <div ref={ref} className="h-[300vh] w-full">
-      <div className="flex-1">
+      <div className="container flex-1">
         {contents.map(({ p1, p2, subtitle, title }, index) => {
           return (
             <div
@@ -80,15 +80,13 @@ const Inequality = () => {
               })}
             >
               <div className="sticky top-[45vh] h-[50vh] sm:top-0 sm:h-screen">
-                <div className="container flex h-full flex-col items-center justify-center sm:flex-row">
+                <div className="flex h-full flex-col items-center justify-center sm:flex-row">
                   <motion.div
                     className="hidden flex-1 sm:block"
                     style={{ opacity: index === 0 ? text1Opacity : text2Opacity }}
                   >
                     <SectionTitle>{title}</SectionTitle>
-                    <SectionSubtitle className="mt-2 mb-6" size="small">
-                      {subtitle}
-                    </SectionSubtitle>
+                    <SectionSubtitle className="mt-2 mb-6">{subtitle}</SectionSubtitle>
                     <div className="mt-4 text-base">
                       <p>{p1}</p>
                       <p className="mt-4 text-base">{p2}</p>
@@ -100,9 +98,7 @@ const Inequality = () => {
                     style={{ opacity: index === 0 ? text1Opacity : text2OpacityMobile }}
                   >
                     <SectionTitle>{title}</SectionTitle>
-                    <SectionSubtitle className="mt-2 mb-6" size="small">
-                      {subtitle}
-                    </SectionSubtitle>
+                    <SectionSubtitle className="mt-2 mb-6">{subtitle}</SectionSubtitle>
                     <div className="mt-4 text-sm">
                       <p>{p1}</p>
                       <p className="mt-4 text-sm">{p2}</p>
@@ -120,7 +116,7 @@ const Inequality = () => {
       <div className="absolute h-[300vh] w-full sm:mt-[-50vh] sm:h-[350vh]">
         <div className="pointer-events-none sticky top-0 h-[100vh] w-full sm:flex sm:pt-0">
           <div className="flex-1"></div>
-          <div className="container flex flex-1 items-center justify-end">
+          <div className="flex flex-1 items-center justify-end">
             <RiveScrollAnimation
               scrollY={animationYProgress}
               fileName="diagram"

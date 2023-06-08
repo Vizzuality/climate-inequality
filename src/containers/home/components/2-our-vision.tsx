@@ -55,7 +55,7 @@ const OurVision = () => {
             fileName="circle"
             stateMachine="Circle"
             stateMachineInput="scrollPos"
-            className="h-[105vw] w-[105vw] scale-[175%] sm:scale-100"
+            className="h-[105vw] w-[105vw] scale-[190%] sm:scale-[150%] lg:scale-100"
             autoplay
           />
         </motion.div>
@@ -70,7 +70,7 @@ const OurVision = () => {
           <div className="sticky top-0 h-screen">
             <div className="container flex h-full items-center justify-center">
               <motion.div
-                className="flex max-w-[50%] flex-col justify-center text-center sm:max-w-[40%]"
+                className="flex max-w-[85%] flex-col justify-center text-center sm:max-w-[75%] lg:max-w-[40%]"
                 style={{ opacity: textOpacity }}
               >
                 <SectionTitle>{title}</SectionTitle>

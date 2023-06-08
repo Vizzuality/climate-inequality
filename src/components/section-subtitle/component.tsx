@@ -6,7 +6,6 @@ const SectionSubtitle = ({ children, size = 'medium', className }: SectionSubtit
   return (
     <h3
       className={classNames('font-serif font-normal leading-tight', {
-        'text-lg sm:text-2xl': size === 'small',
         'text-xl sm:text-2xl': size === 'medium',
         'text-2xl sm:text-3xl lg:text-[56px]': size === 'large',
         'text-[40px] sm:text-4xl lg:text-5xl': size === 'xlarge',
