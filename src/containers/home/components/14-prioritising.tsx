@@ -8,16 +8,19 @@ import FadeYScroll from '../animations/fade-y-scroll/component';
 
 const projects = [
   [
-    { name: 'Half Earth', url: 'https://www.half-earthproject.org/' },
-    { name: 'Global Forest Watch', url: 'https://www.globalforestwatch.org/' },
-    { name: 'NGO Aid Map', url: 'https://ngoaidmap.org/' },
+    { name: 'Half Earth', url: 'https://www.vizzuality.com/project/half-earth/' },
+    { name: 'Global Forest Watch', url: 'https://www.vizzuality.com/project/global-forest-watch/' },
+    { name: 'Aqueduct', url: 'https://www.vizzuality.com/project/aqueduct/' },
     { name: 'Environmental democracy index', url: 'https://www.environmentaldemocracyindex.org/' },
   ],
   [
-    { name: 'Climate Watch', url: 'https://www.climatewatchdata.org/' },
-    { name: 'Care USA', url: 'https://www.care.org/' },
-    { name: 'SDG16 Data initiative', url: 'https://www.sdg16.org/' },
-    { name: 'Marxan', url: 'https://marxanplanning.org/' },
+    { name: 'Climate Watch', url: 'https://www.vizzuality.com/project/climate-watch/' },
+    {
+      name: 'IISD SDG knowledge hub',
+      url: 'https://www.vizzuality.com/project/iisd-sdg-knowledge-hub/',
+    },
+    { name: 'Resource Watch', url: 'https://www.vizzuality.com/project/resource-watch/' },
+    { name: 'Marxan', url: 'https://www.vizzuality.com/project/marxan/' },
   ],
 ];
 
