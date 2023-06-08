@@ -11,7 +11,6 @@ const projects = [
     { name: 'Half Earth', url: 'https://www.vizzuality.com/project/half-earth/' },
     { name: 'Global Forest Watch', url: 'https://www.vizzuality.com/project/global-forest-watch/' },
     { name: 'Aqueduct', url: 'https://www.vizzuality.com/project/aqueduct/' },
-    { name: 'Environmental democracy index', url: 'https://www.environmentaldemocracyindex.org/' },
   ],
   [
     { name: 'Climate Watch', url: 'https://www.vizzuality.com/project/climate-watch/' },
