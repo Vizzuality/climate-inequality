@@ -26,7 +26,7 @@ const MetaTags: FC<MetaTagsProps> = ({
   title,
   description,
   type = 'website',
-  imageURL,
+  imageURL = 'meta-image.jpeg',
 }: MetaTagsProps) => {
   const { asPath } = useRouter();
 
@@ -45,12 +45,9 @@ const MetaTags: FC<MetaTagsProps> = ({
       <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="/apple-touch-icon.png" />
       <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
       <link rel="icon" type="image/png" sizes="256x256" href="/android-chrome-256x256.png" />
-      <link rel="manifest" href={`${process.env.NEXT_PUBLIC_BASE_PATH}/manifest.json`} />
+      <link rel="manifest" href={`${BASE_URL}/manifest.json`} />
       <meta name="msapplication-TileColor" content="#ffffff" />
-      <meta
-        name="msapplication-TileImage"
-        content={`${process.env.NEXT_PUBLIC_BASE_PATH}/ms-tile-150x150.png`}
-      />
+      <meta name="msapplication-TileImage" content={`${BASE_URL}/ms-tile-150x150.png`} />
       <meta name="theme-color" content="#ffffff" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
@@ -62,7 +59,7 @@ const MetaTags: FC<MetaTagsProps> = ({
       <meta name="og:title" content={title} />
       <meta name="og:description" content={description} />
       <meta name="og:type" content={type} />
-      <meta name="og:url" content={`${BASE_URL}${asPath}`} />
+      <meta name="og:url" content={`${BASE_URL}`} />
       <meta property="og:locale" content="en_US" />
       <meta name="og:image" content={`${BASE_URL}/${imageURL}`} />
       <meta property="og:site_name" content="Climate Inequality" />
