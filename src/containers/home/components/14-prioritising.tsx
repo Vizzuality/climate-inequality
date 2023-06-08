@@ -79,7 +79,7 @@ const Prioritising = () => {
       <div className="grid w-full grid-cols-2  overflow-x-hidden md:hidden">
         {projects.flat().map((project, index) => {
           const { name, url } = project;
-          const isFirstOrLast = index === 0 || index === 7;
+          const isFirstOrLast = index === 0 || index === 6;
           return (
             <a
               href={url}
