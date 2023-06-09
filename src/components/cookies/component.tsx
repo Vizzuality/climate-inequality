@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import { AnimatePresence, motion } from 'framer-motion';
 
 import Button from 'components/button';
@@ -36,12 +34,14 @@ export const Cookies: React.FC<CookiesProps> = ({ open, onAccept, onReject }: Co
               <p className="text-base">
                 This website uses cookies to ensure you get the best experience on our website. Read
                 our{' '}
-                <Link
-                  href="/privacy-policy"
+                <a
+                  href="https://www.vizzuality.com/privacy-policy/"
+                  target="_blank"
+                  rel="noreferrer"
                   className="font-semibold text-white underline hover:text-100"
                 >
                   cookie policy
-                </Link>{' '}
+                </a>{' '}
                 to know more.
               </p>
               <div className="flex justify-end gap-3">
