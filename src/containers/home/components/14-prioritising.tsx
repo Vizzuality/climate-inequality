@@ -11,12 +11,16 @@ const projects = [
     { name: 'Half Earth', url: 'https://www.vizzuality.com/project/half-earth/' },
     { name: 'Global Forest Watch', url: 'https://www.vizzuality.com/project/global-forest-watch/' },
     { name: 'Aqueduct', url: 'https://www.vizzuality.com/project/aqueduct/' },
+    {
+      name: 'IISD SDG knowledge hub',
+      url: 'https://www.vizzuality.com/project/iisd-sdg-knowledge-hub/',
+    },
   ],
   [
     { name: 'Climate Watch', url: 'https://www.vizzuality.com/project/climate-watch/' },
     {
-      name: 'IISD SDG knowledge hub',
-      url: 'https://www.vizzuality.com/project/iisd-sdg-knowledge-hub/',
+      name: 'Care USA',
+      url: 'https://www.vizzuality.com/project/care-world-of-impact/',
     },
     { name: 'Resource Watch', url: 'https://www.vizzuality.com/project/resource-watch/' },
     { name: 'Marxan', url: 'https://www.vizzuality.com/project/marxan/' },
