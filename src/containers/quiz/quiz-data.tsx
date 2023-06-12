@@ -339,7 +339,7 @@ const QUESTIONS: Question[] = [
     question:
       'How many people could fall into poverty as a result of the impacts of climate change by 2030?',
     answers: [
-      { value: '2 to 26 <br/> million' },
+      { value: '2 to 26 million' },
       { value: '14 to 58 million' },
       { value: '29 to 81 million' },
       { value: '32 to 132 million', isCorrect: true },
