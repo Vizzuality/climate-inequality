@@ -46,24 +46,29 @@ const MetaTags: FC<MetaTagsProps> = ({
       <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
       <link rel="icon" type="image/png" sizes="256x256" href="/android-chrome-256x256.png" />
       <link rel="manifest" href={`${BASE_URL}/manifest.json`} />
-      <meta name="msapplication-TileColor" content="#ffffff" />
-      <meta name="msapplication-TileImage" content={`${BASE_URL}/ms-tile-150x150.png`} />
-      <meta name="theme-color" content="#ffffff" />
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={`${BASE_URL}/${imageURL}`} />
-      <meta name="twitter:domain" content="https://www.climate-inequality.vizzuality.com" />
-      <meta name="twitter:site" content="@vizzuality" />
-      <meta name="twitter:creator" content="@vizzuality" />
-      <meta name="og:title" content={title} />
-      <meta name="og:description" content={description} />
-      <meta name="og:type" content={type} />
-      <meta name="og:url" content={`${BASE_URL}`} />
-      <meta property="og:locale" content="en_US" />
-      <meta name="og:image" content={`${BASE_URL}/${imageURL}`} />
-      <meta property="og:site_name" content="Climate Inequality" />
-      <meta name="msapplication-config" content="/browserconfig.xml" />
+      <meta property="msapplication-TileColor" content="#ffffff" />
+      <meta property="msapplication-TileImage" content={`${BASE_URL}/ms-tile-150x150.png`} />
+      <meta property="theme-color" content="#ffffff" />
+      <meta name="card" property="twitter:card" content="summary_large_image" />
+      <meta name="title" property="twitter:title" content={title} />
+      <meta name="description" property="twitter:description" content={description} />
+      <meta name="image" property="twitter:image" content={`${BASE_URL}/${imageURL}`} />
+      <meta
+        name="domain"
+        property="twitter:domain"
+        content="https://www.climate-inequality.vizzuality.com"
+      />
+      <meta name="site" property="twitter:site" content="@vizzuality" />
+      <meta name="creator" property="twitter:creator" content="@vizzuality" />
+      <meta name="url" property="twitter:url" content={`${BASE_URL}`} />
+      <meta name="title" property="og:title" content={title} />
+      <meta name="description" property="og:description" content={description} />
+      <meta name="type" property="og:type" content={type} />
+      <meta name="url" property="og:url" content={`${BASE_URL}`} />
+      <meta name="locale" property="og:locale" content="en_US" />
+      <meta name="image" property="og:image" content={`${BASE_URL}/${imageURL}`} />
+      <meta name="site_name" property="og:site_name" content="Climate Inequality" />
+      <meta property="msapplication-config" content="/browserconfig.xml" />
       <link rel="manifest" href="/site.webmanifest" />
     </Head>
   );
