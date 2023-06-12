@@ -41,17 +41,20 @@ const MetaTags: FC<MetaTagsProps> = ({
       <meta name="author" content="Vizzuality" />
       <meta name="robots" content="index, follow" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="title" property="og:title" content={title} />
-      <meta name="description" property="og:description" content={description} />
-      <meta name="type" property="og:type" content={type} />
-      <meta name="url" property="og:url" content={`${BASE_URL}`} />
-      <meta name="locale" property="og:locale" content="en_US" />
-      <meta name="image" property="og:image" content={`${BASE_URL}/${imageURL}`} />
-      <meta name="site_name" property="og:site_name" content="Climate Inequality" />
-      <meta name="twitter:card" property="twitter:card" content="summary_large_image" />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:type" content={type} />
+      <meta property="og:url" content={`${BASE_URL}`} />
+      <meta property="og:locale" content="en_US" />
+      <meta property="og:image" content={`${BASE_URL}/${imageURL}`} />
+      <meta property="og:site_name" content="Climate Inequality" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:image" content={`${BASE_URL}/${imageURL}`} />
+      <meta name="twitter:image:width" content="1200" />
+      <meta name="twitter:image:height" content="630" />
+      <meta name="twitter:image:alt" content="Climate Inequality" />
       <meta name="twitter:title" property="twitter:title" content={title} />
       <meta name="twitter:description" property="twitter:description" content={description} />
-      <meta name="twitter:image" property="twitter:image" content={`${BASE_URL}/${imageURL}`} />
       <meta
         name="twitter:domain"
         property="twitter:domain"
