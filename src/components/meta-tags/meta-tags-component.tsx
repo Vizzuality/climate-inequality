@@ -1,37 +1,14 @@
 import { FC } from 'react';
 
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 
 export interface MetaTagsProps {
   title: string;
   description: string;
   type?: string;
-  imageURL?: string;
 }
 
-const getBaseUrl = () => {
-  if (process.env.NEXT_PUBLIC_VERCEL_URL) {
-    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
-  }
-
-  if (process.env.NEXT_PUBLIC_URL) {
-    return process.env.NEXT_PUBLIC_URL;
-  }
-
-  return 'http://localhost:3000';
-};
-
-const MetaTags: FC<MetaTagsProps> = ({
-  title,
-  description,
-  type = 'website',
-  imageURL = 'meta-image.jpeg',
-}: MetaTagsProps) => {
-  const { asPath } = useRouter();
-
-  const BASE_URL = getBaseUrl();
-
+const MetaTags: FC<MetaTagsProps> = ({ title, description, type = 'website' }: MetaTagsProps) => {
   return (
     <Head>
       <meta
@@ -44,12 +21,18 @@ const MetaTags: FC<MetaTagsProps> = ({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:type" content={type} />
-      <meta property="og:url" content={`${BASE_URL}`} />
+      <meta property="og:url" content="https://climate-inequality.vizzuality.com" />
       <meta property="og:locale" content="en_US" />
-      <meta property="og:image" content={`${BASE_URL}/${imageURL}`} />
+      <meta
+        property="og:image"
+        content="https://climate-inequality.vizzuality.com/meta-image.jpeg"
+      />
       <meta property="og:site_name" content="Climate Inequality" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:image" content={`${BASE_URL}/${imageURL}`} />
+      <meta
+        name="twitter:image"
+        content="https://climate-inequality.vizzuality.com/meta-image.jpeg"
+      />
       <meta name="twitter:image:width" content="1200" />
       <meta name="twitter:image:height" content="630" />
       <meta name="twitter:image:alt" content="Climate Inequality" />
@@ -62,17 +45,24 @@ const MetaTags: FC<MetaTagsProps> = ({
       />
       <meta name="twitter:site" property="twitter:site" content="@vizzuality" />
       <meta name="twitter:creator" property="twitter:creator" content="@vizzuality" />
-      <meta name="twitter:url" property="twitter:url" content={`${BASE_URL}`} />
+      <meta
+        name="twitter:url"
+        property="twitter:url"
+        content="https://climate-inequality.vizzuality.com"
+      />
       <meta property="msapplication-config" content="/browserconfig.xml" />
       <meta property="msapplication-TileColor" content="#ffffff" />
-      <meta property="msapplication-TileImage" content={`${BASE_URL}/ms-tile-150x150.png`} />
+      <meta
+        property="msapplication-TileImage"
+        content="https://climate-inequality.vizzuality.com//ms-tile-150x150.png"
+      />
       <meta property="theme-color" content="#ffffff" />
       <link rel="manifest" href="/site.webmanifest" />
       <link rel="icon" href="/favicon.ico" type="image/x-icon" />
       <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="/apple-touch-icon.png" />
       <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
       <link rel="icon" type="image/png" sizes="256x256" href="/android-chrome-256x256.png" />
-      <link rel="manifest" href={`${BASE_URL}/manifest.json`} />
+      <link rel="manifest" href="https://climate-inequality.vizzuality.com/manifest.json" />
     </Head>
   );
 };
