@@ -57,7 +57,7 @@ const MetaTags: FC<MetaTagsProps> = ({ title, description, type = 'website' }: M
       <meta property="msapplication-TileColor" content="#ffffff" />
       <meta
         property="msapplication-TileImage"
-        content="https://climate-inequality.vizzuality.com//ms-tile-150x150.png"
+        content="https://climate-inequality.vizzuality.com/ms-tile-150x150.png"
       />
       <meta property="theme-color" content="#ffffff" />
       <link rel="manifest" href="/site.webmanifest" />
