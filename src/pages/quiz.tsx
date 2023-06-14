@@ -22,7 +22,7 @@ const QuizPage: React.FC = () => {
         <title>Climate Inequality Quiz</title>
       </Head>
       <main>
-        <MetaTags title="Climate Inequality Quiz" description={SEODescription} />
+        <MetaTags title="The Climate Crisis & Inequality | Quiz" description={SEODescription} />
         <div className="fixed w-full lg:relative">
           <div className="container flex items-start justify-between">
             <div className="flex items-center justify-start gap-x-2 bg-black pt-9">

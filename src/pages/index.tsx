@@ -12,7 +12,10 @@ const HomePage: React.FC = () => {
       <Head>
         <title>Climate inequality</title>
       </Head>
-      <MetaTags title="Climate Inequality" description={SEODescription} />
+      <MetaTags
+        title="The Climate Crisis & Inequality | A Data-Driven Perspective"
+        description={SEODescription}
+      />
       <main>
         <Home />
       </main>
