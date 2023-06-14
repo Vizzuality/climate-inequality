@@ -1,4 +1,5 @@
 import Icon from 'components/icon';
+
 import Facebook from 'svgs/social/facebook.svg';
 import Github from 'svgs/social/github.svg';
 import Linkedin from 'svgs/social/linkedin.svg';
@@ -8,19 +9,19 @@ const socialData = [
   {
     href: 'https://twitter.com/Vizzuality',
     icon: Twitter,
-    shareLink: 'http://www.twitter.com/share?url=https://climate-inequality.vercel.app/quiz',
+    shareLink: 'http://www.twitter.com/share?url=https://climate-inequality.vizzuality.com/quiz',
   },
   {
     href: 'https://www.linkedin.com/company/vizzuality',
     icon: Linkedin,
     shareLink:
-      'https://www.linkedin.com/shareArticle?mini=true&url=https://climate-inequality.vercel.app/quiz',
+      'https://www.linkedin.com/shareArticle?mini=true&url=https://climate-inequality.vizzuality.com/quiz',
   },
   {
     href: 'https://www.facebook.com/vizzuality',
     icon: Facebook,
     shareLink:
-      'https://www.facebook.com/sharer/sharer.php?u=https://climate-inequality.vercel.app/quiz',
+      'https://www.facebook.com/sharer/sharer.php?u=https://climate-inequality.vizzuality.com/quiz',
   },
   {
     href: 'https://github.com/Vizzuality',
