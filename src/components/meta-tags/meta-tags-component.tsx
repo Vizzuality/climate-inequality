@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 export interface MetaTagsProps {
   title: string;
@@ -9,6 +10,8 @@ export interface MetaTagsProps {
 }
 
 const MetaTags: FC<MetaTagsProps> = ({ title, description, type = 'website' }: MetaTagsProps) => {
+  const { pathname } = useRouter();
+
   return (
     <Head>
       <meta
@@ -21,7 +24,7 @@ const MetaTags: FC<MetaTagsProps> = ({ title, description, type = 'website' }: M
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:type" content={type} />
-      <meta property="og:url" content="https://climate-inequality.vizzuality.com" />
+      <meta property="og:url" content={`https://climate-inequality.vizzuality.com${pathname}`} />
       <meta property="og:locale" content="en_US" />
       <meta
         property="og:image"
@@ -41,14 +44,14 @@ const MetaTags: FC<MetaTagsProps> = ({ title, description, type = 'website' }: M
       <meta
         name="twitter:domain"
         property="twitter:domain"
-        content="https://www.climate-inequality.vizzuality.com"
+        content={`https://climate-inequality.vizzuality.com${pathname}`}
       />
       <meta name="twitter:site" property="twitter:site" content="@vizzuality" />
       <meta name="twitter:creator" property="twitter:creator" content="@vizzuality" />
       <meta
         name="twitter:url"
         property="twitter:url"
-        content="https://climate-inequality.vizzuality.com"
+        content={`https://climate-inequality.vizzuality.com${pathname}`}
       />
       <meta property="msapplication-config" content="/browserconfig.xml" />
       <meta property="msapplication-TileColor" content="#ffffff" />
