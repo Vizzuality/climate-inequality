@@ -17,7 +17,7 @@ const contents = [
     p1: 'A person born into a low-income, rural family, with little political representation and access to health care, will face many more obstacles to coping with climate impacts than a wealthy person born in the same country.',
     p2: (
       <>
-        Inequality theory, first introduced by{' '}
+        The theory of intersectionality, first introduced by{' '}
         <a
           target="_blank"
           rel="noreferrer"
