@@ -10,6 +10,7 @@ import Beeswarm, { BeeswarmDataset } from 'components/charts/beeswarm';
 import RadioButton from 'components/forms/radio-button';
 import Icon from 'components/icon';
 import Tooltip from 'components/tooltip';
+import { GAEvent } from 'lib/analytics/ga';
 import { screens } from 'styles/styles.config';
 
 import emissionRadioLegendIcon from 'svgs/ui/emissions-radio-legend.svg';
@@ -140,6 +141,20 @@ const EmissionChart = () => {
     setPlaying(false);
     clearInterval(yearIntervalRef.current);
     setEmissionData({ ...emissionData, [name]: data });
+    const content_type = {
+      emission: 'absolute-percapita',
+      comparation: 'vulnerability-readiness',
+      population: 'region-country'
+    }[name];
+
+    GAEvent(
+      { action: 'select_content',
+        params: {
+          content_type,
+          item_id: data
+        }
+      }
+    );
   };
 
   return (

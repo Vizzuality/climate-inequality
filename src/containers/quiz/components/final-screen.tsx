@@ -1,9 +1,12 @@
+import { useEffect, useState } from 'react';
+
 import { motion } from 'framer-motion';
 
 import SocialIcons from 'containers/social-icons/component';
 
 import { Button, LinkAnchor } from 'components/button/component';
 import Icon from 'components/icon/component';
+import { GAEvent } from 'lib/analytics/ga';
 
 import CorrectIcon from 'svgs/ui/correct.svg';
 import IncorrectIcon from 'svgs/ui/wrong.svg';
@@ -57,7 +60,19 @@ const PositionAnimation = ({
 
 const FinalScreen = ({ userAnswers, handleTryAnother, isLast }: FinalScreenProps) => {
   const correctAnswers = userAnswers.reduce((acc, answer) => (answer ? acc + 1 : acc), 0);
-
+  const [hasLevelEnded, setHasLevelEnded] = useState(false);
+  useEffect(() => {
+    if (!hasLevelEnded) {
+      GAEvent({
+        action: 'level_end',
+        params: {
+          level_name: 'Quiz finished',
+          success: true,
+        },
+      });
+      setHasLevelEnded(true);
+    }
+  }, [hasLevelEnded]);
   return (
     <>
       <motion.div

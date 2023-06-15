@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import { GAEvent } from 'lib/analytics/ga';
+
 import QUESTIONS, { Question } from './quiz-data';
 
 const GROUPS_NUMBER = 4;
@@ -22,6 +24,7 @@ export const useQuestions = () => {
 
   const goToNextGroup = useCallback(() => {
     setGroup(group + 1);
+    GAEvent({ action: 'level_up', params: { level: group + 1, character: 'User' } });
     setCurrentStep(1);
     setUserAnswers([]);
   }, [group]);
