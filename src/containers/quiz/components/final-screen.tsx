@@ -105,11 +105,11 @@ const FinalScreen = ({ userAnswers, handleTryAnother, isLast }: FinalScreenProps
             </p>
           </div>
           <div className="mt-8 flex flex-col items-center justify-center sm:mt-10">
-            {!isLast && (
-              <div className="flex w-full flex-col items-center justify-center text-center">
-                <p className="hidden sm:block">
-                  Try another quiz or learn more about climate inequality and how we can tackle it.
-                </p>
+            <div className="flex w-full flex-col items-center justify-center text-center">
+              <p className="hidden sm:block">
+                Try another quiz or learn more about climate inequality and how we can tackle it.
+              </p>
+              {!isLast && (
                 <motion.div
                   initial={{ width: 200 }}
                   animate={{ width: 390 }}
@@ -125,18 +125,18 @@ const FinalScreen = ({ userAnswers, handleTryAnother, isLast }: FinalScreenProps
                     Try another quiz
                   </Button>
                 </motion.div>
-                <PositionAnimation position="bottom">
-                  <LinkAnchor
-                    size="xl"
-                    theme="primary-alt"
-                    className="mt-4 border-none px-5 text-md font-semibold"
-                    href="/"
-                  >
-                    Explore climate inequality and solutions.
-                  </LinkAnchor>
-                </PositionAnimation>
-              </div>
-            )}
+              )}
+              <PositionAnimation position="bottom">
+                <LinkAnchor
+                  size="xl"
+                  theme="primary-alt"
+                  className="mt-4 border-none px-5 text-md font-semibold"
+                  href="/"
+                >
+                  Explore climate inequality and solutions.
+                </LinkAnchor>
+              </PositionAnimation>
+            </div>
           </div>
         </div>
         <div className="mt-auto flex flex-col items-center justify-center">
