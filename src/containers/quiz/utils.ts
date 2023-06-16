@@ -70,7 +70,7 @@ export const useQuestions = () => {
     currentQuestion,
     currentStep,
     isLastGroup: group === GROUPS_NUMBER,
-    showResult: currentStep === QUESTIONS_NUMBER + 1 || !questions.length,
+    showResult: currentStep === QUESTIONS_NUMBER + 1,
     userAnswers,
     addUserAnswer,
   };
