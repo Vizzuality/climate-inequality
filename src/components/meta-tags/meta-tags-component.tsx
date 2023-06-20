@@ -60,6 +60,7 @@ const MetaTags: FC<MetaTagsProps> = ({ title, description, type = 'website' }: M
         content="https://climate-inequality.vizzuality.com/ms-tile-150x150.png"
       />
       <meta property="theme-color" content="#ffffff" />
+      <link rel="canonical" href={`https://climate-inequality.vizzuality.com${pathname}`} />
       <link rel="manifest" href="/site.webmanifest" />
       <link rel="icon" href="/favicon.ico" type="image/x-icon" />
       <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="/apple-touch-icon.png" />
