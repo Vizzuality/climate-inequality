@@ -151,21 +151,46 @@ export const Circle = ({
     }
   }, 10);
 
-  return (
-    <div className="relative flex h-full w-full items-center justify-center">
-      <motion.div
-        className="hover:border-3 flex items-center justify-center rounded-full border-2 border-500 text-500 hover:cursor-grab"
-        onPan={handlePan}
-        style={{
-          height: answerToSize(answer || 1),
-          width: answerToSize(answer || 1),
-        }}
-        whileTap={{ cursor: !isSolutionMode && 'grabbing' }}
+  const range = (
+    <div className="flex h-1/3 items-end">
+      <label htmlFor="range-input" className="visibility-hidden">
+        Set answer
+      </label>
+      <input
+        type="range"
+        id="range-input"
+        name="range-input"
+        min="0"
+        max={max}
+        value={answer}
+        onChange={(e) => setAnswer(e.target.valueAsNumber)}
       />
-      <div className="pointer-events-none absolute flex h-24 w-24 items-center justify-center">
-        {answer}
-        {isPercentage && ' %'}
+    </div>
+  );
+
+  return (
+    <div className="relative flex h-full w-full flex-col items-center">
+      <div
+        className={cx(
+          'relative flex w-full items-center justify-center pt-3',
+          isSolutionMode ? 'h-full' : 'h-2/3'
+        )}
+      >
+        <motion.div
+          className="hover:border-3 flex items-center justify-center rounded-full border-2 border-500 text-500 hover:cursor-grab"
+          onPan={handlePan}
+          style={{
+            height: answerToSize(answer || 1),
+            width: answerToSize(answer || 1),
+          }}
+          whileTap={{ cursor: !isSolutionMode && 'grabbing' }}
+        />
+        <div className="h-[calc(30% - 16px)] pointer-events-none absolute flex w-24 items-center justify-center">
+          {answer}
+          {isPercentage && ' %'}
+        </div>
       </div>
+      {!isSolutionMode && range}
     </div>
   );
 };

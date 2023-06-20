@@ -140,7 +140,7 @@ const QuizPage: React.FC = () => {
                 <p className="mb-5 text-sm leading-snug text-white/80 sm:text-base">
                   Drag the circles to change value and validate when you are happy with your answer
                 </p>
-                <div className="flex h-56 w-full">
+                <div className={`${isSolutionMode ? 'mt-0' : 'mt-16'} flex h-[250px] w-full`}>
                   {renderCircles(
                     isSolutionMode,
                     circleAnswer1,
