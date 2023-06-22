@@ -7,7 +7,6 @@ import Github from 'svgs/social/github.svg';
 import Linkedin from 'svgs/social/linkedin.svg';
 import Twitter from 'svgs/social/twitter.svg';
 import Share from 'svgs/ui/copy.svg';
-import Correct from 'svgs/ui/correct.svg';
 
 interface SocialData {
   href?: string;
@@ -43,7 +42,6 @@ const socialData: SocialData[] = [
   {
     icon: Share,
     action: 'copy',
-    afterIcon: Correct,
   },
 ];
 
@@ -65,12 +63,20 @@ const SocialIcons = ({ className, isShare }: SocialIconsProps) => {
 
   return (
     <div className={className}>
-      {socialData.map(({ href, icon: IconSvg, shareLink, action, afterIcon: AfterIconSvg }) =>
+      {socialData.map(({ href, icon: IconSvg, shareLink, action }) =>
         action ? (
-          <button key={href} onClick={handleCopy}>
+          <button className="relative" key={href} onClick={handleCopy}>
+            {copied && (
+              <div
+                className="absolute -top-[18px] -left-2 w-full animate-fade text-center font-sans text-xs text-600 opacity-0"
+                onAnimationEnd={() => setCopied(false)}
+              >
+                Copied
+              </div>
+            )}
             <Icon
-              icon={copied ? AfterIconSvg : IconSvg}
-              className="h-6 w-6 transition-all duration-500 ease-in-out hover:text-400"
+              icon={IconSvg}
+              className="h-8 w-8 transition-all duration-500 ease-in-out hover:text-400"
             />
           </button>
         ) : (

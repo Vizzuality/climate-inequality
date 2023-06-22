@@ -65,6 +65,19 @@ module.exports = {
     dropShadow: {
       yellow: '0 0 10px #ffe229',
     },
+    extend: {
+      animation: {
+        fade: 'fadeInOut 1.5s ease-in-out',
+      },
+      keyframes: {
+        fadeInOut: {
+          '0%': { opacity: 0, transform: 'translateY(100%)' },
+          '25%': { opacity: 1, transform: 'translateY(0)' },
+          '75%': { opacity: 1, transform: 'translateY(0)' },
+          '100%': { opacity: 0, transform: 'translateY(100%)' },
+        },
+      },
+    },
   },
   plugins: [forms, lineClamp],
 };
