@@ -80,7 +80,7 @@ const FinalScreen = ({ userAnswers, handleTryAnother, isLast }: FinalScreenProps
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={contentTransition}
-        className="container flex w-full flex-col items-center justify-between pt-24 pb-6 font-sans lg:pt-6 xl:pt-10 xl:pb-9"
+        className="container flex w-full flex-col items-center justify-between pt-24 pb-6 font-sans lg:pt-6 xl:pt-7 xl:pb-9"
       >
         <div className="z-10 flex flex-1 flex-col justify-center">
           <div className="max-w-3xl text-center">
@@ -138,7 +138,7 @@ const FinalScreen = ({ userAnswers, handleTryAnother, isLast }: FinalScreenProps
               </PositionAnimation>
             </div>
           </div>
-          <div className="mt-2 flex flex-col items-center justify-center">
+          <div className="mt-8 flex flex-col items-center justify-center">
             <PositionAnimation position="bottom">
               <>
                 <p className="mb-3 text-center text-sm font-semibold">Share</p>
