@@ -10,10 +10,8 @@ Vizzuality’s look at climate action and equality calls attention to the import
 - [Tailwind](https://tailwindcss.com/) as CSS Framework
 - Reusable components such as forms, modals, icons, and other most use components
 - [Typescript](https://www.typescriptlang.org/) already configured
-- [Cypress](https://www.cypress.io/) as testing client
 - git workflow and hooks
 - editorconfig and code style based on [Airbnb](https://github.com/airbnb/javascript)
-- [Storybook](https://storybook.js.org/) also available and configured
 
 ### Quick start
 
