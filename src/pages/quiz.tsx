@@ -44,7 +44,7 @@ const QuizPage: React.FC = () => {
             </LinkAnchor>
           </div>
         </div>
-        <div className="container flex min-h-screen flex-col">
+        <div className="container flex flex-col">
           <Quiz />
         </div>
       </main>

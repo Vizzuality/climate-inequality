@@ -80,10 +80,10 @@ const FinalScreen = ({ userAnswers, handleTryAnother, isLast }: FinalScreenProps
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={contentTransition}
-        className="container flex h-full w-full flex-1 flex-col items-center justify-between pt-6 pb-6 font-sans xl:pt-10 xl:pb-9"
+        className="container flex w-full flex-col items-center justify-between pt-24 pb-6 font-sans lg:pt-6 xl:pt-7 xl:pb-9"
       >
         <div className="z-10 flex flex-1 flex-col justify-center">
-          <div className="text-center">
+          <div className="max-w-3xl text-center">
             <PositionAnimation position="top">
               <h1 className="mb-4 font-serif text-2xl font-normal leading-tight sm:text-[40px]">
                 Thank you for taking the inequality quiz.
@@ -138,17 +138,17 @@ const FinalScreen = ({ userAnswers, handleTryAnother, isLast }: FinalScreenProps
               </PositionAnimation>
             </div>
           </div>
-        </div>
-        <div className="mt-auto flex flex-col items-center justify-center">
-          <PositionAnimation position="bottom">
-            <>
-              <p className="mb-3 text-center text-sm font-semibold">Share</p>
-              <SocialIcons isShare className="flex gap-4" />
-            </>
-          </PositionAnimation>
+          <div className="mt-8 flex flex-col items-center justify-center">
+            <PositionAnimation position="bottom">
+              <>
+                <p className="mb-3 text-center text-sm font-semibold">Share</p>
+                <SocialIcons isShare className="flex gap-4" />
+              </>
+            </PositionAnimation>
+          </div>
         </div>
       </motion.div>
-      <div className="fixed top-0 left-0 -z-10 flex min-h-screen w-full items-center justify-center">
+      <div className="fixed top-0 left-0 -z-10 flex w-full items-center justify-center">
         <motion.div
           initial={{ opacity: 0, height: '50vh', width: '50vw' }}
           animate={{ opacity: 0.3, height: '100vh', width: '100vw' }}
