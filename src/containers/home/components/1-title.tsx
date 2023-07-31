@@ -1,5 +1,6 @@
 import { useBreakpoint } from 'hooks/breakpoint';
 
+import AI from 'components/ai';
 import { Button } from 'components/button/component';
 
 import FadeYScroll from '../animations/fade-y-scroll/component';
@@ -38,6 +39,7 @@ const Title = () => {
               to understand these dynamics.
             </div>
           </div>
+          <AI />
           <div className="mb-14 flex justify-center sm:mb-0 sm:block">
             <Button
               onClick={handleScroll}
