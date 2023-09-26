@@ -72,13 +72,13 @@ const DistributionDefault = () => {
       </div>
       {/* DESKTOP */}
       <motion.div
-        className="absolute -z-10 mb-6 hidden h-[300vh] w-screen lg:flex"
+        className="absolute mb-6 hidden h-[300vh] w-screen lg:flex"
         style={{
           y: animationY,
           opacity: animationOpacity,
         }}
       >
-        <div className="sticky top-0 h-screen">
+        <div className="sticky top-0 z-20 h-screen">
           <div className="flex h-[calc(100vh-96px)] items-end">
             <RiveScrollAnimation
               scrollY={animationScrollProgress}
@@ -89,7 +89,7 @@ const DistributionDefault = () => {
               autoplay
             />
           </div>
-          <div className="container mt-6 w-full items-end justify-between text-sm text-middle-gray sm:flex">
+          <div className="container z-10 mt-6 w-full items-end justify-between text-sm text-middle-gray sm:flex">
             <p className="font-serif">
               Distribution of pre-tax national income by population group (2021).
             </p>
@@ -97,9 +97,11 @@ const DistributionDefault = () => {
               Source:{' '}
               <a
                 className="underline"
-                href="https://www.figma.com/file/tfBBt7rL4Rt0NJs7swlZdE/V2---Vizz-branding?node-id=347-55549&t=jWrtaEw0X7czunMf-4"
+                target="_blank"
+                rel="noreferrer"
+                href="https://oxfamilibrary.openrepository.com/bitstream/handle/10546/621341/bp-inequality-kills-170122-summ-en.pdf"
               >
-                World Inequality Database, World Bank
+                World Inequality Database, Oxfam
               </a>
             </p>
           </div>
@@ -107,8 +109,8 @@ const DistributionDefault = () => {
       </motion.div>
 
       {/* MOBILE */}
-      <div className="absolute flex h-[300vh] w-screen lg:hidden">
-        <div className="sticky top-0 h-screen">
+      <div className="AAAAAA absolute flex h-[300vh] w-screen lg:hidden">
+        <div className="sticky top-0 z-20 h-screen">
           <div className="flex h-full flex-col justify-end">
             <RiveScrollAnimation
               scrollY={animationScrollProgress}
@@ -126,9 +128,11 @@ const DistributionDefault = () => {
                 Source:{' '}
                 <a
                   className="underline"
-                  href="https://www.figma.com/file/tfBBt7rL4Rt0NJs7swlZdE/V2---Vizz-branding?node-id=347-55549&t=jWrtaEw0X7czunMf-4"
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://oxfamilibrary.openrepository.com/bitstream/handle/10546/621341/bp-inequality-kills-170122-summ-en.pdf"
                 >
-                  World Inequality Database, World Bank
+                  World Inequality Database, Oxfam
                 </a>
               </p>
             </div>
