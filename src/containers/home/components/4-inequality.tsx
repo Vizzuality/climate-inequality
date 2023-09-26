@@ -69,7 +69,7 @@ const Inequality = () => {
 
   return (
     <div ref={ref} className="h-[300vh] w-full">
-      <div className="container flex-1">
+      <div className="flex- container z-20">
         {contents.map(({ p1, p2, subtitle, title }, index) => {
           return (
             <div
@@ -113,8 +113,8 @@ const Inequality = () => {
         })}
       </div>
 
-      <div className="absolute h-[300vh] w-full sm:mt-[-50vh] sm:h-[350vh]">
-        <div className="pointer-events-none sticky top-0 h-[100vh] w-full sm:flex sm:pt-0">
+      <div className="pointer-events-none absolute h-[300vh] w-full sm:mt-[-50vh] sm:h-[350vh]">
+        <div className="sticky top-0 h-[100vh] w-full sm:flex sm:pt-0">
           <div className="flex-1"></div>
           <div className="flex flex-1 items-center justify-end">
             <RiveScrollAnimation
@@ -122,7 +122,7 @@ const Inequality = () => {
               fileName="diagram"
               stateMachine="Default"
               stateMachineInput="scrollPos"
-              className="pointer-events-none mt-[-5vh] h-[50vh] w-[100vw] sm:mt-0 sm:h-[45vw] sm:w-[45vw]"
+              className="mt-[-5vh] h-[50vh] w-[100vw] sm:mt-0 sm:h-[45vw] sm:w-[45vw]"
               autoplay
             />
           </div>

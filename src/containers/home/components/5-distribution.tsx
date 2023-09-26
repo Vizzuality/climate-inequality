@@ -15,6 +15,24 @@ const texts = [
   'The 10 richest men in the world own more than the bottom 3.1 billion people.',
 ];
 
+const Links = ({ className }: { className?: string }) => (
+  <p className={classNames(className)}>
+    Sources:{' '}
+    <a className="underline" target="_blank" rel="noreferrer" href="https://wid.world/data/">
+      World Inequality Database
+    </a>
+    ,{' '}
+    <a
+      className="underline"
+      target="_blank"
+      rel="noreferrer"
+      href="https://oxfamilibrary.openrepository.com/bitstream/handle/10546/621341/bp-inequality-kills-170122-summ-en.pdf"
+    >
+      Oxfam
+    </a>
+  </p>
+);
+
 const DistributionDefault = () => {
   const target = useRef(null);
   const { scrollYProgress: animationScrollProgress } = useScroll({
@@ -72,13 +90,13 @@ const DistributionDefault = () => {
       </div>
       {/* DESKTOP */}
       <motion.div
-        className="absolute -z-10 mb-6 hidden h-[300vh] w-screen lg:flex"
+        className="absolute mb-6 hidden h-[300vh] w-screen lg:flex"
         style={{
           y: animationY,
           opacity: animationOpacity,
         }}
       >
-        <div className="sticky top-0 h-screen">
+        <div className="sticky top-0 z-20 h-screen">
           <div className="flex h-[calc(100vh-96px)] items-end">
             <RiveScrollAnimation
               scrollY={animationScrollProgress}
@@ -89,26 +107,18 @@ const DistributionDefault = () => {
               autoplay
             />
           </div>
-          <div className="container mt-6 w-full items-end justify-between text-sm text-middle-gray sm:flex">
+          <div className="container z-10 mt-6 w-full items-end justify-between text-sm text-middle-gray sm:flex">
             <p className="font-serif">
               Distribution of pre-tax national income by population group (2021).
             </p>
-            <p>
-              Source:{' '}
-              <a
-                className="underline"
-                href="https://www.figma.com/file/tfBBt7rL4Rt0NJs7swlZdE/V2---Vizz-branding?node-id=347-55549&t=jWrtaEw0X7czunMf-4"
-              >
-                World Inequality Database, World Bank
-              </a>
-            </p>
+            <Links />
           </div>
         </div>
       </motion.div>
 
       {/* MOBILE */}
-      <div className="absolute flex h-[300vh] w-screen lg:hidden">
-        <div className="sticky top-0 h-screen">
+      <div className="AAAAAA absolute flex h-[300vh] w-screen lg:hidden">
+        <div className="sticky top-0 z-20 h-screen">
           <div className="flex h-full flex-col justify-end">
             <RiveScrollAnimation
               scrollY={animationScrollProgress}
@@ -122,15 +132,8 @@ const DistributionDefault = () => {
               <p className="mb-2 font-serif">
                 Distribution of pre-tax national income by population group (2021).
               </p>
-              <p className="text-2xs">
-                Source:{' '}
-                <a
-                  className="underline"
-                  href="https://www.figma.com/file/tfBBt7rL4Rt0NJs7swlZdE/V2---Vizz-branding?node-id=347-55549&t=jWrtaEw0X7czunMf-4"
-                >
-                  World Inequality Database, World Bank
-                </a>
-              </p>
+
+              <Links className="text-2xs" />
             </div>
           </div>
         </div>

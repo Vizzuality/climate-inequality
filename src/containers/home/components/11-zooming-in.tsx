@@ -41,7 +41,7 @@ const ZoomingIn = () => {
 
   return (
     <div ref={target} className="flex min-h-screen flex-col py-12 lg:py-16">
-      <div className="container">
+      <div className="container z-20">
         <div className="small-container">
           {/* DESKTOP */}
           <div className="pointer-events-none hidden sm:block">
