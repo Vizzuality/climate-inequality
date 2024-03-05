@@ -19,8 +19,8 @@ const projects = [
   [
     { name: 'Climate Watch', url: 'https://www.vizzuality.com/project/climate-watch/' },
     {
-      name: 'Care USA',
-      url: 'https://www.vizzuality.com/project/care-world-of-impact/',
+      name: 'Catalyse',
+      url: 'https://www.vizzuality.com/project/catalyse/',
     },
     { name: 'Resource Watch', url: 'https://www.vizzuality.com/project/resource-watch/' },
     { name: 'Marxan', url: 'https://www.vizzuality.com/project/marxan/' },
